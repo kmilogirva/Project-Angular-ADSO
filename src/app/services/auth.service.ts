@@ -14,6 +14,16 @@ export class AuthService {
     this.http = http;
   }
 
+  login(loginInfo:Array<string>) {
+    return this.http.post(this.baseServerUrl + "User/Login",{
+      Email: loginInfo[0],
+      Password: loginInfo[1]
+    },
+    {
+      responseType: 'text'
+    }
+  );
+  }
 
 
   registerUser(User: Array<string>){
@@ -29,5 +39,7 @@ export class AuthService {
     {responseType:'text'
 
    });
+
+   
   }
 }
