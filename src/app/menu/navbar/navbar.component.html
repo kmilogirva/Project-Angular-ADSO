@@ -1,0 +1,61 @@
+
+
+    <mat-toolbar color="primary" class="full-width-toolbar">
+      <button mat-icon-button (click)="toggleSidenav()" aria-label="Menú" class="menu-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">JKC_Inventory</span>
+      <span class="spacer"></span>
+  
+    <!-- Título de la aplicación -->
+    <!-- <span class="app-title">JKC_Inventory</span> -->
+
+  
+    <!-- Espaciador flexible -->
+    <span class="spacer"></span>
+  
+    <!-- Buscador (con clases de Bootstrap) -->
+    <mat-form-field class="search-field" appearance="outline">
+      <mat-label>Buscar</mat-label>
+      <input matInput type="text" placeholder="Escribe para buscar..." class="form-control">
+      <button mat-icon-button matSuffix aria-label="Buscar" class="btn btn-outline-primary">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  
+    <!-- Botones de navegación (con clases de Bootstrap) -->
+    <div class="nav-buttons" *ngIf="isNavVisible">
+      <button mat-button routerLink="/home" class="btn btn-outline-secondary">
+        <mat-icon>home_filled</mat-icon> Inicio
+      </button>
+      <button mat-button routerLink="/about" class="btn btn-outline-secondary">
+        <mat-icon>info_outline</mat-icon> Acerca de
+      </button>
+      <button mat-button routerLink="/contact" class="btn btn-outline-secondary">
+        <mat-icon>mail_outline</mat-icon> Contacto
+      </button>
+    </div>
+  
+    <!-- Botón de usuario (con Bootstrap para estilo) -->
+    <button mat-icon-button aria-label="Cuenta" class="btn btn-outline-light" routerLink="/login" aria-placeholder="Inicio">
+      <mat-icon>account_circle</mat-icon>
+      
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side" opened="true">
+      
+      <mat-nav-list>
+        <a mat-list-item routerLink="/register">Registro de Usuarios</a>
+        <a mat-list-item routerLink="/about">Acerca de</a>
+        <a mat-list-item routerLink="/contact">Contacto</a>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+    
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

@@ -1,0 +1,96 @@
+/* Barra de navegación */
+.full-width-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #F0AB00; /* Color primario */
+  // color: #ffffff; /* Color de texto */
+  padding: 10px;
+}
+
+.menu-button mat-icon {
+  color: black; /* Color del icono de menú */
+}
+
+.app-title {
+  font-size: 24px; /* Título más grande */
+  font-weight: bold;
+  color: white; /* Asegura que el título tenga color blanco */
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+/* Estilo del buscador */
+.search-field {
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+/* Estilo para los botones de navegación */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-button {
+  color: white; /* Asegura que los botones de navegación sean blancos */
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.mat-button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Efecto hover */
+  color: white; /* Mantén el texto blanco al pasar el ratón */
+}
+
+/* Estilo para el sidenav */
+.mat-sidenav-container {
+  height: 100vh; /* Asegura que ocupe toda la pantalla */
+  width: 40vh;
+}
+
+.mat-sidenav {
+  color: #ffffff;
+  // background-color: #333; /* Color de fondo del sidenav más claro */
+  
+}
+
+.mat-sidenav-content {
+  background-color: #ffffff; /* Fondo más claro */
+}
+
+.mat-nav-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.mat-list-item {
+  padding: 15px;
+  color: #ffffff;
+}
+
+.mat-list-item:hover {
+  background-color:#ffffff; /* Efecto hover en el sidenav */
+  cursor: pointer;
+}
+
+.mat-icon {
+  color: white; /* Color de los íconos */
+}
+
+/* Estilos responsive */
+@media (max-width: 768px) {
+  .nav-buttons {
+    display: none; /* Esconde los botones en pantallas pequeñas */
+  }
+
+  .search-field {
+    display: none; /* Esconde el campo de búsqueda en pantallas pequeñas */
+  }
+
+  .menu-button mat-icon {
+    color: black; /* Icono de menú visible en móvil */
+  }
+}

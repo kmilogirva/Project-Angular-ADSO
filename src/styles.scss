@@ -1,4 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+// Incluye los estilos básicos de Angular Material
+@include mat.core();
+
+// Define el tema personalizado para tu proyecto.
+$proyecto-temporal-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Aplica el tema a todos los componentes.
+:root {
+  @include mat.all-component-themes($proyecto-temporal-theme);
+}
+
+// Habilita (opcional) las clases de tipografía predeterminadas.
+@include mat.typography-hierarchy($proyecto-temporal-theme);
+
+// Importa estilos adicionales globales.
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/ngx-toastr/toastr.css";
 
+// Estilos globales básicos
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

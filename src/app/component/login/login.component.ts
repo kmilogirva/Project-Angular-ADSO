@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router'; // Importa RouterModule
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -9,37 +10,59 @@ import { RouterModule } from '@angular/router'; // Importa RouterModule
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  userAutentication: boolean =false;
+  loginForm!: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder,private authService : AuthService, public toastr: ToastrService ) { }
 
   ngOnInit(): void {
-  }
-  loginForm = new FormGroup({
-    email : new FormControl("", [
-      Validators.required,
-      Validators.email
-    ]),
+    this.loginForm = this.fb.group({
+      correo: ['', [Validators.required, Validators.email]],
+      contrasena: ['', [Validators.required, Validators.minLength(6),Validators.maxLength(15),]]
 
-
-
-    password: new FormControl("")
-  });
-
-
-
-
-  get Email(): FormControl {
-    return this.Email.get("email") as FormControl;
+    });
   }
 
-  get Password(): FormControl {
-    return this.Password.get("password") as FormControl;
+  get Correo() {
+    return this.loginForm.get('correo');
   }
 
-  
- loginSubmited(){
-console.log(this.loginForm.value)
-alert(this.loginForm.value)
-this.loginForm
+  get Contrasena() {
+    return this.loginForm.get('contrasena');
+  }
+
+  loginSubmited() {
+    if (this.loginForm.valid) {
+
+      const loginData =[
+
+        this.loginForm.value.correo!,
+        this.loginForm.value.contrasena!,
+      ]
+
+
+      this.authService.login(loginData).subscribe(
+        (response) =>{
+
+          if (response.exitoso){
+            this.toastr.success(response.mensaje);
+            this.userAutentication = true;
+            this.loginForm.reset();
+          }
+          else{
+            this.toastr.error(response.mensaje);
+            this.userAutentication = false;
+          }
+        },
+        (error) => {
+          console.error("Error en la llamada al backend:", error);
+          this.toastr.error(error.mensaje);
+          this.userAutentication = false;
+        }
+      );
+    
+    } else {
+      alert('Formulario inválido');
+    }
   }
 }

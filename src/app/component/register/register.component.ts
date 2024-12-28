@@ -6,11 +6,12 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
+ 
+
 })
 export class RegisterComponent implements OnInit {
-  repeatPass: string = 'none';
-
+  repetircontrasena: string = 'none';
   displayMsg: string ='';
   isAccountCreated:boolean= false;
 
@@ -19,95 +20,104 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void { }
   
   registerForm = new FormGroup({
-    firstname: new FormControl("", [
+    nombres: new FormControl("", [
       Validators.required,
       Validators.minLength(2),
       Validators.pattern("[a-zA-Z].*")
     ]),
-    lastname: new FormControl("", [
+    apellidos: new FormControl("", [
       Validators.required,
       Validators.minLength(2),
       Validators.pattern("[a-zA-Z].*")
     ]),
-    email: new FormControl("", [
+    correo: new FormControl("", [
       Validators.required,
       Validators.email
     ]),
-    mobile: new FormControl("", [
+    telefono: new FormControl("", [
       Validators.required,
       Validators.pattern("[0-9]*"),
       Validators.minLength(10),
       Validators.maxLength(10),
     ]),
-    gender: new FormControl("", [
+    sexo: new FormControl("", [
       Validators.required
     ]),
-    password: new FormControl("", [
+
+    contraseña: new FormControl("", [
       Validators.required,
       Validators.minLength(6),
       Validators.maxLength(15),
     ]),
-    confirmpassword: new FormControl("")
+    confirmarcontrasena: new FormControl("")
   });
 
   
 
   registerSubmited() {
-    if (this.Password.value === this.ConfirmPassword.value) {
-      this.repeatPass = 'none'; 
+    if (this.Contrasena.value === this.ConfirmarContrasena.value) {
+      this.repetircontrasena = 'none'; 
+      console.log("Entre al metodo Registrar")
 
       //console.log(this.registerForm.valid);
-      this.authService.registerUser([
-        this.registerForm.value.firstname!,
-        this.registerForm.value.lastname!,
-        this.registerForm.value.email!,
-        this.registerForm.value.mobile!,
-        this.registerForm.value.gender!,
-        this.registerForm.value.password!,
+      const UserData =[
+        this.registerForm.value.nombres!,
+        this.registerForm.value.apellidos!,
+        this.registerForm.value.correo!,
+        this.registerForm.value.telefono!,
+        this.registerForm.value.sexo!,
+        this.registerForm.value.contraseña!,
+      ];
+      console.log()
 
-      ]).subscribe(res => {
-        if (res == 'Success'){
-          this.toastr.success ('Cuenta creada, exitosamente') 
+      this.authService.registerUser(UserData).subscribe(
+        (response) =>{
+        if (response.exitoso){
+          this.toastr.success (response.mensaje) 
           this.isAccountCreated =true;
-        }else if (res =='Usuario ya existe'){
-          this.toastr.error ('La cuenta ya existe,el correo ya se encuentra registrado');
-          this.isAccountCreated =false;
-        }else {
-          this.toastr.error ('Algo salió mal');
-          this.isAccountCreated =false;
+          this.registerForm.reset();
+          this.repetircontrasena = 'none'; 
+        } else {
+          this.toastr.error(response.mensaje);
+          this.isAccountCreated = false;
         }
-      });
-    } else {
-      this.repeatPass = 'inline'; 
+      },
+      (error) => {
+        console.error("Error en la llamada al backend:", error);
+        this.toastr.error(error.mensaje);
+        this.isAccountCreated = false;
+      }
+    );
+  } else {
+    this.repetircontrasena = 'inline';
+  }
+}
 
-    }
+  get Nombres(): FormControl {
+    return this.registerForm.get("nombres") as FormControl;
   }
 
-  get FirstName(): FormControl {
-    return this.registerForm.get("firstname") as FormControl;
+  get Apellidos(): FormControl {
+    return this.registerForm.get("apellidos") as FormControl;
   }
 
-  get LastName(): FormControl {
-    return this.registerForm.get("lastname") as FormControl;
+  get Correo(): FormControl {
+    return this.registerForm.get("correo") as FormControl;
   }
 
-  get Email(): FormControl {
-    return this.registerForm.get("email") as FormControl;
+  get Telefono(): FormControl {
+    return this.registerForm.get("telefono") as FormControl;
   }
 
-  get Mobile(): FormControl {
-    return this.registerForm.get("mobile") as FormControl;
+  get Sexo(): FormControl {
+    return this.registerForm.get("sexo") as FormControl;
   }
 
-  get Gender(): FormControl {
-    return this.registerForm.get("gender") as FormControl;
+  get Contrasena(): FormControl {
+    return this.registerForm.get("contraseña") as FormControl;
   }
 
-  get Password(): FormControl {
-    return this.registerForm.get("password") as FormControl;
-  }
-
-  get ConfirmPassword(): FormControl {
-    return this.registerForm.get("confirmpassword") as FormControl;
+  get ConfirmarContrasena(): FormControl {
+    return this.registerForm.get("confirmarcontrasena") as FormControl;
   }
 }

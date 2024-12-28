@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { last } from 'rxjs';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,32 +20,47 @@ export class AuthService {
     this.http = http;
   }
 
-  login(loginInfo:Array<string>) {
-    return this.http.post(this.baseServerUrl + "User/Login",{
-      Email: loginInfo[0],
-      Password: loginInfo[1]
-    },
+  login(LoginData:Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
+    return this.http.post<{ exitoso: boolean; mensaje: string }>(
+    this.baseServerUrl + "User/Login",
     {
-      responseType: 'text'
-    }
+      Correo: LoginData[0],
+      Contrasena: LoginData[1]
+    },
+  ).pipe(
+    catchError(error => {
+      // Manejo de errores
+      if (error.status === 409) {
+        return throwError({ exitoso: false, mensaje: 'Credenciales inválidas' });
+      }
+      return throwError({ exitoso: false, mensaje: 'Error de conexión con el servidor' });
+    })
   );
-  }
-
-
-  registerUser(User: Array<string>){
-   return  this.http.post(this.baseServerUrl + "User/CreateUsers", {
-    FirstName: User[0],
-    LastName: User [1],
-    Email: User [2],
-    Mobile: User [3],
-    Gender:User [4],
-    Password: User[5]
-
-   }, 
-    {responseType:'text'
-
-   });
-
-   
-  }
 }
+
+
+
+  registerUser(Usuario: Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
+    return this.http.post<{ exitoso: boolean; mensaje: string }>(
+    this.baseServerUrl + 'User/CreateUsers',
+    {
+
+      Nombres: Usuario[0],
+      Apellidos: Usuario[1],
+      Correo: Usuario[2],
+      Telefono: Usuario[3],
+      Sexo: Usuario[4],
+      Contrasena: Usuario[5],
+    }
+  ).pipe(
+    catchError(error => {
+      // Manejo de errores
+      if (error.status === 409) {
+        return throwError({ exitoso: false, mensaje: 'El Usuario ya existe' });
+      }
+      return throwError({ exitoso: false, mensaje: 'Error de conexión con el servidor' });
+    })
+  );
+}
+}
+

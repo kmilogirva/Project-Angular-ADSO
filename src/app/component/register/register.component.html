@@ -15,15 +15,15 @@
             <div class="row">
                 <div class="col mb-3">
                     <label for="firstname" class="form-label">Nombres</label>
-                    <input type="text" class="form-control" id="firstname" placeholder="Ingresa Nombre" formControlName="firstname">
+                    <input type="text" class="form-control" id="nombres" placeholder="Ingresa Nombre" formControlName="nombres">
                     
-                    <div class="form-text text-danger" *ngIf="FirstName.errors?.['required'] && (FirstName.touched || FirstName.dirty)">
+                    <div class="form-text text-danger" *ngIf="Nombres.errors?.['required'] && (Nombres.touched || Nombres.dirty)">
                         Nombres requeridos
                     </div>
-                    <div class="form-text text-danger" *ngIf="FirstName.errors?.['minlength'] && (FirstName.touched || FirstName.dirty)">
+                    <div class="form-text text-danger" *ngIf="Nombres.errors?.['minlength'] && (Nombres.touched || Nombres.dirty)">
                         El nombre debe tener como minimos dos letras
                     </div>
-                    <div class="form-text text-danger" *ngIf="FirstName.errors?.['pattern'] && (FirstName.touched || FirstName.dirty)">
+                    <div class="form-text text-danger" *ngIf="Nombres.errors?.['pattern'] && (Nombres.touched || Nombres.dirty)">
                         El nombre sólo debe tener letras
                     </div>
                 </div>
@@ -31,15 +31,15 @@
                 <div class="col mb-3">
                     <label for="lastname" class="form-label">Apellidos</label>
 
-                    <input type="text" class="form-control" id="lastname" placeholder="Ingresa Apellido" formControlName="lastname">
+                    <input type="text" class="form-control" id="apellidos" placeholder="Ingresa Apellido" formControlName="apellidos">
 
-                    <div class="form-text text-danger" *ngIf="LastName.errors?.['required'] && (LastName.touched || LastName.dirty)">
+                    <div class="form-text text-danger" *ngIf="Apellidos.errors?.['required'] && (Apellidos.touched || Apellidos.dirty)">
                         Apellidos requeridos
                     </div>
-                    <div class="form-text text-danger" *ngIf="LastName.errors?.['minlength'] && (LastName.touched || LastName.dirty)">
+                    <div class="form-text text-danger" *ngIf="Apellidos.errors?.['minlength'] && (Apellidos.touched || Apellidos.dirty)">
                         Los Apellidos deben tener como minimos dos letras
                     </div>
-                    <div class="form-text text-danger" *ngIf="LastName.errors?.['pattern'] && (LastName.touched || LastName.dirty)">
+                    <div class="form-text text-danger" *ngIf="Apellidos.errors?.['pattern'] && (Apellidos.touched || Apellidos.dirty)">
                         Los Apellidos sólo debe tener letras
                     </div>
 
@@ -48,14 +48,14 @@
 
             <div class="row">
                 <div class="col mb-3">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="text" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" formControlName="email">
+                    <label for="correo">Correo Electrónico</label>
+                    <input type="text" class="form-control" id="correo" placeholder="Ingresa tu correo electrónico" formControlName="correo">
 
-                    <div class="form-text text-danger" *ngIf="Email.errors?.['required'] && (Email.touched || Email.dirty)">
+                    <div class="form-text text-danger" *ngIf="Correo.errors?.['required'] && (Correo.touched || Correo.dirty)">
                         Correo Requerido
                     </div>
 
-                    <div class="form-text text-danger" *ngIf="Email.errors?.['email'] && (Email.touched || Email.dirty)">
+                    <div class="form-text text-danger" *ngIf="Correo.errors?.['email'] && (Correo.touched || Correo.dirty)">
                         El correo no es valido
                     </div>
 
@@ -64,33 +64,33 @@
 
             <div class="row">
                 <div class="col mb-3">
-                    <label for="mobile" class="form-label">Número Celular</label>
-                    <input type="text" class="form-control" id="mobile" placeholder="Ingresa Celular" formControlName="mobile">
-                    <div class="form-text text-danger" *ngIf="Mobile.errors?.['required'] && (Mobile.touched || Mobile.dirty)">
+                    <label for="telefono" class="form-label">Número Celular</label>
+                    <input type="text" class="form-control" id="telefono" placeholder="Ingresa Celular" formControlName="telefono">
+                    <div class="form-text text-danger" *ngIf="Telefono.errors?.['required'] && (Telefono.touched || Telefono.dirty)">
                        Número Requerido
                     </div>
-                    <div class="form-text text-danger" *ngIf="Mobile.errors?.['minlength'] && (Mobile.touched || Mobile.dirty)">
+                    <div class="form-text text-danger" *ngIf="Telefono.errors?.['minlength'] && (Telefono.touched || Telefono.dirty)">
                        No puedes tener menos de 10 números
                     </div>
 
-                    <div class="form-text text-danger" *ngIf="Mobile.errors?.['maxlength'] && (Mobile.touched || Mobile.dirty)">
+                    <div class="form-text text-danger" *ngIf="Telefono.errors?.['maxlength'] && (Telefono.touched || Telefono.dirty)">
                         No puedes tener más de 10 números
                     </div>
-                    <div class="form-text text-danger" *ngIf="Mobile.errors?.['pattern'] && (Mobile.touched || Mobile.dirty)">
+                    <div class="form-text text-danger" *ngIf="Telefono.errors?.['pattern'] && (Telefono.touched || Telefono.dirty)">
                        Sólo puedes incluir números
                     </div>
                 </div>
                 <div class="col ps-3 mb-3">
                     <div class="m-1">Sexo</div>
                     <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" value="m" id="gender-m" formControlName="gender">
+                        <input type="radio" class="form-check-input" value="m" id="sexo-m" formControlName="sexo">
                         <label class="form-check-label" for="gender-m">Hombre</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="radio" class="form-check-input" value="f" id="gender-f" formControlName="gender">
+                        <input type="radio" class="form-check-input" value="f" id="sexo-f" formControlName="sexo">
                         <label class="form-check-label" for="gender-f">Mujer</label>
                     </div>
-                    <div class="form-text text-danger" *ngIf="Gender.errors?.['required']">
+                    <div class="form-text text-danger" *ngIf="Sexo.errors?.['required']">
                        Selecciona Sexo
                     </div>
                 </div>
@@ -99,18 +99,18 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" formControlName="password">
-                    <div class="form-text text-danger" *ngIf="Password.errors?.['required'] && (Password.dirty || Password.touched)">
+                    <input type="password" class="form-control" id="contraseña" placeholder="Ingresa tu contraseña" formControlName="contraseña">
+                    <div class="form-text text-danger" *ngIf="Contrasena.errors?.['required'] && (Contrasena.dirty || Contrasena.touched)">
                         Contraseña Requerida
                      </div>
-                     <div class="form-text text-danger" *ngIf="Password.errors?.['minlength'] || Password.errors?.['maxlength'] && (Password.dirty || Password.touched)">
+                     <div class="form-text text-danger" *ngIf="Contrasena.errors?.['minlength'] || Contrasena.errors?.['maxlength'] && (Contrasena.dirty || Contrasena.touched)">
                         La contraseña debe tener minimo 6 caracteres y maximo 15
                      </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="confirmpassword">Confirmar Contraseña</label>
-                    <input type="password" class="form-control" id="confirmpassword" placeholder="Confirma tu contraseña" formControlName="confirmpassword">
-                    <div class="form-text text-danger" [ngStyle]="{'display' : repeatPass} ">
+                    <label for="confirmarcontrasena">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" id="confirmarcontrasena" placeholder="Confirma tu contraseña" formControlName="confirmarcontrasena">
+                    <div class="form-text text-danger" [ngStyle]="{'display' : repetircontrasena} ">
                         Contraseñas no coinciden
                      </div>
                 </div>
