@@ -1,0 +1,34 @@
+<!-- <app-sidebar> </app-sidebar> -->
+<mat-toolbar color="primary" class="full-width-toolbar">
+  <!-- <button mat-icon-button aria-label="Menú" class="menu-button">
+    <mat-icon>menu</mat-icon>
+  </button> -->
+  <span class="app-title">JKC_Inventory</span>
+  <span class="spacer"></span>
+
+  <mat-form-field class="search-field" appearance="outline">
+    <mat-label>Buscar</mat-label>
+    <input matInput type="text" placeholder="Escribe para buscar..." class="form-control">
+    <button mat-icon-button matSuffix aria-label="Buscar" class="btn btn-outline-primary">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="nav-buttons">
+    <button mat-button routerLink="/home" class="btn btn-outline-secondary">
+      <mat-icon>home_filled</mat-icon> Inicio
+    </button>
+    <button mat-button routerLink="/about" class="btn btn-outline-secondary">
+      <mat-icon>info_outline</mat-icon> Acerca de
+    </button>
+    <button mat-button routerLink="/contact" class="btn btn-outline-secondary">
+      <mat-icon>mail_outline</mat-icon> Contacto
+    </button>
+  </div>
+
+  <button mat-icon-button aria-label="Cuenta" class="btn btn-outline-light" routerLink="/login" aria-placeholder="Inicio">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+

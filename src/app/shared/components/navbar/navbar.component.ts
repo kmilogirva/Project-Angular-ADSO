@@ -1,42 +1,46 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component,ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component,ViewChild, AfterViewInit } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
-import { MatInputModule } from '@angular/material/input';
 import { MatSidenav } from '@angular/material/sidenav';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { RouterModule } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+// import { SidebarComponent } from "../sidebar/sidebar.component";
+
 
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatToolbarModule,
+  imports: [
+    MatToolbarModule,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSidenavModule,
-    MatListModule,
-    RouterModule,
-    CommonModule
-    
-  ],
+    // SidebarComponent
+],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
+export class NavbarComponent implements AfterViewInit {
   title = 'material-responsive-sidenav';
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
-  isSearchVisible = false;
-  isNavVisible = true;
 
   constructor(private observer: BreakpointObserver) {}
 
-  toggleSidenav() {
-    this.sidenav.toggle();
+  ngAfterViewInit() {
+    // if (this.sidenav) {
+    //   console.log('Sidenav está disponible');
+    // }
   }
 
+  // toggleSidenav() {
+  //   if (this.sidenav) {
+  //     this.sidenav.toggle();
+  //   } else {
+  //     console.error('No se puede acceder al sidenav');
+  //   }
+  // }
 }
+
+

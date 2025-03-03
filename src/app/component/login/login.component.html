@@ -7,10 +7,10 @@
                 <input type="email" class="form-control" id="correo" placeholder="Ingresa tu correo" formControlName="correo">
             </div>
             <!-- Mensajes de error para el correo -->
-            <div class="form-text text-danger" *ngIf="Correo?.errors?.['required'] && (Correo?.touched || Correo?.dirty)">
+            <div class="form-text text-danger" *ngIf="f['correo']?.errors?.['required'] && (f['correo']?.touched || f['correo']?.dirty)">
                 Correo Electrónico es requerido
             </div>
-            <div class="form-text text-danger" *ngIf="Correo?.errors?.['email'] && (Correo?.touched || Correo?.dirty)">
+            <div class="form-text text-danger" *ngIf="f['correo']?.errors?.['email'] && (f['correo']?.touched || f['correo']?.dirty)">
                 El formato del correo no es válido
             </div>
 
@@ -19,7 +19,7 @@
                 <input type="password" class="form-control" id="contrasena" placeholder="Ingresa tu contraseña" formControlName="contrasena">
             </div>
             <!-- Mensajes de error para la contraseña -->
-            <div class="form-text text-danger" *ngIf="Contrasena?.errors?.['required'] && (Contrasena?.touched || Contrasena?.dirty)">
+            <div class="form-text text-danger" *ngIf="f['contrasena']?.errors?.['required'] && (f['contrasena']?.touched || f['contrasena']?.dirty)">
                 La contraseña es requerida
             </div>
 

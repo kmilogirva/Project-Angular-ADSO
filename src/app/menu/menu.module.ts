@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { NavbarComponent } from '../menu/navbar/navbar.component';  // Ajusta la ruta según corresponda
+ import { NavbarComponent } from '../shared/components/navbar/navbar.component';  // Ajusta la ruta según corresponda
 // import { SidebarComponent } from '../menu/sidebar/sidebar.component';
 // import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 // import {MatToolbarModule} from '@angular/material/toolbar';
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   imports: [
     CommonModule,
-    // NavbarComponent,
+     NavbarComponent
     // SidebarComponent,
     // MatToolbarModule,
     // MatSidenavModule,

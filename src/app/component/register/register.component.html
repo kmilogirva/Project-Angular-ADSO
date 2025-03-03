@@ -1,5 +1,4 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
-        
         <form [formGroup]="registerForm" (ngSubmit)="registerSubmited()">
             <div class="row">
                 <h3 class="col-11 text-center p-2 mb-3 bg-light mx-auto">Regístrate</h3>
@@ -119,7 +118,7 @@
             <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary w-100 mt-3">Registrarse</button>
 
             <div class="text-center mt-2">
-                <a [routerLink]="['/login']">¿Ya tienes una cuenta? Inicia sesión</a>
+                 <a [routerLink]="['/login']">¿Ya tienes una cuenta? Inicia sesión</a>
             </div>
         </form>
     </div> 

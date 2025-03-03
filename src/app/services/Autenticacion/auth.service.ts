@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { environment } from 'src/environments/environment';
+// import { CommonModule } from '@angular/common';
+// import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 
@@ -14,18 +15,19 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 export class AuthService {
 
   private http: HttpClient;
-  baseServerUrl = "https://localhost:44374/api/";
+  baseServerUrl = environment.apiUrl;
 
   constructor(http : HttpClient) { 
     this.http = http;
   }
 
-  login(LoginData:Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
+  
+  login(datosLogin:Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
     return this.http.post<{ exitoso: boolean; mensaje: string }>(
-    this.baseServerUrl + "User/Login",
+    this.baseServerUrl + environment.loginUsuario,
     {
-      Correo: LoginData[0],
-      Contrasena: LoginData[1]
+      Correo: datosLogin[0],
+      Contrasena: datosLogin[1]
     },
   ).pipe(
     catchError(error => {
@@ -42,7 +44,7 @@ export class AuthService {
 
   registerUser(Usuario: Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
     return this.http.post<{ exitoso: boolean; mensaje: string }>(
-    this.baseServerUrl + 'User/CreateUsers',
+    this.baseServerUrl + environment.crearUsuario,
     {
 
       Nombres: Usuario[0],
