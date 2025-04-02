@@ -1,44 +1,53 @@
+<!-- Navbar superior Fijo -->
+<mat-toolbar color="primary" class="full-width-toolbar">
+  <button mat-icon-button (click)="toggleSidebar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="app-title">JKC_Inventory</span>
+  <span class="spacer"></span>
 
+  <mat-form-field appearance="outline">
+    <mat-label>Buscar</mat-label>
+    <input matInput type="text" placeholder="Escribe para buscar...">
+    <button mat-icon-button matSuffix aria-label="Buscar">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="nav-buttons">
+    <button mat-button routerLink="/home">
+      <mat-icon>home</mat-icon> Inicio
+    </button>
+    <button mat-button routerLink="/about">
+      <mat-icon>info</mat-icon> Acerca de
+    </button>
+    <button mat-button routerLink="/contact">
+      <mat-icon>mail</mat-icon> Contacto
+    </button>
+  </div>
+
+  <button mat-icon-button aria-label="Cuenta" routerLink="/login">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+<!-- Contenedor principal con menú lateral -->
+ <br>
+ <br>
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav 
-    #sidenav 
-    [mode]="sidenavMode" 
-    [opened]="sidenavOpened"
-    class="sidenav"
-    [attr.role]="'navigation'"
-    aria-label="Menú de navegación">
-    
-    <div class="logo">
-      <img src=".assets/images/logo.png" alt="Logo">
-    </div>
-    
+  <mat-sidenav #sidenav [mode]="isExpanded ? 'side' : 'over'" [(opened)]="isExpanded">
     <mat-nav-list>
-      <a mat-list-item routerLink="/home" aria-label="Ir a Inicio">
-        <mat-icon>home</mat-icon>
-        Inicio
-      </a>
-      <a mat-list-item routerLink="/about" aria-label="Ir a Acerca de">
-        <mat-icon>info</mat-icon>
-        Acerca de
-      </a>
-      <a mat-list-item routerLink="/contact" aria-label="Ir a Contacto">
-        <mat-icon>contact_mail</mat-icon>
-        Contacto
+      <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.route">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span *ngIf="isExpanded">{{ item.label }}</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <!-- Navbar fijo arriba -->
-    <!-- <app-navbar></app-navbar> -->
-
-    <div class="content-container">
-      <button mat-icon-button (click)="sidenav.toggle()" aria-label="Abrir menú lateral">
-        <mat-icon>menu</mat-icon>
-      </button>
-
-       <router-outlet></router-outlet>
+    <!-- Contenido dinámico -->
+    <div class="content">
+      <ng-content></ng-content>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-

@@ -11,7 +11,7 @@ import {Producto} from 'src/app/models/productos/Producto'
 
 
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
-import { NavbarComponent } from 'src/app/shared/components/navbar/navbar.component';
+// import { NavbarComponent } from 'src/app/shared/components/navbar/navbar.component';
 // import { NavbarComponent } from 'src/app/shared/components/navbar/navbar.component';
 
 
@@ -20,7 +20,7 @@ import { NavbarComponent } from 'src/app/shared/components/navbar/navbar.compone
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.scss'],
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,RouterModule, SidebarComponent ,NavbarComponent,DataTablesModule]
+  imports: [CommonModule,ReactiveFormsModule,RouterModule, SidebarComponent ,DataTablesModule]
 })
 export class ProductosComponent implements OnInit {
 productoForm!: FormGroup; 
