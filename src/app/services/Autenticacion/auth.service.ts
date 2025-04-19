@@ -22,24 +22,28 @@ export class AuthService {
   }
 
   
-  login(datosLogin:Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
-    return this.http.post<{ exitoso: boolean; mensaje: string }>(
-    this.baseServerUrl + environment.loginUsuario,
-    {
-      Correo: datosLogin[0],
-      Contrasena: datosLogin[1]
-    },
-  ).pipe(
-    catchError(error => {
-      // Manejo de errores
-      if (error.status === 409) {
-        return throwError({ exitoso: false, mensaje: 'Credenciales inválidas' });
-      }
-      return throwError({ exitoso: false, mensaje: 'Error de conexión con el servidor' });
-    })
-  );
-}
+//   login(datosLogin:Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
+//     return this.http.post<{ exitoso: boolean; mensaje: string }>(
+//     this.baseServerUrl + environment.loginUsuario,
+//     {
+//       Correo: datosLogin[0],
+//       Contrasena: datosLogin[1]
+//     },
+//   ).pipe(
+//     catchError(error => {
+//       // Manejo de errores
+//       if (error.status === 409) {
+//         return throwError({ exitoso: false, mensaje: 'Credenciales inválidas' });
+//       }
+//       return throwError({ exitoso: false, mensaje: 'Error de conexión con el servidor' });
+//     })
+//   );
+// }
 
+login(datosLogin: any): Observable<any> {
+  console.log("Entre por el Servicio", datosLogin);
+  return this.http.post(`${this.baseServerUrl + environment.loginUsuario}`, datosLogin);
+}
 
 
   registerUser(Usuario: Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
