@@ -46,22 +46,28 @@ export class LoginComponent implements OnInit {
   loginSubmited() {
     if (this.loginForm.valid) {
 
-      const datosLogin =[
-
-        this.f['correo']?.value,
-        this.f['contrasena']?.value,
-      ]
-
+      const datosLogin ={
+        correo: this.f['correo']?.value,
+        contrasena: this.f['contrasena']?.value
+      }
+        
+      
+      console.log("Esta es la respuestad del login",datosLogin)
 
       this.authService.login(datosLogin).subscribe(
-        (respuesta) =>{
+        (respuesta) => {
+            console.log(respuesta)
+          if (respuesta.token) {
+            this.toastr.success('Inicio de sesión exitoso');
+            // Guardar el token y la información del usuario
+            localStorage.setItem('token', respuesta.token);
+            localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
+            // this.usuario = respuesta.usuario;  // Puedes asignarlo a una variable para uso posterior
 
-          if (respuesta.exitoso){
-            this.toastr.success(respuesta.mensaje);
             this.userAutentication = true;
             this.loginForm.reset();
-          }
-          else{
+
+          } else {
             this.toastr.error(respuesta.mensaje);
             this.userAutentication = false;
           }
