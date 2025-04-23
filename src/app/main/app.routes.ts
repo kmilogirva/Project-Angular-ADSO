@@ -21,5 +21,15 @@ export const routes: Routes = [
   path: 'productos',
     loadComponent: () =>
       import('../component/productos/productos.component').then((m) => m.ProductosComponent)
+},
+{
+  path: 'bodegas',
+    loadComponent: () =>
+      import('../component/bodegas/bodegas.component').then((m) => m.BodegasComponent)
+},
+{
+  path: 'categorias',
+    loadComponent: () =>
+      import('../component/categorias/categorias.component').then((m) => m.CategoriasComponent)
 }
 ] as Routes;

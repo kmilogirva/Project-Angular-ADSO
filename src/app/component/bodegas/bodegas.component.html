@@ -1,0 +1,67 @@
+<div class="container py-4">
+  <h2 class="mb-4">Crear/Editar Bodega</h2>
+
+  <form [formGroup]="BodegasForm" (ngSubmit)="guardarBodega()" novalidate>
+    <div class="mb-3">
+      <label for="nombreBodega" class="form-label">Nombre de la Bodega</label>
+      <input
+        type="text"
+        id="nombreBodega"
+        formControlName="nombreBodega"
+        class="form-control"
+        [class.is-invalid]="f['nombreBodega'].invalid && (f['nombreBodega'].dirty || f['nombreBodega'].touched)"
+      >
+      <div class="invalid-feedback">
+        El nombre de la bodega es requerido.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="idBodega" class="form-label">ID de la Bodega</label>
+      <input
+        type="number"
+        id="idBodega"
+        formControlName="idBodega"
+        class="form-control"
+        [class.is-invalid]="f['idBodega'].invalid && (f['idBodega'].dirty || f['idBodega'].touched)"
+      >
+      <div class="invalid-feedback">
+        El ID de la bodega es requerido.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="ubicacion" class="form-label">Ubicación</label>
+      <input
+        type="text"
+        id="ubicacion"
+        formControlName="ubicacion"
+        class="form-control"
+        [class.is-invalid]="f['ubicacion'].invalid && (f['ubicacion'].dirty || f['ubicacion'].touched)"
+      >
+      <div class="invalid-feedback">
+        La ubicación es requerida.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cantidadMaxima" class="form-label">Cantidad Máxima</label>
+      <input
+        type="number"
+        id="cantidadMaxima"
+        formControlName="cantidadMaxima"
+        class="form-control"
+        [class.is-invalid]="f['cantidadMaxima'].invalid && (f['cantidadMaxima'].dirty || f['cantidadMaxima'].touched)"
+      >
+      <div class="invalid-feedback">
+        La cantidad máxima es requerida y debe ser al menos 1.
+      </div>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary" [disabled]="BodegasForm.invalid">
+        Guardar Bodega
+      </button>
+    </div>
+  </form>
+</div>
