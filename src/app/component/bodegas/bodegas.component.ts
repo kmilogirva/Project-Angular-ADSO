@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './bodegas.component.html',
   styleUrl: './bodegas.component.scss'
 
+  
 })
 export class BodegasComponent implements OnInit {
   BodegasForm!: FormGroup;
