@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Usuario } from 'src/app/shared/models/Usuario';
 // import { CommonModule } from '@angular/common';
 // import {MatSidenavModule} from '@angular/material/sidenav';
 
@@ -17,11 +18,11 @@ export class AuthService {
   private http: HttpClient;
   baseServerUrl = environment.apiUrl;
 
-  constructor(http : HttpClient) { 
+  constructor(http : HttpClient) {
     this.http = http;
   }
 
-  
+
 //   login(datosLogin:Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
 //     return this.http.post<{ exitoso: boolean; mensaje: string }>(
 //     this.baseServerUrl + environment.loginUsuario,
@@ -46,18 +47,9 @@ login(datosLogin: any): Observable<any> {
 }
 
 
-  registerUser(Usuario: Array<string>): Observable<{exitoso: boolean; mensaje: string}> {
+  registerUser(Usuario: Usuario): Observable<{exitoso: boolean; mensaje: string}> {
     return this.http.post<{ exitoso: boolean; mensaje: string }>(
-    this.baseServerUrl + environment.crearUsuario,
-    {
-
-      Nombres: Usuario[0],
-      Apellidos: Usuario[1],
-      Correo: Usuario[2],
-      Telefono: Usuario[3],
-      Sexo: Usuario[4],
-      Contrasena: Usuario[5],
-    }
+    this.baseServerUrl + environment.crearUsuario,Usuario
   ).pipe(
     catchError(error => {
       // Manejo de errores

@@ -13,9 +13,9 @@ export const routes: Routes = [
   pathMatch: 'full'
 },
 {
-  path: 'registro',
+  path: 'usuario',
     loadComponent: () =>
-      import('../component/register/register.component').then((m) => m.RegisterComponent)
+      import('../component/usuarios/usuarios/usuarios.component').then((m) => m.UsuariosComponent)
 },
 {
   path: 'productos',
