@@ -1,0 +1,109 @@
+<div class="d-flex">
+    <!-- Sidebar -->
+     <app-sidebar></app-sidebar> 
+  
+    <!-- Contenido principal -->
+    <div class="container mt-5">
+      <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+          <h2>Configuración</h2>
+        </div>
+  
+        <div class="card-body">
+          <form [formGroup]="configuracionForm" (ngSubmit)="onSubmit()">
+            <div class="row"></div>
+              <!-- Código Referencia -->
+              <div class="col-md-3 mb-3" hidden = "true"> 
+               
+                <div *ngIf="f['idConfiguracion'].touched && f['idConfiguracion'].invalid" class="text-danger small">
+                  Campo obligatorio.
+                </div>
+              </div>
+  
+              <!-- Idioma -->
+              <div class="col-md-4 mb-3">
+                <label for="nombreConfiguracion" class="form-label fw-bold">Idioma</label>
+                <select 
+                  id="nombreConfiguracion" 
+                  class="form-select" 
+                  formControlName="nombreConfiguracion"
+                  required>
+                  <option value="" disabled selected>Seleccione un idioma</option>
+                  <option value="es">Español</option>
+                  <option value="en">Inglés</option>
+                  <option value="fr">Francés</option>
+                  <option value="de">Alemán</option>
+                  <option value="it">Italiano</option>
+                  <option value="pt">Portugués</option>
+                  <option value="zh">Chino</option>
+                  <option value="ja">Japonés</option>
+                  <option value="ko">Coreano</option>
+                </select>
+                <div *ngIf="f['nombreConfiguracion'].touched && f['nombreConfiguracion'].invalid" class="text-danger small">
+                  El idioma es obligatorio.
+                </div>
+              </div>
+               
+              <!-- Fecha -->
+              <div class="col-md-6 mb-3">
+                <label for="fecha" class="form-label fw-bold">Fecha</label>
+                <input 
+                  type="text" 
+                  id="fecha" 
+                  class="form-control" 
+                  formControlName="fecha"
+                  placeholder="" 
+                  required 
+                />
+                <div *ngIf="f['fecha'].touched && f['fecha'].invalid" class="text-danger small">
+                  Campo obligatorio.
+                </div>
+              </div>
+            
+  
+            <div class="row">
+              <!-- zonaHoraria -->
+              <div class="col-md-6 mb-3">
+                <label for="zonaHoraria" class="form-label fw-bold">Zona Horaria</label>
+                <input 
+                  type="number" 
+                  id="zonaHoraria" 
+                  class="form-control" 
+                  formControlName="zonaHoraria"
+                  placeholder="Ingrese la zonaHoraria" 
+                  required 
+                />
+                <div *ngIf="f['zonaHoraria'].touched && f['zonaHoraria'].invalid" class="text-danger small">
+                  La zonaHoraria debe ser al menos 1.
+                </div>
+              </div>
+  
+              <!-- cambioDeEstilo -->
+              <div class="col-md-6 mb-3">
+                <label for="cambioDeEstilo" class="form-label fw-bold">Cambio de estilo</label>
+                <div class="mb-3">
+                
+                    <select 
+                      id="cambioDeEstilo" 
+                      class="form-select" 
+                      formControlName="cambioDeEstilo"
+                      required>
+                      <option value="" disabled selected>Seleccione un estilo</option>
+                      <option value="claro">Claro</option>
+                      <option value="oscuro">Oscuro</option>
+                     
+                    </select>
+                  </div>
+                  
+            
+                <div *ngIf="f['cambioDeEstilo'].touched && f['cambioDeEstilo'].invalid" class="text-danger small">
+                  El cambioDeEstilo debe ser mayor a 0.
+                </div>
+              </div>
+            </div>
+          
+      
+      
+    
+  
+  
