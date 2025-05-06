@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component'; 
 @Component({
   selector: 'app-bodegas',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule,CommonModule,SidebarComponent],
   templateUrl: './bodegas.component.html',
   styleUrl: './bodegas.component.scss'
 
+  
 })
 export class BodegasComponent implements OnInit {
   BodegasForm!: FormGroup;

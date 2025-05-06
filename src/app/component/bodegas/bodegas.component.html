@@ -1,4 +1,12 @@
-<div class="container py-4">
+
+<div class="d-flex">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenido principal -->
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      
   <h2 class="mb-4">Crear/Editar Bodega</h2>
 
   <form [formGroup]="BodegasForm" (ngSubmit)="guardarBodega()" novalidate>

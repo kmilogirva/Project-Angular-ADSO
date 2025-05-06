@@ -31,5 +31,10 @@ export const routes: Routes = [
   path: 'categorias',
     loadComponent: () =>
       import('../component/categorias/categorias.component').then((m) => m.CategoriasComponent)
+},
+{
+  path: 'configuracion',
+  loadComponent: () =>
+      import('../component/configuracion/configuracion.component').then((m) => m.ConfiguracionComponent)
 }
 ] as Routes;
