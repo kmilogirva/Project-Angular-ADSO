@@ -1,3 +1,12 @@
+ .container {
+   
+    display: flex;
+      flex-direction: column;
+      padding: 25px;
+    }
+
+
+
 app-sidebar {
   width: 250px;
   min-height: 100vh;
