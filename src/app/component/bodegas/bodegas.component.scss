@@ -1,4 +1,11 @@
- .container {
+  .container {
+   
+    display: flex;
+      flex-direction: column;
+      padding: 14px;
+    }
+
+.container {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
