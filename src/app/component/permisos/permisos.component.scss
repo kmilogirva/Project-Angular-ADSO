@@ -1,0 +1,76 @@
+/* Contenedor principal con sidebar */
+.d-flex {
+  display: flex;
+}
+
+/* Asegura que el contenido principal crezca */
+.container {
+  flex-grow: 1;
+  padding: 16px;
+}
+
+/* Encabezado */
+h2 {
+  margin-bottom: 16px;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Tarjetas */
+.card {
+  margin-bottom: 24px;
+}
+
+/* Etiquetas */
+.form-label {
+  font-weight: bold;
+}
+
+select.form-select {
+  cursor: pointer;
+}
+
+/* Tabla */
+.table {
+  margin-top: 16px;
+
+  th, td {
+    vertical-align: middle;
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+    text-align: left;
+  }
+}
+
+/* Botón de asignar */
+.boton-asignar {
+  margin-top: 16px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 40%;
+  font-size: 16px;
+}
+
+/* Botones de acción */
+.btn {
+  font-size: 14px;
+  padding: 6px 12px;
+  border: none;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}

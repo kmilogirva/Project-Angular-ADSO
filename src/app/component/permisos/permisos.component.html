@@ -1,0 +1,97 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenido principal -->
+  <div class="container mt-5">
+    <!-- Formulario -->
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Asignación de Permisos</h2>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="permisoForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="rol" class="form-label fw-bold">Rol</label>
+              <select
+                id="rol"
+                class="form-select"
+                formControlName="rol"
+                (change)="onRolChange()"
+              >
+                <option value="" disabled selected>Seleccione un rol</option>
+                <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+              </select>
+              <div *ngIf="f['rol'].touched && f['rol'].invalid" class="text-danger small">
+                Campo obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="mostrarPermisos" class="mt-3">
+            <label class="form-label fw-bold">Permisos para {{ permisoSeleccionado }}</label>
+            <div *ngFor="let perm of permisosDisponibles" class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="perm"
+                (change)="onPermisoChange($event)"
+                [checked]="permisosSeleccionados.includes(perm)"
+              >
+              <label class="form-check-label">{{ perm }}</label>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button
+              type="submit"
+              class="btn btn-success btn-lg"
+              style="width: 40%;"
+              [disabled]="permisoForm.invalid"
+            >
+              {{ editIndex !== null ? 'Actualizar Permisos' : 'Asignar Permisos' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tabla de permisos asignados -->
+    <div class="card shadow-lg mt-4">
+      <div class="card-body">
+        <h5 class="text-center fw-bold">Permisos Asignados</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>Rol</th>
+                <th>Permisos Asignados</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of permisosAsignados; let i = index">
+                <td>{{ p.rol }}</td>
+                <td>
+                  <ul class="list-unstyled mb-0">
+                    <li *ngFor="let permiso of p.permisos">• {{ permiso }}</li>
+                  </ul>
+                </td>
+                <td>
+                  <button class="btn btn-warning btn-sm me-2" (click)="editarPermiso(i)">
+                    <i class="fas fa-edit"></i> Editar
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="eliminarPermiso(i)">
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
