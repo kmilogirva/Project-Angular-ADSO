@@ -1,22 +1,24 @@
 
 <div class="d-flex">
   <app-sidebar></app-sidebar>
-<div class="container d-flex justify-content-center align-items-center vh-100">
-
+<div class="container mt-5">
+<div class="card shadow-lg">
+<div class="card-header bg-dark text-white text-center">
+        <h2>Regístrate</h2>
+</div>
+<div class="card-body">
     <form [formGroup]="usuarioForm" (ngSubmit)="registerSubmited()">
-      <div class="row">
-          <h3 class="col-11 text-center p-2 mb-3 bg-light mx-auto">Regístrate</h3>
-      </div>
+      
 
-      <p class="text-center fs-4" [ngClass]="{
+      <!-- <p class="text-center fs-4" [ngClass]="{
           'text-success': cuentaCreada,
           'text-danger': !cuentaCreada
       }">
           {{displayMsg}}
-      </p>
+      </p> -->
 
       <div class="row">
-          <div class="col mb-3">
+          <div class="col-md-3 mb-3">
               <label for="firstname" class="form-label">Nombres</label>
               <input type="text" class="form-control" id="nombres" placeholder="Ingresa Nombres" formControlName="nombres">
 
@@ -31,7 +33,7 @@
               </div>
           </div>
 
-          <div class="col mb-3">
+          <div class="col-md-3 mb-3">
               <label for="lastname" class="form-label">Apellidos</label>
 
               <input type="text" class="form-control" id="apellidos" placeholder="Ingresa Apellido" formControlName="apellidos">
@@ -51,7 +53,7 @@
       </div>
 
       <div class="row">
-          <div class="col mb-3">
+          <div class="col-md-3 mb-3">
               <label for="correo">Correo Electrónico</label>
               <input type="text" class="form-control" id="correo" placeholder="Ingresa tu correo electrónico" formControlName="correo">
 
@@ -66,7 +68,7 @@
       </div>
 
       <div class="row">
-          <div class="col mb-3">
+          <div class="col-md-3 mb-3">
               <label for="telefono" class="form-label">Número Celular</label>
               <input type="text" class="form-control" id="telefono" placeholder="Ingresa Celular" formControlName="telefono">
               <div class="form-text text-danger" *ngIf="f['telefono']?.errors?.['required'] && (f['telefono']?.touched || f['telefono']?.dirty)">
@@ -82,7 +84,7 @@
            </div>
 
           </div>
-          <div class="col ps-3 mb-3">
+          <div class="col-md-3 mb-3">
               <div class="m-1">Sexo</div>
               <div class="form-check form-check-inline">
                   <input type="radio" class="form-check-input" value="m" id="sexo-m" formControlName="sexo">
@@ -99,7 +101,7 @@
       </div>
 
       <div class="row">
-          <div class="form-group col-md-6">
+          <div class="col-md-4 mb-4">
               <label for="password">Contraseña</label>
               <input type="password" class="form-control" id="contraseña" placeholder="Ingresa tu contraseña" formControlName="contraseña">
 
@@ -111,7 +113,7 @@
               La contraseña debe tener minimo 6 caracteres y maximo 15
            </div>
 
-          <div class="form-group col-md-6">
+          <div class="col-md-4 mb-4">
               <label for="confirmarcontrasena">Confirmar Contraseña</label>
               <input type="password" class="form-control" id="confirmarcontrasena" placeholder="Confirma tu contraseña" formControlName="confirmarcontrasena">
               <div class="form-text text-danger" [ngStyle]="{'display' : repetircontrasena} ">
@@ -119,13 +121,16 @@
                </div>
           </div>
       </div>
+       </div>
 
       <button type="submit" [disabled]="!usuarioForm.valid" class="btn btn-primary w-100 mt-3">Registrarse</button>
 
       <!-- <div class="text-center mt-2">
            <a [routerLink]="['/login']">¿Ya tienes una cuenta? Inicia sesión</a>
       </div> -->
-      </div>
+      
   </form>
+  </div>
+  </div>
 </div>
 </div>

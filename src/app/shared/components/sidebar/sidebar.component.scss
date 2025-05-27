@@ -3,6 +3,12 @@
 .sidenav-container {
   margin-top: 20px; /* Ajusta esto si el navbar es más alto */
   height: calc(100vh - 64px); /* Para que ocupe toda la altura restante */
+  // width: 200px;
+}
+
+.sidenav {
+  transition: width 0.3s ease;
+  overflow-x: hidden;
 }
 
 /* 🔹 Fija el toolbar en la parte superior */

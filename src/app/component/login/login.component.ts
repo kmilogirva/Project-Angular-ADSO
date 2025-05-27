@@ -45,42 +45,35 @@ export class LoginComponent implements OnInit {
 
   loginSubmited() {
     if (this.loginForm.valid) {
+      const datosLogin = {
+        correo: this.f['correo'].value,
+        contrasena: this.f['contrasena'].value
+      };
 
-      const datosLogin ={
-        correo: this.f['correo']?.value,
-        contrasena: this.f['contrasena']?.value
-      }
-        
-      
-      console.log("Esta es la respuestad del login",datosLogin)
-
-      this.authService.login(datosLogin).subscribe(
-        (respuesta) => {
-            console.log(respuesta)
+      this.authService.login(datosLogin).subscribe({
+        next: (respuesta) => {
           if (respuesta.token) {
             this.toastr.success('Inicio de sesión exitoso');
-            // Guardar el token y la información del usuario
             localStorage.setItem('token', respuesta.token);
+            console.log("Esta es mi token" + respuesta.token)
             localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
-            // this.usuario = respuesta.usuario;  // Puedes asignarlo a una variable para uso posterior
-
+            console.log("Este es mi json de usaurio" + respuesta.usuario)
             this.userAutentication = true;
             this.loginForm.reset();
-
+            // Redirige a otra ruta si es necesario
           } else {
-            this.toastr.error(respuesta.mensaje);
+            this.toastr.error(respuesta.mensaje ?? 'Credenciales inválidas');
             this.userAutentication = false;
           }
         },
-        (error) => {
-          console.error("Error en la llamada al backend:", error);
-          this.toastr.error(error.mensaje);
+        error: (error) => {
+          const msg = error?.error?.mensaje ?? 'Error al iniciar sesión';
+          this.toastr.error(msg);
           this.userAutentication = false;
         }
-      );
-    
+      });
     } else {
-      alert('Formulario inválido');
+      this.toastr.warning('Por favor completa todos los campos obligatorios');
     }
   }
 }
