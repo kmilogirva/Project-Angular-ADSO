@@ -46,7 +46,6 @@ login(datosLogin: any): Observable<any> {
   return this.http.post(`${this.baseServerUrl + environment.loginUsuario}`, datosLogin);
 }
 
-
   registerUser(Usuario: Usuario): Observable<{exitoso: boolean; mensaje: string}> {
     return this.http.post<{ exitoso: boolean; mensaje: string }>(
     this.baseServerUrl + environment.crearUsuario,Usuario
