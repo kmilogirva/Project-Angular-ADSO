@@ -1,75 +1,85 @@
-
-<div class="d-flex">
+<div class="d-flex"> 
   <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
   <!-- Contenido principal -->
   <div class="container mt-5">
     <div class="card shadow-lg">
-      
-  <h2 class="mb-4">Crear/Editar Bodega</h2>
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Crear / Editar Bodega</h2>
+      </div>
 
-  <form [formGroup]="BodegasForm" (ngSubmit)="guardarBodega()" novalidate>
-    <div class="mb-3">
-      <label for="nombreBodega" class="form-label">Nombre de la Bodega</label>
-      <input
-        type="text"
-        id="nombreBodega"
-        formControlName="nombreBodega"
-        class="form-control"
-        [class.is-invalid]="f['nombreBodega'].invalid && (f['nombreBodega'].dirty || f['nombreBodega'].touched)"
-      >
-      <div class="invalid-feedback">
-        El nombre de la bodega es requerido.
+      <div class="card-body">
+        <form [formGroup]="BodegasForm" (ngSubmit)="guardarBodega()" novalidate>
+          <div class="row">
+            <!-- Nombre de la Bodega -->
+            <div class="col-md-6 mb-3">
+              <label for="nombreBodega" class="form-label fw-bold">Nombre de la Bodega</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                formControlName="nombreBodega"
+                placeholder="Ingrese el nombre de la bodega"
+                required
+              />
+              <div *ngIf="f['nombreBodega'].touched && f['nombreBodega'].invalid" class="text-danger small">
+                El nombre de la bodega es obligatorio.
+              </div>
+            </div>
+
+            <!-- ID de la Bodega -->
+          
+          <input type="hidden" formControlName="idBodega">
+
+
+          </div>
+
+          <div class="row">
+            <!-- Ubicación -->
+            <div class="col-md-6 mb-3">
+              <label for="ubicacion" class="form-label fw-bold">Ubicación</label>
+              <input 
+                type="text" 
+                id="ubicacion" 
+                class="form-control" 
+                formControlName="ubicacion"
+                placeholder="Ingrese la ubicación"
+                required
+              />
+              <div *ngIf="f['ubicacion'].touched && f['ubicacion'].invalid" class="text-danger small">
+                La ubicación es obligatoria.
+              </div>
+            </div>
+
+            <!-- Cantidad Máxima -->
+            <div class="col-md-6 mb-3">
+              <label for="cantidadMaxima" class="form-label fw-bold">Cantidad Máxima</label>
+              <input 
+                type="number" 
+                id="cantidadMaxima" 
+                class="form-control" 
+                formControlName="cantidadMaxima"
+                placeholder="Ingrese la cantidad máxima"
+                required
+              />
+              <div *ngIf="f['cantidadMaxima'].touched && f['cantidadMaxima'].invalid" class="text-danger small">
+                La cantidad máxima debe ser al menos 1.
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón -->
+          <div class="text-center mt-4">
+            <button 
+              type="submit" 
+              class="btn btn-primary btn-lg" 
+              style="width: 40%;" 
+              [disabled]="BodegasForm.invalid">
+              Guardar Bodega
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-
-    <div class="mb-3">
-      <label for="idBodega" class="form-label">ID de la Bodega</label>
-      <input
-        type="number"
-        id="idBodega"
-        formControlName="idBodega"
-        class="form-control"
-        [class.is-invalid]="f['idBodega'].invalid && (f['idBodega'].dirty || f['idBodega'].touched)"
-      >
-      <div class="invalid-feedback">
-        El ID de la bodega es requerido.
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label for="ubicacion" class="form-label">Ubicación</label>
-      <input
-        type="text"
-        id="ubicacion"
-        formControlName="ubicacion"
-        class="form-control"
-        [class.is-invalid]="f['ubicacion'].invalid && (f['ubicacion'].dirty || f['ubicacion'].touched)"
-      >
-      <div class="invalid-feedback">
-        La ubicación es requerida.
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label for="cantidadMaxima" class="form-label">Cantidad Máxima</label>
-      <input
-        type="number"
-        id="cantidadMaxima"
-        formControlName="cantidadMaxima"
-        class="form-control"
-        [class.is-invalid]="f['cantidadMaxima'].invalid && (f['cantidadMaxima'].dirty || f['cantidadMaxima'].touched)"
-      >
-      <div class="invalid-feedback">
-        La cantidad máxima es requerida y debe ser al menos 1.
-      </div>
-    </div>
-
-    <div class="d-grid">
-      <button type="submit" class="btn btn-primary" [disabled]="BodegasForm.invalid">
-        Guardar Bodega
-      </button>
-    </div>
-  </form>
+  </div>
 </div>

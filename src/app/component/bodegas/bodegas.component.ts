@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 
-import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component'; 
 @Component({
   selector: 'app-bodegas',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule,SidebarComponent],
+  imports: [ReactiveFormsModule, CommonModule, SidebarComponent],
   templateUrl: './bodegas.component.html',
-  styleUrl: './bodegas.component.scss'
-
-  
+  styleUrls: ['./bodegas.component.scss']
 })
 export class BodegasComponent implements OnInit {
   BodegasForm!: FormGroup;
@@ -24,27 +22,25 @@ export class BodegasComponent implements OnInit {
   instanciarFormulario(): void {
     this.BodegasForm = this.fb.group({
       nombreBodega: ['', Validators.required],
-      idBodega: ['', Validators.required],
+      idBodega: [''],
       ubicacion: ['', Validators.required],
-      cantidadMaxima: ['', [Validators.required, Validators.min(1)]], // Asegurando que sea al menos 1
+      cantidadMaxima: ['', [Validators.required, Validators.min(1)]],
     });
   }
-get f() {
-  return this.BodegasForm.controls;
-}
+
+  get f() {
+    return this.BodegasForm.controls;
+  }
+
   guardarBodega(): void {
     if (this.BodegasForm.valid) {
-      // Aquí puedes acceder a los valores del formulario
       const nuevaBodega = this.BodegasForm.value;
       console.log('Datos de la nueva bodega:', nuevaBodega);
-      // Lógica para enviar los datos al servicio o realizar otras acciones
+      // Aquí podrías llamar a un servicio
     } else {
-      // Marcar los controles como "touched" para mostrar los errores de validación
       Object.values(this.BodegasForm.controls).forEach(control => {
         control.markAsTouched();
       });
     }
   }
 }
-
-   
