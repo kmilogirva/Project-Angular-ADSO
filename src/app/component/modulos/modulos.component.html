@@ -1,0 +1,152 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <div class="container mt-5">
+    <!-- Formulario de módulo -->
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Gestión de Módulos</h2>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="moduloForm" (ngSubmit)="onSubmit()">
+          <input type="hidden" formControlName="id" />
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Nombre del módulo</label>
+              <input type="text" class="form-control" formControlName="nombre" />
+              <div *ngIf="f['nombre'].touched && f['nombre'].invalid" class="text-danger small">
+                Campo obligatorio.
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Descripción</label>
+              <input type="text" class="form-control" formControlName="descripcion" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Estado</label>
+              <select class="form-select" formControlName="estado">
+                <option value="" disabled selected>Seleccione un estado</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg boton-asignar" [disabled]="moduloForm.invalid">
+              {{ editIndex !== null ? 'Actualizar Módulo' : 'Crear Módulo' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tabla de módulos -->
+    <div class="card shadow-lg mt-4" *ngIf="modulos.length">
+      <div class="card-body">
+        <h5 class="text-center fw-bold">Módulos Registrados</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let m of modulos; let i = index">
+                <tr>
+                  <td class="text-start">
+                    <span *ngIf="m.submodulos?.length" class="me-2" style="cursor: pointer;" (click)="toggleExpand(i)">
+                      {{ modulosExpandido.has(i) ? '➖' : '➕' }}
+                    </span>
+                    {{ m.nombre }}
+                  </td>
+                  <td>{{ m.descripcion }}</td>
+                  <td>{{ m.estado }}</td>
+                  <td>
+                    <button class="btn btn-warning btn-sm me-2" (click)="editarModulo(i)">
+                      <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <button class="btn btn-danger btn-sm me-2" (click)="eliminarModulo(i)">
+                      <i class="fas fa-trash-alt"></i> Eliminar
+                    </button>
+                    <button class="btn btn-primary btn-sm" (click)="toggleSubform(i)">
+                      <i class="fas fa-plus"></i> Añadir
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Subformulario -->
+                <tr *ngIf="mostrarSubformIndex === i">
+                  <td colspan="4">
+                    <form [formGroup]="submoduloForm" (ngSubmit)="guardarSubmodulo(i)">
+                      <div class="row">
+                        <div class="col-md-4 mb-2">
+                          <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre submódulo" />
+                        </div>
+                        <div class="col-md-4 mb-2">
+                          <input type="text" class="form-control" formControlName="descripcion" placeholder="Descripción" />
+                        </div>
+                        <div class="col-md-3 mb-2">
+                          <select class="form-select" formControlName="estado">
+                            <option value="" disabled selected>Estado</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                          </select>
+                        </div>
+                        <div class="col-md-1 mb-2 d-flex align-items-center">
+                          <button class="btn btn-success btn-sm" type="submit" [disabled]="submoduloForm.invalid">
+                            {{ subEditIndex !== null ? 'Actualizar' : 'Guardar' }}
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+
+                <!-- Submódulos -->
+                <tr *ngIf="modulosExpandido.has(i)">
+                  <td colspan="4">
+                    <h6 class="fw-bold text-start">Submódulos de {{ m.nombre }}</h6>
+                    <div class="table-responsive">
+                      <table class="table table-sm table-bordered table-striped text-center">
+                        <thead class="table-light">
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let s of m.submodulos; let j = index">
+                            <td>{{ s.nombre }}</td>
+                            <td>{{ s.descripcion }}</td>
+                            <td>{{ s.estado }}</td>
+                            <td>
+                              <button class="btn btn-warning btn-sm me-2" (click)="editarSubmodulo(i, j)">
+                                <i class="fas fa-edit"></i> Editar
+                              </button>
+                              <button class="btn btn-danger btn-sm" (click)="eliminarSubmodulo(i, j)">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
