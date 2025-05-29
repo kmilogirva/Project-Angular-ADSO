@@ -1,0 +1,51 @@
+.d-flex {
+  display: flex;
+}
+
+.container {
+  flex-grow: 1;
+  padding: 16px;
+}
+
+h2 {
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.card {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+select.form-select,
+input.form-control {
+  cursor: pointer;
+}
+
+.table {
+  margin-top: 16px;
+
+  th,
+  td {
+    vertical-align: middle;
+  }
+}
+
+.boton-asignar {
+  margin-top: 16px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 40%;
+  font-size: 16px;
+}
+
+.btn-sm {
+  font-size: 14px;
+  padding: 6px 12px;
+}
