@@ -4,13 +4,14 @@ import { AuthService } from 'src/app/services/Autenticacion/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,RouterModule]
+  imports: [CommonModule,ReactiveFormsModule,RouterModule, SidebarComponent]
 })
 export class LoginComponent implements OnInit {
   userAutentication: boolean =false;
@@ -50,8 +51,8 @@ export class LoginComponent implements OnInit {
         correo: this.f['correo']?.value,
         contrasena: this.f['contrasena']?.value
       }
-        
-      
+
+
       console.log("Esta es la respuestad del login",datosLogin)
 
       this.authService.login(datosLogin).subscribe(
@@ -78,7 +79,7 @@ export class LoginComponent implements OnInit {
           this.userAutentication = false;
         }
       );
-    
+
     } else {
       alert('Formulario inválido');
     }

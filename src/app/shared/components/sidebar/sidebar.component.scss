@@ -1,8 +1,8 @@
-
 /* 🔹 Ajuste para que el sidenav-container ocupe toda la pantalla */
 .sidenav-container {
   margin-top: 20px; /* Ajusta esto si el navbar es más alto */
   height: calc(100vh - 64px); /* Para que ocupe toda la altura restante */
+  
 }
 
 /* 🔹 Fija el toolbar en la parte superior */
@@ -20,13 +20,14 @@
 .content {
   margin-top: 64px;
   padding: 16px;
+
 }
 
 .spacer {
   flex: 1;
 }
 
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
   .hide-on-large {
     display: none;
   }

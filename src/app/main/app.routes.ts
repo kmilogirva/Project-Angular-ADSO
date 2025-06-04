@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 
+
 export const routes: Routes = [
 // export default [
 {
@@ -36,5 +37,15 @@ export const routes: Routes = [
   path: 'configuracion',
   loadComponent: () =>
       import('../component/configuracion/configuracion.component').then((m) => m.ConfiguracionComponent)
+},
+
+{
+    path: 'roles',
+    loadComponent: () =>
+        import('../component/roles/roles.component').then((m) => m.RolesComponent)
 }
+
 ] as Routes;
+
+
+

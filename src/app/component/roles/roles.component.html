@@ -1,0 +1,59 @@
+<div class="d-flex">
+<app-sidebar></app-sidebar>
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+<div class="roles-container">
+
+
+        <h3 class="text-center p-2 mb-3 bg-light">ROLES</h3>
+  <h2>Crear Nuevo Rol</h2>
+  <form (ngSubmit)="onSubmit()" #rolForm="ngForm">
+    <!-- Nombre del Rol -->
+    <div class="form-group">
+      <label for="nombre">Nombre del Rol*</label>
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        [(ngModel)]="rol.nombre"
+        required
+        placeholder="Ej: Admin, Editor"
+      >
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label for="descripcion">Descripción</label>
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        [(ngModel)]="rol.descripcion"
+        placeholder="Descripción del rol..."
+      ></textarea>
+    </div>
+
+    <!-- Permisos (Checkboxes) -->
+    <div class="form-group">
+      <label>Permisos*</label>
+      <div *ngFor="let permiso of permisosDisponibles" class="permiso-item">
+        <input
+          type="checkbox"
+          [id]="permiso.id"
+          [name]="permiso.nombre"
+          [(ngModel)]="permiso.seleccionado"
+        >
+        <label [for]="permiso.id">{{ permiso.nombre }}</label>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button type="button" (click)="cancelar()">Cancelar</button>
+      <button type="submit" [disabled]="!rolForm.valid">Guardar</button>
+    </div>
+  </form>
+</div>
+</div>
+
+</div>
+
