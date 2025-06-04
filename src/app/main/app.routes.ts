@@ -15,7 +15,7 @@ export const routes: Routes = [
 {
   path: 'usuario',
     loadComponent: () =>
-      import('../component/usuarios/usuarios/usuarios.component').then((m) => m.UsuariosComponent)
+      import('../component/usuarios/usuarios.component').then((m) => m.UsuariosComponent)
 },
 {
   path: 'productos',
