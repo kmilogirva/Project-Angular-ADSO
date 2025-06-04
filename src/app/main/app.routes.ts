@@ -41,5 +41,10 @@ export const routes: Routes = [
   path: 'permisos',
   loadComponent: () =>
       import('../component/permisos/permisos.component').then((m) => m.PermisosComponent)
+},
+{
+  path: 'modulos',
+  loadComponent: () =>
+      import('../component/modulos/modulos.component').then((m) => m.ModulosComponent)
 }
 ] as Routes;
