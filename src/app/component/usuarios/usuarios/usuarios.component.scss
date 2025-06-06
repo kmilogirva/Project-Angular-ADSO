@@ -1,1 +1,52 @@
+.registro-container {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("/assets/images/background-login.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 
+.registro-card {
+  width: 100%;
+  max-width: 600px;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 15px;
+  padding: 30px;
+  color: white;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.registro-logo {
+  width: 100px;
+  filter: drop-shadow(0 0 10px #ffffff);
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #00bfff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #009acd;
+}
+
+a {
+  color: #00dfff;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

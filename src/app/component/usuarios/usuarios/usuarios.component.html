@@ -1,131 +1,75 @@
+<div class="registro-container">
+  <div class="registro-card shadow-lg">
 
-<div class="d-flex">
-  <app-sidebar></app-sidebar>
-<div class="container d-flex justify-content-center align-items-center vh-100">
+    <!-- Logo -->
+    <div class="text-center mb-3">
+      <img src="/assets/images/logo-jkc.png" alt="Logo JKC" class="registro-logo">
+    </div>
+
+    <h3 class="text-center mb-3 text-white">Registro de Usuario</h3>
+
+    <p class="text-center fs-5" [ngClass]="{ 'text-success': cuentaCreada, 'text-danger': !cuentaCreada }">
+      {{ displayMsg }}
+    </p>
 
     <form [formGroup]="usuarioForm" (ngSubmit)="registerSubmited()">
       <div class="row">
-          <h3 class="col-11 text-center p-2 mb-3 bg-light mx-auto">Regístrate</h3>
+        <div class="col mb-3">
+          <label class="form-label text-white">Nombres</label>
+          <input type="text" class="form-control" formControlName="nombres">
+          <div class="form-text text-danger" *ngIf="f['nombres']?.invalid && f['nombres']?.touched">
+            Nombres válidos requeridos.
+          </div>
+        </div>
+
+        <div class="col mb-3">
+          <label class="form-label text-white">Apellidos</label>
+          <input type="text" class="form-control" formControlName="apellidos">
+          <div class="form-text text-danger" *ngIf="f['apellidos']?.invalid && f['apellidos']?.touched">
+            Apellidos válidos requeridos.
+          </div>
+        </div>
       </div>
 
-      <p class="text-center fs-4" [ngClass]="{
-          'text-success': cuentaCreada,
-          'text-danger': !cuentaCreada
-      }">
-          {{displayMsg}}
-      </p>
-
-      <div class="row">
-          <div class="col mb-3">
-              <label for="firstname" class="form-label">Nombres</label>
-              <input type="text" class="form-control" id="nombres" placeholder="Ingresa Nombres" formControlName="nombres">
-
-              <div class="form-text text-danger" *ngIf="f['nombres']?.errors?.['required'] && (f['nombres']?.touched || f['nombres']?.dirty)">
-                  Nombres requeridos
-              </div>
-              <div class="form-text text-danger" *ngIf="f['nombres']?.errors?.['minlength'] && (f['nombres']?.touched || f['nombres']?.dirty)">
-                  El nombre debe tener como minimos dos letras
-              </div>
-              <div class="form-text text-danger" *ngIf="f['nombres']?.errors?.['pattern'] && (f['nombres']?.touched || f['nombres']?.dirty)">
-                  El nombre sólo debe tener letras
-              </div>
-          </div>
-
-          <div class="col mb-3">
-              <label for="lastname" class="form-label">Apellidos</label>
-
-              <input type="text" class="form-control" id="apellidos" placeholder="Ingresa Apellido" formControlName="apellidos">
-
-              <div class="form-text text-danger" *ngIf="f['apellidos']?.errors?.['required'] && (f['apellidos']?.touched || f['apelllidos']?.dirty)">
-                Apelidos requeridos
-            </div>
-
-              <div class="form-text text-danger" *ngIf="f['apellidos']?.errors?.['minlength'] && (f['apellidos']?.touched || f['apellidos']?.dirty)">
-                  Los Apellidos deben tener como minimos dos letras
-              </div>
-              <div class="form-text text-danger" *ngIf="f['apellidos']?.errors?.['pattern'] && (f['apellidos']?.touched || f['apellidos']?.dirty)">
-                  Los Apellidos sólo debe tener letras
-              </div>
-
-          </div>
+      <div class="mb-3">
+        <label class="form-label text-white">Correo Electrónico</label>
+        <input type="email" class="form-control" formControlName="correo">
+        <div class="form-text text-danger" *ngIf="f['correo']?.invalid && f['correo']?.touched">
+          Correo válido requerido.
+        </div>
       </div>
 
       <div class="row">
-          <div class="col mb-3">
-              <label for="correo">Correo Electrónico</label>
-              <input type="text" class="form-control" id="correo" placeholder="Ingresa tu correo electrónico" formControlName="correo">
-
-              <div class="form-text text-danger" *ngIf="f['correo']?.errors?.['required'] && (f['correo']?.touched || f['correo']?.dirty)">
-                  Correo Requerido
-              </div>
-
-              <div class="form-text text-danger" *ngIf="f['correo']?.errors?.['email'] && (f['correo']?.touched || f['correo']?.dirty)">
-                  El correo no es valido
-              </div>
+        <div class="col mb-3">
+          <label class="form-label text-white">Teléfono</label>
+          <input type="text" class="form-control" formControlName="telefono">
+        </div>
+        <div class="col mb-3">
+          <label class="form-label text-white d-block">Sexo</label>
+          <div class="form-check form-check-inline text-white">
+            <input class="form-check-input" type="radio" value="m" formControlName="sexo"> Hombre
           </div>
+          <div class="form-check form-check-inline text-white">
+            <input class="form-check-input" type="radio" value="f" formControlName="sexo"> Mujer
+          </div>
+        </div>
       </div>
 
       <div class="row">
-          <div class="col mb-3">
-              <label for="telefono" class="form-label">Número Celular</label>
-              <input type="text" class="form-control" id="telefono" placeholder="Ingresa Celular" formControlName="telefono">
-              <div class="form-text text-danger" *ngIf="f['telefono']?.errors?.['required'] && (f['telefono']?.touched || f['telefono']?.dirty)">
-                 Número Requerido
-              </div>
-
-              <div class="form-text text-danger" *ngIf="f['telefono']?.errors?.['minlength'] && (f['telefono']?.touched || f['telefono']?.dirty)">
-                No puedes tener menos de 10 números
-             </div>
-
-             <div class="form-text text-danger" *ngIf="f['telefono']?.errors?.['pattern'] && (f['telefono']?.touched || f['telefono']?.dirty)">
-              Sólo puedes incluir números
-           </div>
-
+        <div class="col mb-3">
+          <label class="form-label text-white">Contraseña</label>
+          <input type="password" class="form-control" formControlName="contrasena">
+        </div>
+        <div class="col mb-3">
+          <label class="form-label text-white">Confirmar Contraseña</label>
+          <input type="password" class="form-control" formControlName="confirmarcontrasena">
+          <div class="form-text text-danger" [ngStyle]="{ 'display': repetircontrasena }">
+            Las contraseñas no coinciden.
           </div>
-          <div class="col ps-3 mb-3">
-              <div class="m-1">Sexo</div>
-              <div class="form-check form-check-inline">
-                  <input type="radio" class="form-check-input" value="m" id="sexo-m" formControlName="sexo">
-                  <label class="form-check-label" for="gender-m">Hombre</label>
-              </div>
-              <div class="form-check form-check-inline">
-                  <input type="radio" class="form-check-input" value="f" id="sexo-f" formControlName="sexo">
-                  <label class="form-check-label" for="gender-f">Mujer</label>
-              </div>
-              <div class="form-text text-danger" *ngIf="f['sexo']?.errors?.['required']">
-                 Selecciona Sexo
-              </div>
-          </div>
+        </div>
       </div>
 
-      <div class="row">
-          <div class="form-group col-md-6">
-              <label for="password">Contraseña</label>
-              <input type="password" class="form-control" id="contraseña" placeholder="Ingresa tu contraseña" formControlName="contraseña">
-
-              <div class="form-text text-danger" *ngIf="f['contraseña']?.errors?.['pattern'] && (f['contraseña']?.touched || f['contraseña']?.dirty)">
-                Contraseña Requerida
-             </div>
-
-             <div class="form-text text-danger" *ngIf="f['contraseña']?.errors?.['minlength'] && (f['contraseña']?.touched || f['contraseña']?.dirty)">
-              La contraseña debe tener minimo 6 caracteres y maximo 15
-           </div>
-
-          <div class="form-group col-md-6">
-              <label for="confirmarcontrasena">Confirmar Contraseña</label>
-              <input type="password" class="form-control" id="confirmarcontrasena" placeholder="Confirma tu contraseña" formControlName="confirmarcontrasena">
-              <div class="form-text text-danger" [ngStyle]="{'display' : repetircontrasena} ">
-                  Contraseñas no coinciden
-               </div>
-          </div>
-      </div>
-
-      <button type="submit" [disabled]="!usuarioForm.valid" class="btn btn-primary w-100 mt-3">Registrarse</button>
-
-      <!-- <div class="text-center mt-2">
-           <a [routerLink]="['/login']">¿Ya tienes una cuenta? Inicia sesión</a>
-      </div> -->
-      </div>
-  </form>
-</div>
+      <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="!usuarioForm.valid">Registrarse</button>
+    </form>
+  </div>
 </div>

@@ -1,11 +1,10 @@
-<!-- Navbar superior Fijo -->
 <mat-toolbar color="primary" class="full-width-toolbar">
   <button mat-icon-button (click)="toggleSidebar()">
     <mat-icon>menu</mat-icon>
   </button>
+  <img src="/assets/images/logo-jkc.png" alt="Logo JKC Inventory" class="app-logo">
   <span class="app-title">JKC_Inventory</span>
   <span class="spacer"></span>
-
   <mat-form-field appearance="outline">
     <mat-label>Buscar</mat-label>
     <input matInput type="text" placeholder="Escribe para buscar...">
@@ -13,7 +12,6 @@
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
-
   <div class="nav-buttons">
     <button mat-button routerLink="/home">
       <mat-icon>home</mat-icon> Inicio
@@ -25,17 +23,14 @@
       <mat-icon>mail</mat-icon> Contacto
     </button>
   </div>
-
   <button mat-icon-button aria-label="Cuenta" routerLink="/login">
     <mat-icon>account_circle</mat-icon>
   </button>
 </mat-toolbar>
-
-<!-- Contenedor principal con menú lateral -->
- <br>
- <br>
+<br>
+<br>
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav [mode]="isExpanded ? 'side' : 'over'" [(opened)]="isExpanded">
+  <mat-sidenav #sidenav [mode]="isExpanded ? 'side' : 'over'" [(opened)]="isExpanded"> 
     <mat-nav-list>
       <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.route">
         <mat-icon>{{ item.icon }}</mat-icon>
@@ -43,9 +38,7 @@
       </a>
     </mat-nav-list>
   </mat-sidenav>
-
   <mat-sidenav-content>
-    <!-- Contenido dinámico -->
     <div class="content">
       <ng-content></ng-content>
     </div>

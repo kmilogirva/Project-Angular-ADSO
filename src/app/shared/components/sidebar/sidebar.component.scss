@@ -1,35 +1,41 @@
-
-/* 🔹 Ajuste para que el sidenav-container ocupe toda la pantalla */
+/* 🔹  Ajuste para que el sidenav-container ocupe toda la pantalla */
 .sidenav-container {
   margin-top: 20px; /* Ajusta esto si el navbar es más alto */
   height: calc(100vh - 64px); /* Para que ocupe toda la altura restante */
 }
 
-/* 🔹 Fija el toolbar en la parte superior */
+/* 🔹  Fija el toolbar en la parte superior */
 .full-width-toolbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000; /* Asegura que siempre esté arriba */
-  display: flex;
-  align-items: center;
-  background-color: #F0AB00;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  z-index: 1000; /* Asegura que siempre esté arriba */ 
+  display: flex; 
+  align-items: center; 
+  background-color: #F0AB00; 
 }
 
+/* Clase para el nuevo logo */
+.app-logo {
+  height: 40px; /* Altura del logo */
+  width: auto; /* Ancho automático para mantener la proporción */
+  margin-right: 10px; /* Espacio entre el logo y el título */
+  filter: drop-shadow(0 0 5px #ffffff); /* Sombra blanca opcional */
+}
+
+
 .content {
-  margin-top: 64px;
-  padding: 16px;
+  margin-top: 64px; 
+  padding: 16px; 
 }
 
 .spacer {
-  flex: 1;
+  flex: 1; 
 }
 
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
   .hide-on-large {
-    display: none;
+    display: none; 
   }
 }
-
-
