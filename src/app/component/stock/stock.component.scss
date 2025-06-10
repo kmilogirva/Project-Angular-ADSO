@@ -1,0 +1,34 @@
+.d-flex {
+  display: flex;
+}
+
+.card {
+  color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+}
+
+.card-header {
+  background-color: #0d0d0d;
+  border-bottom: 1px solid #140693;
+  text-align: center;
+  padding: 1rem 0; /* Cambio aquí: añade espacio arriba y abajo */
+}
+
+.table thead {
+  background-color: #003333;
+}
+
+.table th {
+  vertical-align: middle;
+  color: rgb(255, 255, 255);
+}
+
+.table tbody td {
+  vertical-align: middle;
+  color: #000000;
+}
+
+.alert {
+  font-size: 1rem;
+}
