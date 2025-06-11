@@ -48,8 +48,13 @@ export const routes: Routes = [
       import('../component/modulos/modulos.component').then((m) => m.ModulosComponent)
 },
 {
+  path: 'stock',
+  loadComponent: () => import('../component/stock/stock.component').then(m => m.StockComponent)
+},
+{
   path: 'notificaciones',
   loadComponent: () =>
       import('../component/notificaciones/notificaciones.component').then((m) => m.NotificacionesComponent)
 }
+
 ] as Routes;

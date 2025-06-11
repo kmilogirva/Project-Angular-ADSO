@@ -1,0 +1,48 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Alertas de Stock Bajo</h2>
+      </div>
+
+      <div class="card-body">
+        <div *ngIf="productosConAlerta.length > 0; else sinAlertas">
+          <div class="alert alert-danger" role="alert">
+            Se han detectado productos con niveles bajos de stock. Verifique los siguientes elementos:
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Código</th>
+                  <th>Producto</th>
+                  <th>Stock Actual</th>
+                  <th>Stock Mínimo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let producto of productosConAlerta; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ producto.codReferencia }}</td>
+                  <td>{{ producto.nombreProducto }}</td>
+                  <td class="text-warning fw-bold">{{ producto.cantidad }}</td>
+                  <td>{{ producto.minimoStock }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <ng-template #sinAlertas>
+          <div class="alert alert-success text-center">
+            Todos los productos se encuentran con stock suficiente.
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
