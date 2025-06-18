@@ -1,0 +1,26 @@
+.d-flex {
+  display: flex;
+}
+
+.container {
+  flex-grow: 1;
+  padding: 16px;
+}
+
+h2 {
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.card {
+  margin-bottom: 24px;
+}
+
+.table {
+  margin-top: 16px;
+
+  th,
+  td {
+    vertical-align: middle;
+  }
+}
