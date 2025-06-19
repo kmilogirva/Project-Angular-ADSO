@@ -1,9 +1,14 @@
 <!-- Navbar superior Fijo -->
-<mat-toolbar color="primary" class="full-width-toolbar">
+<mat-toolbar color="primary" class="full-width-toolbar" *ngIf="!isLoginRoute()">
   <button mat-icon-button (click)="toggleSidebar()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="app-title">JKC_Inventory</span>
+
+  <div class="logo-container">
+    <img src="assets/images/inve.png" alt="Logo JKC" class="logo-jkc" />
+    <span class="app-title">JKC_Inventory</span>
+  </div>
+
   <span class="spacer"></span>
 
   <mat-form-field appearance="outline">
@@ -32,9 +37,8 @@
 </mat-toolbar>
 
 <!-- Contenedor principal con menú lateral -->
- <br>
- <br>
- <mat-sidenav-container class="sidenav-container">
+<br><br>
+<mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #sidenav
     [mode]="isExpanded ? 'side' : 'over'"

@@ -1,0 +1,90 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Registro de Recepciones</h2>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="recepcionForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Código</label>
+              <input type="text" formControlName="codigo" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Producto</label>
+              <input type="text" formControlName="producto" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Fecha</label>
+              <input type="date" formControlName="fecha" class="form-control" required />
+            </div>
+            <div class="col-md-3 mb-3">
+              <label class="form-label fw-bold">Cantidad</label>
+              <input type="number" formControlName="cantidad" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Recibido por</label>
+              <input type="text" formControlName="recibidoPor" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Entregado por</label>
+              <input type="text" formControlName="entregadoPor" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Estado</label>
+              <select formControlName="estado" class="form-select" required>
+                <option value="">Seleccione</option>
+                <option value="Recibido">Recibido</option>
+                <option value="Pendiente">Pendiente</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button class="btn btn-success btn-lg" type="submit" style="width: 40%;" [disabled]="recepcionForm.invalid">
+              Guardar Recepción
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card shadow-lg mt-4">
+      <div class="card-body">
+        <h5 class="text-center fw-bold">Recepciones Registradas</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Fecha</th>
+                <th>Cantidad</th>
+                <th>Recibido Por</th>
+                <th>Entregado Por</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rec of recepciones; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ rec.codigo }}</td>
+                <td>{{ rec.producto }}</td>
+                <td>{{ rec.fecha }}</td>
+                <td>{{ rec.cantidad }}</td>
+                <td>{{ rec.recibidoPor }}</td>
+                <td>{{ rec.entregadoPor }}</td>
+                <td>{{ rec.estado }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

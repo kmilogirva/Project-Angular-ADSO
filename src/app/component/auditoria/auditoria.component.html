@@ -1,0 +1,36 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Historial de Auditoría</h2>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Usuario</th>
+                <th>Acción</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of logs; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ log.usuario }}</td>
+                <td>{{ log.accion }}</td>
+                <td>{{ log.fecha }}</td>
+                <td>{{ log.hora }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
