@@ -1,56 +1,66 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { DataTablesModule, DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
-@Component({
-  standalone: true,
-  imports: [ReactiveFormsModule,CommonModule,SidebarComponent],
-  selector: 'app-categorias', // Selector CSS para usar este componente en las plantillas
-  templateUrl: './categorias.component.html', // Ruta al archivo HTML del componente
-  styleUrls: ['./categorias.component.scss'] // Ruta al archivo de estilos (Sass) del componente
 
+interface Categoria {
+  codigo: string;
+  descripcion: string;
+  estado: 'ACTIVO' | 'INACTIVO';
+}
+
+@Component({
+  selector: 'app-categorias',
+  templateUrl: './categorias.component.html',
+  styleUrls: ['./categorias.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, SidebarComponent, DataTablesModule]
 })
 export class CategoriasComponent implements OnInit {
-  categoriasForm!: FormGroup;
+  categoriaForm!: FormGroup;
+  categorias: Categoria[] = [];
 
-  categorias: any[] = []; // Ejemplo: Array para almacenar las categorías
+  dtOptions: any = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private fb: FormBuilder) { }
+  @ViewChild(DataTableDirective, { static: false }) dtElement!: DataTableDirective;
+
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    // Aquí puedes cargar las categorías al inicializarse el componente
-    this.instanciarFormulario();
-    this.cargarCategorias();
-  }
-
-  instanciarFormulario(): void {
-    this.categoriasForm = this.fb.group({
-      categoria: ['',[Validators.required]]
+    this.categoriaForm = this.fb.group({
+      codigo: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]],
+      descripcion: ['', Validators.required],
+      estado: ['ACTIVO', Validators.required]
     });
-  }
-  cargarCategorias(): void {
-    // Lógica para obtener las categorías (ejemplo simulado)
-    this.categorias = [
-      { id: 1, nombre: 'Electrónicos' },
-      { id: 2, nombre: 'Ropa' },
-      { id: 3, nombre: 'Alimentos' }
-    ];
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
+      }
+    };
+
+    this.dtTrigger.next(null);
   }
 
-  agregarCategoria(): void {
-    // Lógica para agregar una nueva categoría
-    console.log('Agregar nueva categoría');
+  get f() {
+    return this.categoriaForm.controls;
   }
 
-  editarCategoria(categoriaId: number): void {
-    // Lógica para editar una categoría existente
-    console.log('Editar categoría:', categoriaId);
+  registrarCategoria(): void {
+    if (this.categoriaForm.invalid) return;
+
+    const nuevaCategoria: Categoria = { ...this.categoriaForm.value };
+    this.categorias.push(nuevaCategoria);
+    this.categoriaForm.reset({ estado: 'ACTIVO' });
   }
 
-  eliminarCategoria(categoriaId: number): void {
-    // Lógica para eliminar una categoría
-    console.log('Eliminar categoría:', categoriaId);
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
-
 }

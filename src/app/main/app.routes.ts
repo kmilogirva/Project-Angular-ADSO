@@ -67,7 +67,8 @@ export const routes: Routes = [
 {
   path: 'auditoria',
   loadComponent: () => import('../component/auditoria/auditoria.component').then(m => m.AuditoriaComponent)
-=======
+},
+{
   path: 'notificaciones',
   loadComponent: () =>
       import('../component/notificaciones/notificaciones.component').then((m) => m.NotificacionesComponent)
