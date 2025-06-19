@@ -52,6 +52,7 @@ export const routes: Routes = [
   loadComponent: () => import('../component/stock/stock.component').then(m => m.StockComponent)
 },
 {
+
   path: 'recepcion',
   loadComponent: () => import('../component/recepcion/recepcion.component').then(m => m.RecepcionComponent)
 },
@@ -66,6 +67,10 @@ export const routes: Routes = [
 {
   path: 'auditoria',
   loadComponent: () => import('../component/auditoria/auditoria.component').then(m => m.AuditoriaComponent)
+=======
+  path: 'notificaciones',
+  loadComponent: () =>
+      import('../component/notificaciones/notificaciones.component').then((m) => m.NotificacionesComponent)
 }
 
 ] as Routes;

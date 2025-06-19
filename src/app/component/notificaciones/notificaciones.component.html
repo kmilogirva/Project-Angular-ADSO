@@ -1,0 +1,83 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenido principal -->
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Gestión de Notificaciones</h2>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="notificacionForm" (ngSubmit)="enviarNotificacion()">
+          <div class="row">
+            <!-- Tipo de Notificación -->
+            <div class="col-md-6 mb-3">
+              <label for="tipo" class="form-label fw-bold">Tipo de Notificación</label>
+              <select id="tipo" class="form-select" formControlName="tipo" required>
+                <option value="" disabled selected>Seleccione el tipo</option>
+                <option value="SISTEMA">Sistema (Acceso sospechoso)</option>
+                <option value="INVENTARIO">Inventario (Ajustes/Recepción)</option>
+              </select>
+              <div *ngIf="f['tipo'].touched && f['tipo'].invalid" class="text-danger small">
+                Campo obligatorio.
+              </div>
+            </div>
+
+            <!-- Mensaje -->
+            <div class="col-md-6 mb-3">
+              <label for="mensaje" class="form-label fw-bold">Mensaje</label>
+              <input type="text" id="mensaje" class="form-control" formControlName="mensaje" placeholder="Ingrese el mensaje" required />
+              <div *ngIf="f['mensaje'].touched && f['mensaje'].invalid" class="text-danger small">
+                El mensaje es obligatorio (máx. 200 caracteres).
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón de envío -->
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 40%;" [disabled]="notificacionForm.invalid">
+              Enviar Notificación
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tabla de notificaciones -->
+      <div class="container mt-5">
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <label class="col-sm-2">Historial de Notificaciones:</label>
+
+            <div class="table-responsive">
+              <table datatable class="table table-bordered table-hover table-striped text-center" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                <thead class="table-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Tipo</th>
+                    <th>Mensaje</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let noti of notificaciones; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ noti.tipo }}</td>
+                    <td>{{ noti.mensaje }}</td>
+                    <td>{{ noti.fecha | date: 'short' }}</td>
+                  </tr>
+                  <tr *ngIf="notificaciones.length === 0">
+                    <td colspan="4">No hay notificaciones registradas.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
