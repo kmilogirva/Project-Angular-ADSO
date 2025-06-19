@@ -1,0 +1,74 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Registro de Devoluciones</h2>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="devolucionForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Producto</label>
+              <input type="text" formControlName="producto" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Fecha</label>
+              <input type="date" formControlName="fecha" class="form-control" required />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label fw-bold">Cantidad Devuelta</label>
+              <input type="number" formControlName="cantidad" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Motivo</label>
+              <input type="text" formControlName="motivo" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-bold">Observaciones</label>
+              <textarea formControlName="observaciones" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button class="btn btn-success btn-lg" type="submit" style="width: 40%;" [disabled]="devolucionForm.invalid">
+              Guardar Devolución
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card shadow-lg mt-4">
+      <div class="card-body">
+        <h5 class="text-center fw-bold">Historial de Devoluciones</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Producto</th>
+                <th>Fecha</th>
+                <th>Cantidad</th>
+                <th>Motivo</th>
+                <th>Observaciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let dev of devoluciones; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ dev.producto }}</td>
+                <td>{{ dev.fecha }}</td>
+                <td>{{ dev.cantidad }}</td>
+                <td>{{ dev.motivo }}</td>
+                <td>{{ dev.observaciones }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

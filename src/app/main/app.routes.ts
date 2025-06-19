@@ -52,6 +52,22 @@ export const routes: Routes = [
   loadComponent: () => import('../component/stock/stock.component').then(m => m.StockComponent)
 },
 {
+
+  path: 'recepcion',
+  loadComponent: () => import('../component/recepcion/recepcion.component').then(m => m.RecepcionComponent)
+},
+{
+  path: 'devoluciones',
+  loadComponent: () => import('../component/devoluciones/devoluciones.component').then(m => m.DevolucionesComponent)
+},
+{
+  path: 'reportes',
+  loadComponent: () => import('../component/reportes/reportes.component').then(m => m.ReportesComponent)
+},
+{
+  path: 'auditoria',
+  loadComponent: () => import('../component/auditoria/auditoria.component').then(m => m.AuditoriaComponent)
+=======
   path: 'notificaciones',
   loadComponent: () =>
       import('../component/notificaciones/notificaciones.component').then((m) => m.NotificacionesComponent)
