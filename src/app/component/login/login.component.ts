@@ -59,10 +59,10 @@ export class LoginComponent implements OnInit {
             console.log(respuesta)
           if (respuesta.token) {
             this.toastr.success('Inicio de sesión exitoso');
-            // Guardar el token y la información del usuario
-            localStorage.setItem('token', respuesta.token);
+            localStorage.setItem('jwtToken', respuesta.token);
+            // console.log("Esta es mi token" + respuesta.token)
             localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
-            // this.usuario = respuesta.usuario;  // Puedes asignarlo a una variable para uso posterior
+            // console.log("Este es mi json de usaurio" + respuesta.usuario)
 
             this.userAutentication = true;
             this.loginForm.reset();

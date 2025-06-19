@@ -23,8 +23,27 @@ import { Producto } from 'src/app/models/productos/Producto';
 
     // }
 
-    registrarProducto(producto: Producto): Observable<Producto> {
-        return this.http.post<Producto>(this.baseServerUrl + , producto);
-      }
+    registrarProducto(producto: Producto) {
+        return this.http.post(`${this.baseServerUrl + environment.registrarProductos}`, producto)
+  }
+
+
+    obtenercomboCategorias(){
+      
+
+    }
+
+
+  // registerUser(producto: Producto): Observable<{exitoso: boolean; mensaje: string}> {
+  //     return this.http.post(`${this.baseServerUrl + environment.registrarProductos}`, producto)
+  //   // ).pipe(
+  //   //   catchError(error => {
+  //   //     // Manejo de errores
+  //   //     if (error.status === 409) {
+  //   //       return throwError({ exitoso: false, mensaje: 'El Usuario ya existe' });
+  //   //     }
+  //   //     return throwError({ exitoso: false, mensaje: 'Error de conexión con el servidor' });
+  //   //   })
+  //   );
 
 }
