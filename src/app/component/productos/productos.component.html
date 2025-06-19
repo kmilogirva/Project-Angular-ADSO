@@ -12,64 +12,56 @@
       <div class="card-body">
         <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
           <div class="row">
-            <!-- Código Referencia -->
-            <div class="col-md-3 mb-3">
-              <label for="codReferencia" class="form-label fw-bold">Código Referencia</label>
-              <input 
-                type="text" 
-                id="codReferencia" 
-                class="form-control" 
-                formControlName="codReferencia"
-                placeholder="Ingrese el código de referencia" 
-                required 
-              />
-              <div *ngIf="f['codReferencia'].touched && f['codReferencia'].invalid" class="text-danger small">
-                Campo obligatorio.
-              </div>
-            </div>
+            <input type="hidden" id="IdProducto" formControlName="IdProducto" />
 
             <!-- Nombre del Producto -->
             <div class="col-md-4 mb-3">
-              <label for="nombreProducto" class="form-label fw-bold">Nombre del Producto</label>
-              <input 
-                type="text" 
-                id="nombreProducto" 
-                class="form-control" 
-                formControlName="nombreProducto"
-                placeholder="Ingrese el nombre del producto" 
-                required 
-              />
-              <div *ngIf="f['nombreProducto'].touched && f['nombreProducto'].invalid" class="text-danger small">
+              <label for="NomProducto" class="form-label fw-bold">Nombre del Producto</label>
+              <input type="text" id="NomProducto" class="form-control" formControlName="NomProducto"
+                placeholder="Ingrese el nombre del producto" required />
+              <div *ngIf="f['NomProducto'].touched && f['NomProducto'].invalid" class="text-danger small">
                 El nombre del producto es obligatorio.
+              </div>
+            </div>
+
+            <!-- Código EAN -->
+            <div class="col-md-4 mb-3">
+              <label for="CodEan" class="form-label fw-bold">Código EAN</label>
+              <input type="text" id="CodEan" class="form-control" formControlName="CodEan" readonly />
+            </div>
+
+            <!-- Código de Barras SVG -->
+            <div class="col-md-4 mb-3 d-flex align-items-end justify-content-center ">
+              <div class="text-center" [hidden]="!CodEanVisible">
+                <label class="form-label fw-bold">Visualización Código</label>
+                <svg id="barcode"></svg>
               </div>
             </div>
           </div>
 
+
           <div class="row">
             <!-- Categoría -->
+
+
+
             <div class="col-md-3 mb-3">
-              <label for="categoria" class="form-label fw-bold">Categoría</label>
-              <select id="categoria" class="form-select" formControlName="categoria" required>
+              <label for="IdCategoria" class="form-label fw-bold">Categoría</label>
+              <select id="IdCategoria" class="form-select" formControlName="IdCategoria" required>
                 <option value="" disabled selected>Seleccione una categoría</option>
-                <option *ngFor="let cat of categoria" [ngValue]="cat">{{ cat }}</option>
+                <option *ngFor="let cat of IdCategoria" [ngValue]="cat">{{ cat }}</option>
               </select>
-              <div *ngIf="f['categoria'].touched && f['categoria'].invalid" class="text-danger small">
+              <div *ngIf="f['IdCategoria'].touched && f['IdCategoria'].invalid" class="text-danger small">
                 La categoría es obligatoria.
               </div>
             </div>
 
             <!-- Ubicación -->
-            <div class="col-md-6 mb-3">
-              <label for="ubicacion" class="form-label fw-bold">Ubicación</label>
-              <input 
-                type="text" 
-                id="ubicacion" 
-                class="form-control" 
-                formControlName="ubicacion"
-                placeholder="Ingrese la ubicación del producto" 
-                required 
-              />
-              <div *ngIf="f['ubicacion'].touched && f['ubicacion'].invalid" class="text-danger small">
+            <div class="col-md-4 mb-3">
+              <label for="UbicacionProducto" class="form-label fw-bold">Ubicación</label>
+              <input type="text" id="UbicacionProducto" class="form-control" formControlName="UbicacionProducto"
+                placeholder="Ingrese la ubicación del producto" required />
+              <div *ngIf="f['UbicacionProducto'].touched && f['UbicacionProducto'].invalid" class="text-danger small">
                 Campo obligatorio.
               </div>
             </div>
@@ -78,33 +70,24 @@
           <div class="row">
             <!-- Cantidad -->
             <div class="col-md-6 mb-3">
-              <label for="cantidad" class="form-label fw-bold">Cantidad</label>
-              <input 
-                type="number" 
-                id="cantidad" 
-                class="form-control" 
-                formControlName="cantidad"
-                placeholder="Ingrese la cantidad" 
-                required 
-              />
-              <div *ngIf="f['cantidad'].touched && f['cantidad'].invalid" class="text-danger small">
-                La cantidad debe ser al menos 1.
+              <label for="Cantidad" class="form-label fw-bold">Cantidad</label>
+              <input type="number" id="Cantidad" class="form-control" formControlName="Cantidad"
+                placeholder="Ingrese la Cantidad" required />
+              <div *ngIf="f['Cantidad'].touched && f['Cantidad'].invalid" class="text-danger small">
+                La Cantidad debe ser al menos 1.
               </div>
             </div>
 
             <!-- Precio -->
-            <div class="col-md-6 mb-3">
-              <label for="precio" class="form-label fw-bold">Precio</label>
-              <input 
-                type="number" 
-                id="precio" 
-                class="form-control" 
-                formControlName="precio"
-                placeholder="Ingrese el precio" 
-                required 
-              />
-              <div *ngIf="f['precio'].touched && f['precio'].invalid" class="text-danger small">
-                El precio debe ser mayor a 0.
+
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <label for="Observacion" class="form-label fw-bold">Observación</label>
+              <input type="text" id="Observacion" class="form-control" formControlName="Observacion"
+                placeholder="Ingresa una observación" required />
+              <div *ngIf="f['Observacion'].touched && f['Observacion'].invalid" class="text-danger small">
               </div>
             </div>
           </div>
@@ -117,64 +100,6 @@
           </div>
         </form>
       </div>
-      <!-- Tabla de productos -->
-    <div class="container mt-5">
-      <div class="card shadow-lg">
-        <div class="card-body">
-          <label class="col-sm-2">Ingrese un Filtro:</label>
-
-          <div class="table-responsive">
-            <table 
-              datatable 
-              class="table table-bordered table-hover table-striped text-center" 
-              [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger"
-            >
-              <thead class="table-dark">
-                <tr>
-                  <th>#</th>
-                  <th>Código Referencia</th>
-                  <th>Nombre del Producto</th>
-                  <th>Categoría</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of productos; let i = index">
-                  <td>
-                    <input 
-                      type="checkbox" 
-                      id="chkSeleccionar-{{ i }}" 
-                      [checked]="item.seleccionado"
-                      (change)="toggleItem(item)" 
-                    />
-                  </td>
-                  <td>{{ item.codReferencia }}</td>
-                  <td>{{ item.nombreProducto }}</td>
-                  <td>{{ item.categoria }}</td>
-                  <td>{{ item.cantidad }}</td>
-                  <td>{{ item.precio | currency }}</td>
-                  <td>
-                    <button class="btn btn-warning btn-sm">
-                      <i class="fas fa-edit"></i> Editar
-                    </button>
-                    <button class="btn btn-danger btn-sm">
-                      <i class="fas fa-trash-alt"></i> Eliminar
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    </div>
-
     
-
   </div>
 </div>

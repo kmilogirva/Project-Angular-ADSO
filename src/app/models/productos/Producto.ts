@@ -1,8 +1,9 @@
 export interface Producto {
-  codReferencia: string;
+  idProducto?: number;
   nombreProducto: string;
   categoria: string;
   cantidad: number;
-  precio: number;
+  ubicacion: string;
+  observacion: string;
   seleccionado?: boolean;
 }
