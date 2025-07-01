@@ -12,7 +12,7 @@ import { Producto } from 'src/app/models/productos/Producto'
 import JsBarcode from 'jsbarcode';
 import { ProductoService } from 'src/app/services/Productos/productos.service';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
-import { AuthService } from 'src/app/services/Autenticacion/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 

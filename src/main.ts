@@ -4,7 +4,7 @@ import { MainComponent } from './app/main/main.component';
 import { routes } from './app/main/app.routes';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { jwtInterceptor } from './app/interceptor/jwt.interceptor'; // ✅ nombre correcto
+import { jwtInterceptor } from './app/core/interceptor/jwt.interceptor';
 
 import { importProvidersFrom } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
