@@ -41,7 +41,7 @@ export const environment = {
 
 //Inicio Productos
 
-,registrarProductos: "User/Login",
+,registrarProductos: "productos/registrarproducto",
 // ,crearUsuario: 'User/CreateUsers'
 
 

@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { authGuard } from '../core/guards/auth.guard';
 
 export const routes: Routes = [
 // export default [
@@ -14,62 +15,75 @@ export const routes: Routes = [
 },
 {
   path: 'usuario',
+   canActivate: [authGuard],
     loadComponent: () =>
       import('../component/usuarios/usuarios.component').then((m) => m.UsuariosComponent)
 },
 {
   path: 'productos',
+   canActivate: [authGuard],
     loadComponent: () =>
       import('../component/productos/productos.component').then((m) => m.ProductosComponent)
 },
 {
   path: 'bodegas',
+   canActivate: [authGuard],
     loadComponent: () =>
       import('../component/bodegas/bodegas.component').then((m) => m.BodegasComponent)
 },
 {
   path: 'categorias',
+   canActivate: [authGuard],
     loadComponent: () =>
       import('../component/categorias/categorias.component').then((m) => m.CategoriasComponent)
 },
 {
   path: 'configuracion',
+   canActivate: [authGuard],
   loadComponent: () =>
       import('../component/configuracion/configuracion.component').then((m) => m.ConfiguracionComponent)
 },
 {
   path: 'permisos',
+   canActivate: [authGuard],
   loadComponent: () =>
       import('../component/permisos/permisos.component').then((m) => m.PermisosComponent)
 },
 {
   path: 'modulos',
+   canActivate: [authGuard],
   loadComponent: () =>
       import('../component/modulos/modulos.component').then((m) => m.ModulosComponent)
 },
 {
   path: 'stock',
+   canActivate: [authGuard],
   loadComponent: () => import('../component/stock/stock.component').then(m => m.StockComponent)
 },
 {
 
   path: 'recepcion',
+   canActivate: [authGuard],
   loadComponent: () => import('../component/recepcion/recepcion.component').then(m => m.RecepcionComponent)
 },
 {
   path: 'devoluciones',
+   canActivate: [authGuard],
   loadComponent: () => import('../component/devoluciones/devoluciones.component').then(m => m.DevolucionesComponent)
 },
 {
   path: 'reportes',
+   canActivate: [authGuard],
   loadComponent: () => import('../component/reportes/reportes.component').then(m => m.ReportesComponent)
 },
 {
   path: 'auditoria',
+   canActivate: [authGuard],
   loadComponent: () => import('../component/auditoria/auditoria.component').then(m => m.AuditoriaComponent)
 },
 {
   path: 'notificaciones',
+   canActivate: [authGuard],
   loadComponent: () =>
       import('../component/notificaciones/notificaciones.component').then((m) => m.NotificacionesComponent)
 }
