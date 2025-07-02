@@ -6,3 +6,10 @@
     border-radius: 5px;
     margin: top 0;
   }
+
+  .card-header {
+  background-color: #000000 !important; /* Fondo negro */
+  color: white !important;              /* Texto blanco */
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
