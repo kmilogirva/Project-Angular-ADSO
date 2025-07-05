@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators,ReactiveFormsModule  } from '@angula
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule,Router  } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private authService : AuthService,
-    private toastr: ToastrService ){ }
+    private toastr: ToastrService,private router: Router ){ }
 
   ngOnInit(): void {
     this.instanciarFormulario();
@@ -34,15 +34,6 @@ export class LoginComponent implements OnInit {
   get f() {
     return this.loginForm.controls;
   }
-
-  // get Correo() {
-  //   return this.f['correo'].value();
-  // }
-
-  // get Contrasena() {
-  //   return this.loginForm.get('contrasena');
-  // }
-
   loginSubmited() {
     if (this.loginForm.valid) {
 
@@ -56,16 +47,13 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(datosLogin).subscribe(
         (respuesta) => {
-            console.log(respuesta)
           if (respuesta.token) {
             this.toastr.success('Inicio de sesión exitoso');
             localStorage.setItem('jwtToken', respuesta.token);
-            // console.log("Esta es mi token" + respuesta.token)
             localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
-            // console.log("Este es mi json de usaurio" + respuesta.usuario)
-
             this.userAutentication = true;
             this.loginForm.reset();
+            this.router.navigate(['/inicio']);
 
           } else {
             this.toastr.error(respuesta.mensaje);

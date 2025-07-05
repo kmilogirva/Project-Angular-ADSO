@@ -14,13 +14,22 @@ export const routes: Routes = [
   pathMatch: 'full'
 },
 {
+  path: 'inicio',
+   canActivate: [authGuard],
+   loadComponent: () =>
+  import('../shared/components/inicio/inicio.component').then(m => {
+    console.log('DEBUG m=', m);    // debería mostrar { InicioComponent: class … }
+    return m.InicioComponent;
+  })
+},
+{
   path: 'usuario',
    canActivate: [authGuard],
     loadComponent: () =>
       import('../component/usuarios/usuarios.component').then((m) => m.UsuariosComponent)
 },
 {
-  path: 'productos',
+  path: 'crear-productos',
    canActivate: [authGuard],
     loadComponent: () =>
       import('../component/productos/productos.component').then((m) => m.ProductosComponent)

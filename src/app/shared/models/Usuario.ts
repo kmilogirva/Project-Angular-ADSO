@@ -5,6 +5,7 @@ export interface Usuario {
   correo: string;
   telefono: string;
   sexo: string;
-  contraseña: string;
+  contrasena: string;
   rol?: string[];
+  idUsuarioCreacion :number
 }

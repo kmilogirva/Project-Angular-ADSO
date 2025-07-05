@@ -37,7 +37,7 @@ export const environment = {
 //Inicio Usuario
 
  loginUsuario: "Seguridad/InicioSesion",
- crearUsuario: 'User/CreateUsers'
+ crearUsuario: 'User/CrearUsuario'
 
 //Inicio Productos
 
