@@ -43,6 +43,8 @@ export class UsuariosComponent implements OnInit {
 
   registerSubmited(): void {
     // Verificamos si el formulario es válido y las contraseñas coinciden
+    const idUsuario = this.authService.obtenerIdUsuario();
+
     if (this.usuarioForm.valid && this.f['contraseña'].value === this.f['confirmarcontrasena'].value) {
       const usuario: Usuario = {
         nombres: this.f['nombres'].value,
@@ -50,10 +52,11 @@ export class UsuariosComponent implements OnInit {
         correo: this.f['correo'].value,
         telefono: this.f['telefono'].value,
         sexo: this.f['sexo'].value,
-        contraseña: this.f['contraseña'].value,
-        rol: ['Admin', 'Auxiliar']
+        contrasena: this.f['contraseña'].value,
+        idUsuarioCreacion: Number(idUsuario)
+        // rol: ['Admin', 'Auxiliar']
       };
-
+      console.log(usuario)
       this.authService.registerUser(usuario).subscribe({
         next: (response) => {
           if (response.exitoso) {

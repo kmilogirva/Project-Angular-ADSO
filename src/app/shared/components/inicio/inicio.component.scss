@@ -1,0 +1,56 @@
+/* ===== Layout general ===== */
+app-sidebar {
+  /* Fija el ancho del menú lateral y permite scroll interno */
+  width: 250px;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* Fondo suave para el área principal */
+main {
+  background: #f8f9fa;      /* tono gris claro */
+}
+
+/* ===== Carrusel ===== */
+#carouselInicio {
+  border-radius: 0.75rem;   /* esquinas redondeadas */
+  overflow: hidden;         /* recorta img */
+  box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.15);
+}
+
+/* Ajusta la altura de las imágenes para que se vean uniformes */
+#carouselInicio .carousel-item img {
+  object-fit: cover;
+  height: 360px;            /* cambia según tu gusto / media queries */
+}
+
+/* Texto de caption más discreto */
+#carouselInicio .carousel-caption h6 {
+  font-size: 1rem;
+  background: rgba(0,0,0,0.55);
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+}
+
+/* ===== Tarjeta de bienvenida ===== */
+.card.welcome-card {
+  max-width: 480px;
+  margin-inline: auto;      /* centra horizontalmente */
+  border-radius: 0.75rem;
+  box-shadow: 0 0.125rem 0.75rem rgba(0,0,0,0.08);
+}
+
+.card.welcome-card p {
+  font-size: 1.05rem;
+}
+
+/* ===== Responsividad ===== */
+@media (max-width: 768px) {
+  app-sidebar {
+    display: none;          /* oculta sidebar en móviles */
+  }
+  #carouselInicio .carousel-item img {
+    height: 240px;
+  }
+}
