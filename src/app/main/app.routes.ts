@@ -6,7 +6,7 @@ export const routes: Routes = [
 {
   path: 'acceso',
   loadComponent: () =>
-      import('../component/login/login.component').then((m) => m.LoginComponent)
+      import('../component/seguridad/login/login.component').then((m) => m.LoginComponent)
 },
 {
   path: '',
@@ -23,16 +23,24 @@ export const routes: Routes = [
   })
 },
 {
-  path: 'usuario',
+  path: 'crear-usuario',
    canActivate: [authGuard],
     loadComponent: () =>
-      import('../component/usuarios/usuarios.component').then((m) => m.UsuariosComponent)
+      import('../component/gestionusuarios/registrousuarios/registrousuario.component').then((m) => m.RegistroUsuariosComponent)
 },
+
+{
+  path: 'crear-roles',
+   canActivate: [authGuard],
+    loadComponent: () =>
+      import('../component/seguridad/creacionroles/creacionroles.component').then((m) => m.CreacionrolesComponent)
+},
+
 {
   path: 'crear-productos',
    canActivate: [authGuard],
     loadComponent: () =>
-      import('../component/productos/productos.component').then((m) => m.ProductosComponent)
+      import('../component/gestionproductos/productos/productos.component').then((m) => m.ProductosComponent)
 },
 {
   path: 'bodegas',

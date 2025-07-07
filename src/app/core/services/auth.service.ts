@@ -1,23 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/shared/models/Usuario';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 interface MyJwtPayload extends JwtPayload {
-  IdUsuario?: string; // Asegúrate de que este sea el nombre correcto en el token
+  IdUsuario?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseServerUrl = environment.apiUrl;
-  private currentUserSubject: BehaviorSubject<Usuario | null>;
-  public currentUser: Observable<Usuario | null>;
 
+  // #region 🔧 Propiedades – estado y configuración
+  private readonly baseServerUrl = environment.apiUrl;
+  private currentUserSubject: BehaviorSubject<Usuario | null>;
+  public  currentUser:        Observable<Usuario | null>;
+  // #endregion
+
+  // #region 🚀 Constructor
   constructor(private http: HttpClient) {
     const savedUser = localStorage.getItem('usuario');
     this.currentUserSubject = new BehaviorSubject<Usuario | null>(
@@ -25,33 +28,27 @@ export class AuthService {
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
+  // #endregion
 
-  // =======================
-  // Login y Registro
-  // =======================
-
+  // #region 🔐 Autenticación (Login / Registro)
   login(datosLogin: any): Observable<any> {
-    return this.http.post(`${this.baseServerUrl + environment.loginUsuario}`, datosLogin);
-  }
-
-  registerUser(usuario: Usuario): Observable<{ exitoso: boolean; mensaje: string }> {
-    return this.http.post<{ exitoso: boolean; mensaje: string }>(
-      this.baseServerUrl + environment.crearUsuario,
-      usuario
-    ).pipe(
-      catchError(error => {
-        if (error.status === 409) {
-          return throwError(() => ({ exitoso: false, mensaje: 'El Usuario ya existe' }));
-        }
-        return throwError(() => ({ exitoso: false, mensaje: 'Error de conexión con el servidor' }));
-      })
+    return this.http.post(
+      `${this.baseServerUrl}${environment.loginUsuario}`,
+      datosLogin
     );
   }
+  // #endregion
 
-  // =======================
-  // Token y Usuario actual
-  // =======================
+   // #region 🔐 Autenticación (Login / Registro)
+  crearRol(datosLRol: any): Observable<any> {
+    return this.http.post(
+      `${this.baseServerUrl}${environment.crearRol}`,
+      datosLRol
+    );
+  }
+  // #endregion
 
+  // #region 🪪 Token – obtención y decodificación
   getToken(): string | null {
     return localStorage.getItem('jwtToken');
   }
@@ -66,10 +63,11 @@ export class AuthService {
       return null;
     }
   }
+  // #endregion
 
+  // #region 👤 Usuario actual
   obtenerIdUsuario(): string | null {
-    const payload = this.getDecodedToken();
-    return payload?.IdUsuario || null;
+    return this.getDecodedToken()?.IdUsuario ?? null;
   }
 
   public get currentUserValue(): Usuario | null {
@@ -79,14 +77,13 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken() && !!this.currentUserValue;
   }
+  // #endregion
 
-  // =======================
-  // Logout
-  // =======================
-
+  // #region 🔓 Cierre de sesión
   logout(): void {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('usuario');
     this.currentUserSubject.next(null);
   }
+  // #endregion
 }
