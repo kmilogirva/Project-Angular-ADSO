@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { UsuarioService } from 'src/app/services/usuarios/usuarios.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Usuario } from 'src/app/shared/models/Usuario';
 import { CommonModule } from '@angular/common';
@@ -8,13 +9,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss'],
+  selector: 'app-registrousuario',
+  templateUrl: './registrousuario.component.html',
+  styleUrls: ['./registrousuario.component.scss'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, SidebarComponent]
 })
-export class UsuariosComponent implements OnInit {
+export class RegistroUsuariosComponent implements OnInit {
   usuarioForm!: FormGroup;
   cuentaCreada = false;
   repetircontrasena = 'none';
@@ -22,6 +23,7 @@ export class UsuariosComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private usuarioService : UsuarioService,
     private toastr: ToastrService
   ) {}
 
@@ -57,7 +59,7 @@ export class UsuariosComponent implements OnInit {
         // rol: ['Admin', 'Auxiliar']
       };
       console.log(usuario)
-      this.authService.registerUser(usuario).subscribe({
+      this.usuarioService.crearUsuario(usuario).subscribe({
         next: (response) => {
           if (response.exitoso) {
             this.toastr.success(response.mensaje);

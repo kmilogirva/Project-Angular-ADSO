@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Producto } from 'src/app/models/productos/Producto';
+import {ListadoProductosResponse, ProductosResponse} from 'src/app/models/Response/ProductosResponse'
 
 
 @Injectable({
@@ -24,26 +25,30 @@ import { Producto } from 'src/app/models/productos/Producto';
     // }
 
     registrarProducto(producto: Producto) {
-        return this.http.post(`${this.baseServerUrl + environment.registrarProductos}`, producto)
+        return this.http.post<ProductosResponse>(`${this.baseServerUrl + environment.registrarProductos}`, producto)
   }
+
+  actualizarProducto(producto: Producto) {
+    console.log("Este es mientidad en el service", producto)
+  const url = `${this.baseServerUrl}${environment.actualizarProducto}/${producto.idProducto}`;
+  console.log("URL SERVICES", url)
+  return this.http.put<ProductosResponse>(url, producto);
+}
 
 
     obtenercomboCategorias(){
-      
-
     }
 
+   obtenerListadoProductos(): Observable<ListadoProductosResponse> {
+    return this.http.get<ListadoProductosResponse>(
+      `${this.baseServerUrl}${environment.obtenerListadoProductos}`
+    );
+  }
 
-  // registerUser(producto: Producto): Observable<{exitoso: boolean; mensaje: string}> {
-  //     return this.http.post(`${this.baseServerUrl + environment.registrarProductos}`, producto)
-  //   // ).pipe(
-  //   //   catchError(error => {
-  //   //     // Manejo de errores
-  //   //     if (error.status === 409) {
-  //   //       return throwError({ exitoso: false, mensaje: 'El Usuario ya existe' });
-  //   //     }
-  //   //     return throwError({ exitoso: false, mensaje: 'Error de conexión con el servidor' });
-  //   //   })
-  //   );
+  obtenerProductoPorId(id: number) {
+  return this.http.get<any>(`${this.baseServerUrl + environment.obtenerProductoPorId}`, {
+    params: { idProducto: id }
+  });
+}
 
 }

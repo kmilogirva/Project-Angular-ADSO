@@ -1,0 +1,33 @@
+/* ================================================
+   CONTENEDOR DE LA TABLA
+   ================================================ */
+.tabla-wrapper {
+  border: 1px solid #cfd4da;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .06);
+  overflow: hidden;
+  max-width: 95%;
+  margin: 0 auto;
+}
+
+/* Si quieres un margen interior extra dentro del borde */
+.tabla-wrapper > table {
+  width: 100%;        /* que la tabla llene el wrapper */
+  border: none;       /* evita doble borde */
+}
+
+.barra-filtros {
+  justify-content: flex-start;
+  margin: 0 auto;
+  max-width: 95%;
+}
+
+/* Campo de búsqueda más estrecho que “flex‑fill” */
+.campo-buscar {
+  width: 250px;       // ajusta al gusto
+}
+
+/* Campos numéricos */
+.campo-num {
+  width: 120px;
+}
