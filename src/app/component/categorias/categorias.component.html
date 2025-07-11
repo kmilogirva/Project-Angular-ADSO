@@ -1,78 +1,79 @@
 <div class="d-flex">
+  <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
+  <!-- Contenido principal -->
   <div class="container mt-5">
+    <!-- Encabezado visual como en "Registro de Productos" -->
     <div class="card shadow-lg">
       <div class="card-header bg-dark text-white text-center">
-        <h2>Gestión de Categorías</h2>
+        <h2 class="mb-0">Registro de Categorías</h2>
       </div>
 
       <div class="card-body">
+        <!-- Formulario -->
         <form [formGroup]="categoriaForm" (ngSubmit)="registrarCategoria()">
-          <div class="row">
-            <div class="col-md-4 mb-3">
-              <label class="form-label fw-bold">Código de Categoría</label>
-              <input type="text" class="form-control" formControlName="codigo" placeholder="Ej. RO001TEX" />
-              <div *ngIf="f['codigo'].touched && f['codigo'].invalid" class="text-danger small">
-                Debe tener entre 6 y 10 caracteres.
-              </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label class="form-label">Nombre Categoría</label>
+              <input type="text" class="form-control" formControlName="nomCategoria">
             </div>
-
-            <div class="col-md-5 mb-3">
-              <label class="form-label fw-bold">Descripción</label>
-              <input type="text" class="form-control" formControlName="descripcion" />
-              <div *ngIf="f['descripcion'].touched && f['descripcion'].invalid" class="text-danger small">
-                Campo obligatorio.
-              </div>
+            <div class="col">
+              <label class="form-label">Descripción</label>
+              <input type="text" class="form-control" formControlName="descripcion">
             </div>
-
-            <div class="col-md-3 mb-3">
-              <label class="form-label fw-bold">Estado</label>
-              <select class="form-select" formControlName="estado">
-                <option value="ACTIVO">Activo</option>
-                <option value="INACTIVO">Inactivo</option>
+            <div class="col">
+              <label class="form-label">Estado</label>
+              <select class="form-control" formControlName="estado">
+                <option [value]="true">ACTIVO</option>
+                <option [value]="false">INACTIVO</option>
               </select>
             </div>
           </div>
-
-          <div class="text-center mt-4">
-            <button type="submit" class="btn btn-primary btn-lg" [disabled]="categoriaForm.invalid">
-              Registrar Categoría
+          <div class="text-end">
+            <button class="btn btn-primary me-2" type="submit">
+              {{ editando ? 'Actualizar' : 'Registrar' }}
             </button>
+            <button *ngIf="editando" class="btn btn-secondary" type="button" (click)="cancelarEdicion()">Cancelar</button>
           </div>
         </form>
       </div>
-
-      <div class="container mt-5">
-        <div class="card shadow-lg">
-          <div class="card-body">
-            <label class="col-sm-2">Categorías registradas:</label>
-            <div class="table-responsive">
-              <table datatable class="table table-bordered table-hover table-striped text-center" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-                <thead class="table-dark">
-                  <tr>
-                    <th>#</th>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let cat of categorias; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ cat.codigo }}</td>
-                    <td>{{ cat.descripcion }}</td>
-                    <td>{{ cat.estado }}</td>
-                  </tr>
-                  <tr *ngIf="categorias.length === 0">
-                    <td colspan="4">No hay categorías registradas.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+
+    <hr>
+
+    <!-- Tabla de Categorías -->
+  <!-- Tabla de Categorías (sin DataTables) -->
+<div class="card shadow-sm mt-3">
+  <div class="card-body">
+    <table class="table table-bordered table-hover table-striped">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of categorias">
+          <td>{{ cat.idCategoria }}</td>
+          <td>{{ cat.nomCategoria }}</td>
+          <td>{{ cat.descripcion }}</td>
+          <td>{{ cat.estado ? 'ACTIVO' : 'INACTIVO' }}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-warning me-2" (click)="editarCategoria(cat)">✏️ Editar</button>
+          </td>
+        </tr>
+        <tr *ngIf="categorias && categorias.length === 0">
+          <td colspan="5" class="text-center">No hay categorías registradas.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
   </div>
 </div>
