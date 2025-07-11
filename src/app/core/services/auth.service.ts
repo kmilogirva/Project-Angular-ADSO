@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/shared/models/Usuario';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { Roles } from 'src/app/shared/models/roles.model';
 
 interface MyJwtPayload extends JwtPayload {
   IdUsuario?: string;
@@ -13,6 +14,12 @@ interface MyJwtPayload extends JwtPayload {
   providedIn: 'root'
 })
 export class AuthService {
+
+  obtenerRoles(): Observable<Roles[]> {
+  return this.http.get<Roles[]>(
+    `${this.baseServerUrl}seguridad/listaroles` // Ajusta la ruta si es diferente
+  );
+}
 
   // #region 🔧 Propiedades – estado y configuración
   private readonly baseServerUrl = environment.apiUrl;
@@ -86,4 +93,6 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
   // #endregion
+
+
 }

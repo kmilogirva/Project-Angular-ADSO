@@ -1,64 +1,43 @@
-<!-- role-create.component.html -->
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <div class="d-flex">
-  <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
-  <!-- Contenido principal -->
   <div class="container my-5">
     <div class="card shadow border-0 rounded-4">
-      <!-- Encabezado -->
       <div class="card-header bg-gradient bg-dark text-white text-center rounded-top-4 py-3">
         <h2 class="mb-0">
-          <i class="fa-solid fa-shield-halved me-2"></i>Creación de Roles
+          <i class="fa-solid fa-shield-halved me-2"></i>Gestión de Roles
         </h2>
       </div>
 
-      <!-- Cuerpo -->
       <div class="card-body p-4">
+        <!-- Formulario de creación -->
         <form *ngIf="rolesForm"
               [formGroup]="rolesForm"
               (ngSubmit)="onSubmit()"
-              class="needs-validation"
+              class="needs-validation mb-5"
               novalidate>
 
-          <!-- ID oculto (opcional) -->
           <input type="hidden" id="IdRol" formControlName="IdRol" />
 
           <div class="row g-4">
-            <!-- Nombre del Rol -->
             <div class="col-lg-6">
               <div class="form-floating">
-                <input
-                  id="NombreRol"
-                  type="text"
-                  class="form-control pe-5"
-                  formControlName="NombreRol"
-                  placeholder="Nombre del Rol"
-                  required />
+                <input id="NombreRol" type="text" class="form-control pe-5"
+                      formControlName="NombreRol" placeholder="Nombre del Rol" required />
                 <label for="NombreRol" class="fw-bold">
                   <i class="fa-solid fa-user-tag me-1"></i>Nombre del Rol
                 </label>
               </div>
-
-              <!-- Mensaje de validación -->
-              <div
-                *ngIf="f['NombreRol'].touched && f['NombreRol'].invalid"
-                class="text-danger small mt-1">
+              <div *ngIf="f['NombreRol'].touched && f['NombreRol'].invalid" class="text-danger small mt-1">
                 El nombre es obligatorio.
               </div>
             </div>
 
-            <!-- Interruptor Activo/Inactivo -->
             <div class="col-lg-4 d-flex align-items-center">
               <div class="form-check form-switch form-check-lg ms-lg-4">
-                <input
-                  id="IdEstado"
-                  type="checkbox"
-                  class="form-check-input"
-                  formControlName="IdEstado">
+                <input id="IdEstado" type="checkbox" class="form-check-input" formControlName="IdEstado">
                 <label class="form-check-label fw-bold" for="IdEstado">
                   <i class="fa-solid fa-power-off me-1"></i>Estado
                 </label>
@@ -66,20 +45,58 @@
             </div>
           </div>
 
-          <!-- Botones -->
           <div class="d-flex justify-content-center gap-3 mt-5">
             <button type="reset" class="btn btn-outline-secondary px-4">
               <i class="fa-solid fa-rotate-left me-1"></i>Limpiar
             </button>
-
-            <button
-              type="submit"
-              class="btn btn-success px-5"
-              [disabled]="rolesForm.invalid">
+            <button type="submit" class="btn btn-success px-5" [disabled]="rolesForm.invalid">
               <i class="fa-solid fa-floppy-disk me-1"></i>Guardar Rol
             </button>
           </div>
         </form>
+
+        <!-- Tabla de roles existentes -->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="loading">
+                <td colspan="4" class="text-center">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngFor="let rol of rolesList">
+                <td>{{ rol.id }}</td>
+                <td>{{ rol.nombreRol }}</td>
+                <td>
+                  <span class="badge" [ngClass]="rol.idEstado ? 'bg-success' : 'bg-secondary'">
+                    {{ rol.idEstado ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-warning me-2" (click)="editarRol(rol)">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="eliminarRol(rol.id)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="!loading && rolesList.length === 0">
+                <td colspan="4" class="text-center">No hay roles registrados</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

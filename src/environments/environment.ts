@@ -5,7 +5,7 @@
 export const environment = {
 
   production: false,
-  
+
 //   espanol: {
 //     processing: "Procesando...",
 //     search: "Buscar:",
@@ -30,7 +30,7 @@ export const environment = {
 //     },
 // },
 
- //Inicio Conexión Api y Variables 
+ //Inicio Conexión Api y Variables
 
  apiUrl: "https://localhost:44374/api/", // backend pruebas
 
@@ -38,6 +38,7 @@ export const environment = {
 
  loginUsuario: "Seguridad/InicioSesion",
  crearRol: "Seguridad/crearrol",
+ obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
  crearUsuario: 'User/CrearUsuario'
 
 //Inicio Productos
