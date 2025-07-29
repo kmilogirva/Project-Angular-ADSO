@@ -1,0 +1,72 @@
+<section class="barra-filtros d-flex flex-wrap align-items-center gap-2 mb-3">
+  <!-- Búsqueda por nombre o correo -->
+  <mat-form-field appearance="outline" class="campo-buscar">
+    <mat-label>Buscar…</mat-label>
+    <input matInput [(ngModel)]="termino" (keyup)="aplicarFiltro()" placeholder="Nombre, correo…" />
+  </mat-form-field>
+</section>
+
+<!-- Tabla -->
+<div class="tabla-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 w-100">
+    <ng-container matColumnDef="posicion">
+      <th mat-header-cell *matHeaderCellDef> # </th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        {{ i + 1 }}
+      </td>
+    </ng-container>
+    <!-- Nombre completo -->
+    <ng-container matColumnDef="nombreCompleto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let u">
+        {{ u.nombre1 }} {{ u.nombre2 }} {{ u.apellido1 }} {{ u.apellido2 }}
+      </td>
+    </ng-container>
+
+    <!-- Correo -->
+    <ng-container matColumnDef="correo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo</th>
+      <td mat-cell *matCellDef="let u">{{ u.correo }}</td>
+    </ng-container>
+
+    <!-- Teléfono -->
+    <ng-container matColumnDef="telefono">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Teléfono</th>
+      <td mat-cell *matCellDef="let u">{{ u.telefono }}</td>
+    </ng-container>
+
+    <!-- Rol -->
+    <ng-container matColumnDef="idRol">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rol</th>
+      <td mat-cell *matCellDef="let u">{{ u.idRol }}</td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="idEstado">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+      <td mat-cell *matCellDef="let u">
+        <span [ngClass]="{ 'text-success': u.idEstado === 1, 'text-danger': u.idEstado !== 1 }">
+          {{ u.idEstado === 1 ? 'Activo' : 'Inactivo' }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let u" class="text-end">
+        <button mat-icon-button color="primary" (click)="editar(u)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="eliminar(u)" matTooltip="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

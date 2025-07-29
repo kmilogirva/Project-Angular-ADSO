@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/shared/models/Usuario';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { ComboResponse } from 'src/app/models/Response/Generales/ComboResponse';
 
 interface MyJwtPayload extends JwtPayload {
   IdUsuario?: string;
@@ -45,6 +46,10 @@ export class AuthService {
       `${this.baseServerUrl}${environment.crearRol}`,
       datosLRol
     );
+  }
+
+    obtenerComboRoles(): Observable<ComboResponse[]> {
+    return this.http.get<ComboResponse[]>( `${this.baseServerUrl}${environment.obtenerComboRoles}`,);
   }
   // #endregion
 
