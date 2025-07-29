@@ -1,15 +1,69 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+@import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css";
+/* Contenedor general */
 .container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: top 0;
-  }
-
-  .card-header {
-  background-color: #000000 !important; /* Fondo negro */
-  color: white !important;              /* Texto blanco */
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  max-width: 1200px;
+  margin: 20px auto 0 auto; /* Elimina el margin-top inválido */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
+
+/* Fondo general del módulo */
+.registro-wrapper {
+  min-height: 100vh;
+  background-color: #f5f8fa;
+}
+
+/* Tarjeta de registro */
+.registro-card {
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado de tarjeta: puedes alternar entre fondo degradado o negro */
+.registro-card .card-header {
+  background-color: #000000 !important;
+  /* background-color: #000000 !important; */ /* Alternativa: fondo negro */
+  color: white;
+  padding: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+}
+
+/* Inputs y selects */
+input.form-control,
+select.form-select {
+  border-radius: 0.5rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* Estilo al enfocar inputs y selects */
+input.form-control:focus,
+select.form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  border-color: #007bff;
+}
+
+/* Botón principal */
+button.btn-success {
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  transition: background-color 0.3s ease;
+}
+
+button.btn-success:hover {
+  background-color: #28a745;
+}
+
+/* Errores en campos */
+small.text-danger {
+  font-size: 0.85rem;
+}
+/* Animaciones (requiere Animate.css cargado en el index.html) */
+

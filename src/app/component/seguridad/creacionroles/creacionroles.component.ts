@@ -22,7 +22,7 @@ private toastr: ToastrService){
 
   instanciarFormulario(): void {
     this.rolesForm = this.fb.group({
-      IdRol:[''],
+      idRol:[''],
       NombreRol:['',Validators.required],
       IdEstado:[false,Validators.required],
       IdUsuarioCreacion: ['']
@@ -39,26 +39,26 @@ private toastr: ToastrService){
 
 onSubmit() {
   if (this.rolesForm.invalid) return;
-const idUsuario = this.authService.obtenerIdUsuario();
 
-this.rolesForm.patchValue({ IdUsuarioCreacion: idUsuario });
+  const idUsuario = this.authService.obtenerIdUsuario();
+  this.rolesForm.patchValue({ IdUsuarioCreacion: idUsuario });
+
   const nuevoRol = this.rolesForm.value;
-  console.log('Rol a insertar:', nuevoRol);
-    this.authService.crearRol(nuevoRol).subscribe({
-      next:(response) => {
-        if (response.exitoso){
-          this.toastr.success(response.mensaje);
-          this.rolesForm.reset();
-        }else{
-          this.toastr.error(response.mensaje)
-        }
-      },
-      error: () => {
+
+  this.authService.crearRol(nuevoRol).subscribe({
+    next: (response) => {
+      this.toastr.success(response.mensaje);
+      this.rolesForm.reset();
+    },
+    error: (err) => {
+      if (err.status === 409) {
+        this.toastr.warning(err.error.mensaje);
+      } else {
         this.toastr.error('Error al registrar el rol');
       }
-    })
-  // Si quieres limpiar el formulario después de visualizar los datos:
-  // this.rolesForm.reset({ IdEstado: true });
+    }
+  });
 }
+
 
 }
