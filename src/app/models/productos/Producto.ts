@@ -1,5 +1,5 @@
 export interface Producto {
-  idProducto?: number;
+  idProducto?: number | null;
   codEan?: string;
   nomProducto: string;
   idCategoria: number;

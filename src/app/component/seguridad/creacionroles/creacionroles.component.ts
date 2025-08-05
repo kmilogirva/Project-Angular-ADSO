@@ -34,9 +34,11 @@ export class CreacionrolesComponent implements OnInit {
   // 1. Definir formulario con los nombres EXACTOS como están en backend y HTML
   instanciarFormulario(): void {
     this.rolesForm = this.fb.group({
+
       IdRol: [''],
       NombreRol: ['', Validators.required],
       IdEstado: [true, Validators.required],
+
       IdUsuarioCreacion: ['']
     });
   }
@@ -60,6 +62,7 @@ export class CreacionrolesComponent implements OnInit {
       }
     });
   }
+
 
   // 3. Editar: llena el formulario con el rol seleccionado
   editarRol(rol: Roles): void {
@@ -146,4 +149,28 @@ export class CreacionrolesComponent implements OnInit {
     });
   }
 }
+
+onSubmit() {
+  if (this.rolesForm.invalid) return;
+
+  const idUsuario = this.authService.obtenerIdUsuario();
+  this.rolesForm.patchValue({ IdUsuarioCreacion: idUsuario });
+
+  const nuevoRol = this.rolesForm.value;
+
+  this.authService.crearRol(nuevoRol).subscribe({
+    next: (response) => {
+      this.toastr.success(response.mensaje);
+      this.rolesForm.reset();
+    },
+    error: (err) => {
+      if (err.status === 409) {
+        this.toastr.warning(err.error.mensaje);
+      } else {
+        this.toastr.error('Error al registrar el rol');
+      }
+    }
+  });
+}
+
 }

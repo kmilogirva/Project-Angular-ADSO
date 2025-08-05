@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/shared/models/Usuario';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { Roles } from 'src/app/shared/models/roles.model';
+import { ComboResponse } from 'src/app/models/Response/Generales/ComboResponse';
+
 
 interface MyJwtPayload extends JwtPayload {
   IdUsuario?: string;
@@ -41,6 +43,22 @@ export class AuthService {
   // #endregion
 
   // #region 🪪 Token – obtención y decodificación
+=======
+   // #region 🔐 Autenticación (Login / Registro)
+  crearRol(datosLRol: any): Observable<any> {
+    return this.http.post(
+      `${this.baseServerUrl}${environment.crearRol}`,
+      datosLRol
+    );
+  }
+
+    obtenerComboRoles(): Observable<ComboResponse[]> {
+    return this.http.get<ComboResponse[]>( `${this.baseServerUrl}${environment.obtenerComboRoles}`,);
+  }
+  // #endregion
+
+  // #region 🪪 Token – obtención y decodificación
+  
   getToken(): string | null {
     return localStorage.getItem('jwtToken');
   }

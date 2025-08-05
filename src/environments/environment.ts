@@ -6,6 +6,7 @@ export const environment = {
 
   production: false,
 
+
 //   espanol: {
 //     processing: "Procesando...",
 //     search: "Buscar:",
@@ -30,6 +31,7 @@ export const environment = {
 //     },
 // },
 
+
  //Inicio Conexión Api y Variables
 
  apiUrl: "https://localhost:44374/api/", // backend pruebas
@@ -40,6 +42,12 @@ export const environment = {
  crearRol: "Seguridad/crearrol",
  obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
  crearUsuario: 'User/CrearUsuario'
+ obtenerComboRoles: "Seguridad/combo-roles",
+ crearUsuario: 'User/crearusuario',
+ obtenerListadoUsuarios: "User/listarusuarios"
+ ,obtenerUsuarioPorId: "User/obtenerusuarioporid"
+ ,actualizarUsuarioPorId: "User/actualizarusuario"
+ ,eliminarUsuarioPorId:"User/eliminarusuarioporid"
 
 //Inicio Productos
 

@@ -1,66 +1,132 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DataTablesModule, DataTableDirective } from 'angular-datatables';
+// import { DataTablesModule, DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
-
-interface Categoria {
-  codigo: string;
-  descripcion: string;
-  estado: 'ACTIVO' | 'INACTIVO';
-}
+import { CategoriaService, Categoria } from 'src/app/services/Categorias/categoria.services';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, SidebarComponent, DataTablesModule]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    SidebarComponent,
+    FormsModule
+    // DataTablesModule
+  ]
 })
 export class CategoriasComponent implements OnInit {
   categoriaForm!: FormGroup;
   categorias: Categoria[] = [];
+  editando = false;
+  categoriaEditandoId: number | null = null;
 
   dtOptions: any = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  // @ViewChild(DataTableDirective, { static: false }) dtElement!: DataTableDirective;
 
-  @ViewChild(DataTableDirective, { static: false }) dtElement!: DataTableDirective;
-
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private categoriaService: CategoriaService) {}
 
   ngOnInit(): void {
     this.categoriaForm = this.fb.group({
-      codigo: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(10)]],
+      nomCategoria: ['', Validators.required],
       descripcion: ['', Validators.required],
-      estado: ['ACTIVO', Validators.required]
+      estado: [true, Validators.required]
     });
 
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 5,
-      language: {
-        url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json'
-      }
-    };
+  //   this.dtOptions = {
+  //   pagingType: 'full_numbers',
+  //   pageLength: 5,
+  //   language: environment.espanol
+  // };
 
-    this.dtTrigger.next(null);
+    this.cargarCategorias();
   }
 
   get f() {
     return this.categoriaForm.controls;
   }
 
+   cargarCategorias() {
+    this.categoriaService.listarCategorias().subscribe({
+      next: (data) => {
+        this.categorias = data;
+
+        console.log("Categorías cargadas:", data);
+      },
+      error: (err) => console.error('Error al cargar categorías', err)
+    });
+  }
+  
+
+  // ngOnDestroy(): void {
+  //   this.dtTrigger.unsubscribe();
+  // }
+
   registrarCategoria(): void {
     if (this.categoriaForm.invalid) return;
 
-    const nuevaCategoria: Categoria = { ...this.categoriaForm.value };
-    this.categorias.push(nuevaCategoria);
-    this.categoriaForm.reset({ estado: 'ACTIVO' });
+    if (this.editando && this.categoriaEditandoId !== null) {
+      const categoriaActualizada: Categoria = {
+        ...this.categoriaForm.value,
+        idCategoria: this.categoriaEditandoId,
+        fechaModificacion: new Date(),
+        idUsuarioModificacion: 1
+      };
+
+      this.categoriaService.actualizarCategoria(categoriaActualizada).subscribe({
+        next: (response) => {
+          console.log(response)
+          this.resetFormulario();
+          this.cargarCategorias();
+        },
+        error: (err) => console.error('Error al actualizar categoría', err)
+      });
+    } else {
+      const nuevaCategoria: Categoria = {
+        ...this.categoriaForm.value,
+        fechaCreacion: new Date(),
+        idUsuarioCreacion: 1
+      };
+
+      this.categoriaService.registrarCategoria(nuevaCategoria).subscribe({
+        next: (response) => {
+          console.log(response)
+          this.resetFormulario();
+          this.cargarCategorias();
+        },
+        error: (err) => console.error('Error al registrar categoría', err)
+      });
+    }
   }
 
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
+  editarCategoria(categoria: Categoria): void {
+    this.categoriaForm.patchValue({
+      nomCategoria: categoria.nomCategoria,
+      descripcion: categoria.descripcion,
+      estado: categoria.estado
+    });
+
+    this.editando = true;
+    this.categoriaEditandoId = categoria.idCategoria ?? null;
   }
+
+  cancelarEdicion(): void {
+    this.resetFormulario();
+  }
+
+  resetFormulario(): void {
+    this.editando = false;
+    this.categoriaEditandoId = null;
+    this.categoriaForm.reset({ estado: true });
+  }
+
+
 }

@@ -16,20 +16,34 @@ import { environment } from 'src/environments/environment';
       this.http = http;
     }
 
-    crearUsuario(usuario: Usuario): Observable<{ exitoso: boolean; mensaje: string }> {
-    return this.http.post<{ exitoso: boolean; mensaje: string }>(
-      this.baseServerUrl + environment.crearUsuario,
-      usuario
-    ).pipe(
-      catchError(error => {
-        if (error.status === 409) {
-          return throwError(() => ({ exitoso: false, mensaje: 'El Usuario ya existe' }));
-        }
-        return throwError(() => ({ exitoso: false, mensaje: 'Error de conexión con el servidor' }));
-      })
+  crearUsuario(usuario: Usuario) {
+  const url = `${this.baseServerUrl}${environment.crearUsuario}`;
+  return this.http.post<Usuario>(url, usuario); // devuelve Usuario
+}
+
+actualizarUsuario(usuario: Usuario) {
+  console.log("Entre al servicio, soy la entidad", usuario)
+  const url = `${this.baseServerUrl}${environment.actualizarUsuarioPorId}`;
+  return this.http.put<Usuario>(url, usuario); // también devuelve Usuario
+}
+
+  obtenerListadoUsuarios(): Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(
+      `${this.baseServerUrl}${environment.obtenerListadoUsuarios}`
     );
   }
 
+  obtenerUsuarioPorId(id: number) {
+    console.log("Este es el id", id)
+     const url = `${this.baseServerUrl + environment.obtenerUsuarioPorId}`
+  return this.http.get<any>(url, { params: { idUsuario: id }});
+}
 
+eliminarUsuarioPorId(idUsuario: number): Observable<any> {
+  const url = `${this.baseServerUrl + environment.eliminarUsuarioPorId}`;
+  return this.http.delete(url, {
+    params: { idUsuario: idUsuario.toString() }
+  });
+}
 
 }
