@@ -128,5 +128,19 @@ export class CategoriasComponent implements OnInit {
     this.categoriaForm.reset({ estado: true });
   }
 
+  eliminarCategoria(id: number): void {
+  if (confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
+    this.categoriaService.eliminarCategoriasPorIds([id]).subscribe({
+      next: () => {
+        alert('Categoría eliminada con éxito');
+        this.cargarCategorias(); // recarga la lista
+      },
+      error: (err) => {
+        console.error('Error al eliminar la categoría', err);
+        alert('Error al eliminar la categoría');
+      }
+    });
+  }
+}
 
 }

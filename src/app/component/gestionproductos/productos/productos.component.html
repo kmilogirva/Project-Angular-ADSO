@@ -104,8 +104,7 @@
       <app-tabla-productos
   class="mt-4"
   [productos]="productos"
-  (editarProducto)="llenarCamposFormulario($event.idProducto)"
-  (eliminarProducto)="onEliminar($event)"
+  (editarProducto)="llenarCamposFormulario($event.idProducto!)"
 ></app-tabla-productos>
     
   </div>

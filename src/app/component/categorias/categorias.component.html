@@ -64,6 +64,7 @@
           <td>{{ cat.estado ? 'ACTIVO' : 'INACTIVO' }}</td>
           <td class="text-center">
             <button class="btn btn-sm btn-warning me-2" (click)="editarCategoria(cat)">✏️ Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="cat.idCategoria && eliminarCategoria(cat.idCategoria)">🗑️ Eliminar </button>
           </td>
         </tr>
         <tr *ngIf="categorias && categorias.length === 0">
