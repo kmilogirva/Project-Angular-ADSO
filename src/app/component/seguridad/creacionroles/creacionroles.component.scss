@@ -1,8 +1,65 @@
-.container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: top 0;
-  }
+/* Margen adicional para separar del sidebar */
+.contenedor-roles {
+  margin-left: 30px; /* Ajusta según el ancho de tu sidebar */
+}
+
+/* Título */
+.titulo-gestion {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Tarjetas */
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Tabla */
+.table thead th {
+  text-align: center;
+  font-weight: 600;
+}
+.table tbody td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* Botón guardar */
+.btn-success {
+  background-color: #28a745;
+  border: none;
+}
+
+/* Switch: más separación */
+.switch-estado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Tamaño del switch */
+.form-check-input {
+  width: 2.5em;
+  height: 1.3em;
+}
+
+/* Botones de acciones */
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+}
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
