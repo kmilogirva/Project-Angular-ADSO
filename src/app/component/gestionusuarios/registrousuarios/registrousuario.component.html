@@ -35,7 +35,7 @@
               <div class="col-md-4">
                 <label for="apellido1" class="form-label">Primer Apellido</label>
                 <input id="apellido1" type="text" class="form-control" formControlName="apellido1"
-                 [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Pérez' : ''">
+                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Pérez' : ''">
                 <small class="text-danger" *ngIf="f['apellido1'].touched && f['apellido1'].errors?.['required']">
                   Campo requerido
                 </small>
@@ -138,14 +138,14 @@
                 </button>
               </div>
             </div>
-            
+
           </div>
         </form>
         <app-tabla-usuarios class="mt-4" [usuarios]="usuarios"
-              (editarUsuario)="llenarCamposFormulario($event.idUsuario!)"
-              (eliminarUsuario)="eliminarUsuario($event.idUsuario!)">
+          (editarUsuario)="llenarCamposFormulario($event.idUsuario!)"
+          (eliminarUsuario)="eliminarUsuario($event.idUsuario!)">
 
-            </app-tabla-usuarios>
+        </app-tabla-usuarios>
       </div>
     </div>
   </div>

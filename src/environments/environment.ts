@@ -1,7 +1,3 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
 
   production: false,
@@ -11,16 +7,22 @@ export const environment = {
 
  apiUrl: "https://localhost:44374/api/", // backend pruebas
 
-//Inicio Usuario
 
+//Inicio Seguridad
  loginUsuario: "Seguridad/InicioSesion",
  crearRol: "Seguridad/crearrol",
  obtenerComboRoles: "Seguridad/combo-roles",
- crearUsuario: 'User/crearusuario',
+ consultarpermisosaccionporrol : "Seguridad/consultar-permisos-accion-por-rol",
+ registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol"
+
+
+//Inicio Usuario
+ ,crearUsuario: 'User/crearusuario',
  obtenerListadoUsuarios: "User/listarusuarios"
  ,obtenerUsuarioPorId: "User/obtenerusuarioporid"
  ,actualizarUsuarioPorId: "User/actualizarusuario"
  ,eliminarUsuarioPorId:"User/eliminarusuarioporid"
+
 
 //Inicio Productos
 
@@ -28,9 +30,23 @@ export const environment = {
 ,obtenerProductoPorId: "productos/obtenerproductoporid"
 ,registrarProductos: "productos/registrarproducto"
 ,actualizarProducto: "productos/actualizarproducto"
-// ,crearUsuario: 'User/CreateUsers'
 
+//Inicio Modulos
+,registrarModulo: "modulos/crearmodulo",
+obtenerModuloPorId: "modulos/obtenermoduloporid",
+obtenerListadoModulos: "modulos/listarmodulos",
+actualizarModulo: "modulos/actualizarmodulo",
+eliminarModulo: "modulos/eliminarmodulo"
 
+//Inicio SubModulos
+,registrarSubModulo: "submodulos/crearsubmodulo",
+obtenerSubModuloPorId: "submodulos/obtenersubmoduloporid",
+obtenerListadoSubModulos: "submodulos/listarsubmodulos",
+actualizarSubModulo: "submodulos/actualizarsubmodulo",
+eliminarSubModulo: "submodulos/eliminarsubmodulo"
+
+//Asignación Permisos y Acciones a Rol
+,obtenerSubModulosPorRol:""
 };
 
 

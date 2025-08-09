@@ -1,0 +1,198 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, NumberSymbol } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { TablaSubmodulosComponent } from './tabla-submodulos/tabla-submodulos.component';
+
+import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
+
+// import { SubmoduloService } from 'src/app/services/Submodulos/submodulo.service';
+import { ModuloService } from 'src/app/services/Modulos/modulo.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+// import { Submodulo } from 'src/app/models/submodulos/Submodulo';
+import { Modulo } from 'src/app/models/modulos/Modulo';
+import { Submodulo } from 'src/app/models/modulos/Submodulo';
+
+@Component({
+  selector: 'app-submodulos',
+  templateUrl: './submodulos.component.html',
+  styleUrls: ['./submodulos.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    SidebarComponent,
+    TablaSubmodulosComponent
+  ]
+})
+export class SubmodulosComponent implements OnInit {
+
+  submoduloForm!: FormGroup;
+  submodulos: Submodulo[] = [];
+   modulos: Modulo[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    // private submoduloService: SubmoduloService,
+    private moduloService: ModuloService,
+    private toastr: ToastrService,
+    private authService: AuthService
+  ) { }
+
+  ngOnInit(): void {
+    this.instanciarFormulario();
+    this.cargarDataSubmodulos();
+    this.cargarModulos();
+  }
+
+  private instanciarFormulario(): void {
+    this.submoduloForm = this.fb.group({
+      id: [''],
+      idModuloPadre: [null, Validators.required],
+      nombreSubModulo: ['', Validators.required],
+      descripcion: [''],
+      idEstado: [1, Validators.required],
+      idUsuarioCreacion: [],
+      idUsuarioModificacion: []
+    });
+  }
+
+  get f() {
+    return this.submoduloForm.controls;
+  }
+
+  onEstadoToggle(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    const nuevoEstado = isChecked ? 1 : 0;
+    this.submoduloForm.patchValue({ idEstado: nuevoEstado });
+  }
+
+  onSubmit(): void {
+    if (this.submoduloForm.invalid) return;
+
+    const esEdicion = !!this.f['id'].value;
+    const idUsuario = this.authService.obtenerIdUsuario();
+
+    // if (esEdicion) {
+    //   this.submoduloForm.patchValue({ idUsuarioModificacion: Number(idUsuario) });
+    // } else {
+    //   this.submoduloForm.patchValue({ idUsuarioCreacion: Number(idUsuario) });
+    // }
+
+    const raw = this.submoduloForm.getRawValue();
+    console.log("Dta de raw", raw)
+
+    const dto: Submodulo = {
+      idSubModulo: esEdicion ? Number(raw.id) : undefined,
+      nombre: raw.nombreSubModulo,
+      descripcion: raw.descripcion,
+      idModulo: Number(raw.idModuloPadre),
+      idEstado: Number(raw.idEstado),
+      ...(esEdicion
+        ? { idUsuarioModificacion: Number(idUsuario) }
+        : { idUsuarioCreacion: Number(idUsuario) })
+    };
+
+    console.log(dto)
+    if (!esEdicion) {
+      delete dto.idSubModulo;
+      delete dto.idUsuarioModificacion;
+    } else {
+      delete dto.idUsuarioCreacion;
+    }
+
+    const accion$ = esEdicion
+      ? this.moduloService.actualizarSubmodulo(dto)
+      : this.moduloService.crearSubmodulo(dto);
+
+    accion$.subscribe({
+      next: () => {
+        this.toastr.success(esEdicion ? 'Submódulo actualizado' : 'Submódulo registrado');
+        this.cargarDataSubmodulos();
+        this.submoduloForm.reset();
+      },
+      error: () => this.toastr.error('Error al procesar la solicitud')
+    });
+  }
+
+//   llenarCamposFormulario(submodulo: Submodulo) {
+//     console.log('Editando:', submodulo);
+  
+//   if (submodulo?.id !== undefined) {
+//     // Usa submodulo.idSubmodulo como lo necesitas
+//     console.log('Editando:', submodulo);
+//   }
+// }
+
+  llenarCamposFormulario(submodulo: Submodulo): void {
+    console.log("Entre por llenarCamposFormulario", submodulo.idSubModulo)
+    if (!submodulo.idModulo) {
+      this.toastr.warning('ID no válido');
+      return;
+    }
+
+    this.moduloService.obtenerSubModuloPorId(submodulo.idSubModulo!).subscribe({
+      next: (submodulo) => {
+        console.log(submodulo)
+        this.submoduloForm.patchValue({
+          id: submodulo.idSubModulo,
+          idModuloPadre: submodulo.idModulo,
+          nombreSubModulo: submodulo.nombre,
+          descripcion : submodulo.descripcion,
+          idEstado: submodulo.idEstado,
+          // idUsuarioCreacion: submodulo.idUsuarioCreacion,
+          // idUsuarioModificacion: submodulo.idUsuarioModificacion
+        });
+      },
+      error: () => this.toastr.error('Error al cargar submódulo')
+    });
+  }
+
+   onEliminar(submodulo: Submodulo): void {
+  if (!submodulo.idSubModulo) {
+    console.log("Id Invalido a Eliminar");
+    return;
+  }
+
+  const confirmado = confirm("¿Confirma que desea eliminar el registro?");
+  if (!confirmado) {
+    return;
+  }
+
+  // Eliminación local (opcional y optimista)
+  this.modulos = this.modulos.filter(m => m.id !== submodulo.idSubModulo);
+
+  this.moduloService.eliminarSubmoduloPorId(submodulo.idSubModulo).subscribe({
+    next: () => {
+      this.toastr.success('Módulo eliminado correctamente');
+      this.cargarDataSubmodulos();
+    },
+    error: (err) => {
+      this.toastr.error('Error al eliminar el módulo');
+      console.error('Error al eliminar el módulo:', err);
+
+      // Restaurar el módulo en caso de error
+      this.modulos.push(submodulo);
+    }
+  });
+}
+
+  private cargarDataSubmodulos(): void {
+  this.moduloService.obtenerListadoSubmodulos().subscribe({
+    next: (res) => {
+      console.log('Submódulos cargados:', res); // 👈 Console log para depuración
+      this.submodulos = res;
+    },
+    error: () => this.toastr.error('No se pudieron cargar los submódulos')
+  });
+}
+
+  private cargarModulos(): void {
+    this.moduloService.obtenerListadoModulos().subscribe({
+      next: (res) => this.modulos = res,
+      error: () => this.toastr.error('Error al cargar módulos')
+    });
+  }
+}

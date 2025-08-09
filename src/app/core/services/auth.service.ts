@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/app/shared/models/Usuario';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import { ComboResponse } from 'src/app/models/Response/Generales/ComboResponse';
+import { RolesPermisosAccion } from 'src/app/models/modulos/RolesPermisosAccion';
 
 interface MyJwtPayload extends JwtPayload {
   IdUsuario?: string;
@@ -31,6 +32,9 @@ export class AuthService {
   }
   // #endregion
 
+  public get usuarioActual(): Usuario | null {
+  return this.currentUserSubject.value;
+}
   // #region 🔐 Autenticación (Login / Registro)
   login(datosLogin: any): Observable<any> {
     return this.http.post(
@@ -52,6 +56,15 @@ export class AuthService {
     return this.http.get<ComboResponse[]>( `${this.baseServerUrl}${environment.obtenerComboRoles}`,);
   }
   // #endregion
+
+  obtenerPermisosRolesAcciones(idRol: number): Observable<RolesPermisosAccion[]> {
+    return this.http.get<RolesPermisosAccion[]>(`${this.baseServerUrl}${environment.consultarpermisosaccionporrol}/${idRol}`,);
+  }
+
+  guardarPermisosRolesAcciones(rolesPermisosAcciones :RolesPermisosAccion[]){
+    return this.http.post<RolesPermisosAccion[]>(`${this.baseServerUrl}${environment.registrarPermisosRolesAcciones}`,rolesPermisosAcciones);
+  }
+
 
   // #region 🪪 Token – obtención y decodificación
   getToken(): string | null {
