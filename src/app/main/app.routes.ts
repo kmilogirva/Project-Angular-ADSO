@@ -70,7 +70,7 @@ export const routes: Routes = [
   path: 'modulos',
    canActivate: [authGuard],
   loadComponent: () =>
-      import('../component/modulos/modulos.component').then((m) => m.ModulosComponent)
+      import('../component/seguridad/gestionmodulos/modulos/modulos.component').then((m) => m.ModulosComponent)
 },
 {
   path: 'stock',
@@ -103,6 +103,18 @@ export const routes: Routes = [
    canActivate: [authGuard],
   loadComponent: () =>
       import('../component/notificaciones/notificaciones.component').then((m) => m.NotificacionesComponent)
+},
+{
+  path: 'configurar-submodulos',
+   canActivate: [authGuard],
+  loadComponent: () =>
+      import('../component/seguridad/gestionmodulos/submodulos/submodulos.component').then((m) => m.SubmodulosComponent)
+},
+{
+  path: 'asignacion-permisos-roles',
+   canActivate: [authGuard],
+  loadComponent: () =>
+      import('../component/seguridad/asignacionpermisosroles/asignacionpermisosroles.component').then((m) => m.AsignacionpermisosrolesComponent)
 }
 
 ] as Routes;

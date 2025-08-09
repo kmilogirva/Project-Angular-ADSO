@@ -1,0 +1,67 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenido principal -->
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Registro de Módulos</h2>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="moduloForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <input type="hidden" formControlName="id" />
+
+            <!-- Nombre del Módulo -->
+            <div class="col-md-6 mb-3">
+              <label for="nombre" class="form-label fw-bold">Nombre del Módulo</label>
+              <input type="text" id="nombre" class="form-control" formControlName="nombre"
+                placeholder="Ingrese el nombre del módulo" required />
+              <div *ngIf="f['nombre'].touched && f['nombre'].invalid" class="text-danger small">
+                El nombre del módulo es obligatorio.
+              </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="col-md-6 mb-3">
+              <label for="descripcion" class="form-label fw-bold">Descripción</label>
+              <input type="text" id="descripcion" class="form-control" formControlName="descripcion"
+                placeholder="Ingrese una descripción" />
+            </div>
+          </div>
+
+          <!-- Estado -->
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="form-check form-switch mt-4">
+                <input type="checkbox" class="form-check-input" id="IdEstado"
+                  [checked]="f['IdEstado'].value === 1" (change)="onEstadoToggle($event)" />
+                <label class="form-check-label fw-bold" for="IdEstado">
+                  <i class="fa-solid fa-power-off me-1"></i> Estado Activo
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón de envío -->
+          <div class="row g-3">
+            <div class="col-5 mt-3 mx-auto">
+              <button type="submit" class="btn btn-success w-100" [disabled]="moduloForm.invalid">
+                <i class="fas fa-save me-2"></i>
+                {{ f['id'].value ? 'Actualizar Módulo' : 'Crear Módulo' }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tabla de Módulos Registrados -->
+      <app-tabla-modulos class="mt-4" [modulos]="modulos"
+        (editarModulo)="($event.id !== undefined) && llenarCamposFormulario($event.id)"
+        (eliminarModulo)="onEliminar($event)">
+      </app-tabla-modulos>
+    </div>
+  </div>
+</div>
