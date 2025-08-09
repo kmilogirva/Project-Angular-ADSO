@@ -1,43 +1,45 @@
-<!-- Navbar superior Fijo -->
 <mat-toolbar color="primary" class="full-width-toolbar" *ngIf="!isLoginRoute()">
-  <button mat-icon-button (click)="toggleSidebar()">
+  <!-- Botón menú -->
+  <button mat-icon-button class="menu-btn" (click)="toggleSidebar()">
     <mat-icon>menu</mat-icon>
   </button>
 
+  <!-- Logo -->
   <div class="logo-container">
     <img src="assets/images/inve.png" alt="Logo JKC" class="logo-jkc" />
-    <span class="app-title">JKC_Inventory</span>
   </div>
 
-  <span class="spacer"></span>
+  <!-- Buscador centrado -->
+  <div class="center-container">
+    <div class="search-wrapper">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" placeholder="Buscar..." />
+    </div>
+  </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Buscar</mat-label>
-    <input matInput type="text" placeholder="Escribe para buscar...">
-    <button mat-icon-button matSuffix aria-label="Buscar">
-      <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field>
-
+  <!-- Botones -->
   <div class="nav-buttons">
-    <button mat-button routerLink="/home">
-      <mat-icon>home</mat-icon> Inicio
+    <button class="nav-btn" routerLink="/home">
+      <mat-icon>home</mat-icon>
+      <span>Inicio</span>
     </button>
-    <button mat-button routerLink="/about">
-      <mat-icon>info</mat-icon> Acerca de
+    <button class="nav-btn" routerLink="/about">
+      <mat-icon>info</mat-icon>
+      <span>Acerca de</span>
     </button>
-    <button mat-button routerLink="/contact">
-      <mat-icon>mail</mat-icon> Contacto
+    <button class="nav-btn" routerLink="/contact">
+      <mat-icon>mail</mat-icon>
+      <span>Contacto</span>
     </button>
   </div>
 
-  <button mat-icon-button aria-label="Cuenta" routerLink="/login">
+  <!-- Icono usuario -->
+  <button mat-icon-button aria-label="Cuenta" routerLink="/login" class="account-btn">
     <mat-icon>account_circle</mat-icon>
   </button>
 </mat-toolbar>
 
-<!-- Contenedor principal con menú lateral -->
-<br><br>
+<!-- Contenedor lateral -->
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #sidenav
@@ -59,3 +61,6 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<!-- <div class="footer" *ngIf="!isLoginRoute()">
+  <span>© 2023 JKC. Todos los derechos reservados.</span> -->
