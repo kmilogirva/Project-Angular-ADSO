@@ -57,3 +57,24 @@
      background-color: #0056b3;
    }
  }
+ .container {
+  max-width: 900px;
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.btn {
+  font-size: 0.9rem;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
