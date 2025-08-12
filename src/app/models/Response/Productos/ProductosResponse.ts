@@ -1,4 +1,4 @@
-import { Producto } from "../productos/Producto";
+import { Producto } from "src/app/models/productos/Producto";
 
 export interface ProductosResponse {
   mensaje:   string;
@@ -9,3 +9,5 @@ export interface ListadoProductosResponse {
   mensaje:   string;
   productos: Producto[];   // ← array
 }
+
+

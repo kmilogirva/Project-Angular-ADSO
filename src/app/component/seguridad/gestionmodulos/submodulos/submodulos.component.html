@@ -1,0 +1,100 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenido principal -->
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-dark text-white text-center">
+        <h2>Registro de Submódulos</h2>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="submoduloForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <input type="hidden" formControlName="idSubModulo" />
+            <input type="hidden" formControlName="idUsuarioCreacion" />
+            <input type="hidden" formControlName="idUsuarioModificacion" />
+
+            <!-- Módulo Padre -->
+            <div class="col-md-6 mb-3">
+              <label for="idModulo" class="form-label fw-bold">Módulo Padre</label>
+              <select id="idModulo" class="form-select" formControlName="idModulo" required>
+                <option value="" disabled selected>Seleccione un módulo</option>
+                <option *ngFor="let modulo of modulos" [value]="modulo.id">{{ modulo.nombre }}</option>
+              </select>
+              <div *ngIf="f['idModulo'].touched && f['idModulo'].invalid" class="text-danger small">
+                El módulo padre es obligatorio.
+              </div>
+            </div>
+
+            <!-- Nombre del Submódulo -->
+            <div class="col-md-6 mb-3">
+              <label for="nombre" class="form-label fw-bold">Nombre del Submódulo</label>
+              <input type="text" id="nombreSubModulo" class="form-control" formControlName="nombre"
+                placeholder="Ingrese el nombre del submódulo" required />
+              <div *ngIf="f['nombre'].touched && f['nombre'].invalid" class="text-danger small">
+                El nombre del submódulo es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <!-- Descripcion-->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="descripcion" class="form-label fw-bold">Descripción</label>
+              <input type="text" id="descripcion" class="form-control" formControlName="descripcion"
+                placeholder="Ingrese una descripción" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <label for="iconSubModulo" class="form-label fw-bold">Nombre Icon</label>
+              <input type="text" id="iconSubModulo" class="form-control" formControlName="iconSubModulo"
+                placeholder="Ingrese el nombre del módulo" required />
+              <div *ngIf="f['iconSubModulo'].touched && f['iconSubModulo'].invalid" class="text-danger small">
+                El nombre del Icon es obligatorio.
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label for="rutaAngular" class="form-label fw-bold">Ruta Angular</label>
+              <input type="text" id="rutaAngular" class="form-control" formControlName="rutaAngular"
+                placeholder="Ej. asignacion-permisos-roles" required />
+              <div *ngIf="f['rutaAngular'].touched && f['rutaAngular'].invalid" class="text-danger small">
+                La ruta es obligatoria.
+              </div>
+            </div>
+          </div>
+          <!-- Estado -->
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="form-check form-switch mt-4">
+                <input type="checkbox" class="form-check-input" id="idEstado" [checked]="f['idEstado'].value === 1"
+                  (change)="f['idEstado'].setValue($any($event.target).checked ? 1 : 0)" />
+                <label class="form-check-label fw-bold" for="idEstado">
+                  <i class="fa-solid fa-power-off me-1"></i> Estado Activo
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón de envío -->
+          <div class="row g-3">
+            <div class="col-5 mt-3 mx-auto">
+              <button type="submit" class="btn btn-success w-100" [disabled]="submoduloForm.invalid">
+                <i class="fas fa-save me-2"></i>
+                {{ f['idSubModulo'].value ? 'Actualizar Submódulo' : 'Crear Submódulo' }}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tabla de Submódulos Registrados -->
+      <app-tabla-submodulos class="mt-4" [submodulos]="submodulos" (editarSubmodulo)="llenarCamposFormulario($event)"
+        (eliminarSubmodulo)="onEliminar($event)">
+      </app-tabla-submodulos>
+    </div>
+  </div>

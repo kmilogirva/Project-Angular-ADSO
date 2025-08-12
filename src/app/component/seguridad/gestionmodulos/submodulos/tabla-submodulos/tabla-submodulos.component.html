@@ -1,0 +1,67 @@
+<!-- Filtro de búsqueda -->
+<section class="barra-filtros d-flex flex-wrap align-items-center gap-2 mb-3">
+  <mat-form-field appearance="outline" class="campo-buscar w-100">
+    <mat-label>Buscar submódulo…</mat-label>
+    <input matInput [(ngModel)]="termino" (keyup)="aplicarFiltro()" placeholder="Nombre o descripción" />
+  </mat-form-field>
+</section>
+
+<!-- Tabla de submódulos -->
+<div class="tabla-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 w-100">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let s">{{ s.idSubModulo }}</td>
+    </ng-container>
+
+    <!-- Nombre -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Submódulo</th>
+      <td mat-cell *matCellDef="let s">{{ s.nombre }}</td>
+    </ng-container>
+
+    <!-- Descripción -->
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+      <td mat-cell *matCellDef="let s">{{ s.descripcion }}</td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="idEstado">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+      <td mat-cell *matCellDef="let s">
+        <span class="badge" [ngClass]="s.idEstado === 1 ? 'bg-success' : 'bg-secondary'">
+          {{ s.idEstado === 1 ? 'Activo' : 'Inactivo' }}
+        </span>
+      </td>
+    </ng-container>
+
+     <ng-container matColumnDef="rutaAngular">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ruta Angular</th>
+      <td mat-cell *matCellDef="let s">{{ s.rutaAngular }}</td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let s" class="text-end">
+        <button mat-icon-button color="primary" (click)="editar(s)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="eliminar(s)" matTooltip="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Encabezados y filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>
+
+<!-- Paginador -->
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

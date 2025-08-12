@@ -1,106 +1,151 @@
-<div class="d-flex">
+<div class="d-flex registro-wrapper">
   <app-sidebar></app-sidebar>
 
   <div class="container mt-5">
-    <div class="card shadow-lg">
-      <div class="card-header bg-primary text-white text-center">
-        <h3>Registro Usuarios</h3>
+    <div class="card registro-card shadow animate__animated animate__fadeIn">
+      <div class="card-header text-white text-center">
+        <h3 class="mb-0">
+          <i class="fa-solid fa-user-plus me-2"></i> Registro de Usuarios
+        </h3>
       </div>
 
-      <div class="card-body">
-        <form [formGroup]="usuarioForm" (ngSubmit)="registerSubmited()">
-          <div class="row">
-            <!-- Nombres -->
-            <div class="col-md-6 mb-3">
-              <label for="nombres">Nombres</label>
-              <input id="nombres" type="text" class="form-control" formControlName="nombres">
-              <small class="text-danger" *ngIf="f['nombres'].touched && f['nombres'].errors?.['required']">
-                Campo requerido
-              </small>
+      <div class="card-body px-4 py-4">
+        <form [formGroup]="usuarioForm" (ngSubmit)="registerSubmited()" novalidate>
+
+          <input type="hidden" id="idUsuario" formControlName="idUsuario" />
+          <div class="row g-4">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="nombre1" class="form-label fw-semibold">Primer Nombre</label>
+                <input id="nombre1" type="text" class="form-control shadow-sm" formControlName="nombre1"
+                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Juan' : ''">
+                <div *ngIf="f['nombre1'].touched && f['nombre1'].errors?.['required']" class="text-danger small mt-1">
+                  Campo requerido
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="nombre2" class="form-label fw-semibold">Segundo Nombre</label>
+                <input id="nombre2" type="text" class="form-control shadow-sm" formControlName="nombre2"
+                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Esteban' : ''">
+              </div>
             </div>
 
-            <!-- Apellidos -->
-            <div class="col-md-6 mb-3">
-              <label for="apellidos">Apellidos</label>
-              <input id="apellidos" type="text" class="form-control" formControlName="apellidos">
-              <small class="text-danger" *ngIf="f['apellidos'].touched && f['apellidos'].errors?.['required']">
-                Campo requerido
-              </small>
-            </div>
-          </div>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="apellido1" class="form-label">Primer Apellido</label>
+                <input id="apellido1" type="text" class="form-control" formControlName="apellido1"
+                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Pérez' : ''">
+                <small class="text-danger" *ngIf="f['apellido1'].touched && f['apellido1'].errors?.['required']">
+                  Campo requerido
+                </small>
+              </div>
 
-          <div class="row">
-            <!-- Correo -->
-            <div class="col-md-6 mb-3">
-              <label for="correo">Correo electrónico</label>
-              <input id="correo" type="email" class="form-control" formControlName="correo">
-              <small class="text-danger" *ngIf="f['correo'].touched && f['correo'].errors?.['required']">
-                Campo requerido
-              </small>
-              <small class="text-danger" *ngIf="f['correo'].touched && f['correo'].errors?.['email']">
-                Correo inválido
-              </small>
+              <div class="col-md-4">
+                <label for="apellido2" class="form-label">Segundo Apellido</label>
+                <input id="apellido2" type="text" class="form-control" formControlName="apellido2"
+                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Gómez' : ''">
+              </div>
             </div>
 
-            <!-- Teléfono -->
-            <div class="col-md-6 mb-3">
-              <label for="telefono">Teléfono</label>
-              <input id="telefono" type="text" class="form-control" formControlName="telefono">
-              <small class="text-danger" *ngIf="f['telefono'].touched && f['telefono'].errors?.['required']">
-                Campo requerido
-              </small>
-              <small class="text-danger" *ngIf="f['telefono'].touched && f['telefono'].errors?.['pattern']">
-                Debe tener 10 dígitos
-              </small>
-            </div>
-          </div>
-
-          <!-- Sexo -->
-          <div class="mb-3">
-            <label>Sexo</label>
-            <div>
-              <label><input type="radio" value="m" formControlName="sexo"> Masculino</label>
-              <label class="ms-3"><input type="radio" value="f" formControlName="sexo"> Femenino</label>
-            </div>
-            <small class="text-danger" *ngIf="f['sexo'].touched && f['sexo'].errors?.['required']">
-              Campo requerido
-            </small>
-          </div>
-
-          <div class="row">
-            <!-- Contraseña -->
-            <div class="col-md-6 mb-3">
-              <label for="contraseña">Contraseña</label>
-              <input id="contraseña" type="password" class="form-control" formControlName="contraseña">
-              <small class="text-danger" *ngIf="f['contraseña'].touched && f['contraseña'].errors?.['required']">
-                Campo requerido
-              </small>
-              <small class="text-danger" *ngIf="f['contraseña'].touched && f['contraseña'].errors?.['minlength']">
-                Mínimo 6 caracteres
-              </small>
-              <small class="text-danger" *ngIf="f['contraseña'].touched && f['contraseña'].errors?.['maxlength']">
-                Máximo 15 caracteres
-              </small>
+            <div class="row g-3">
+              <div class="col-md-5">
+                <label for="correo" class="form-label">Correo Electrónico</label>
+                <input id="correo" type="email" class="form-control" formControlName="correo"
+                  placeholder="correo@ejemplo.com">
+                <small class="text-danger" *ngIf="f['correo'].touched && f['correo'].errors?.['required']">
+                  Campo requerido
+                </small>
+                <small class="text-danger" *ngIf="f['correo'].touched && f['correo'].errors?.['email']">
+                  Correo inválido
+                </small>
+              </div>
+              <div class="col-md-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input id="telefono" type="text" class="form-control" formControlName="telefono"
+                  placeholder="Ej. 3012345678">
+                <small class="text-danger" *ngIf="f['telefono'].touched && f['telefono'].errors?.['required']">
+                  Campo requerido
+                </small>
+                <small class="text-danger" *ngIf="f['telefono'].touched && f['telefono'].errors?.['pattern']">
+                  Debe tener 10 dígitos
+                </small>
+              </div>
             </div>
 
-            <!-- Confirmar contraseña -->
-            <div class="col-md-6 mb-3">
-              <label for="confirmarcontrasena">Confirmar contraseña</label>
-              <input id="confirmarcontrasena" type="password" class="form-control" formControlName="confirmarcontrasena">
-              <small class="text-danger" *ngIf="repetircontrasena === 'inline'">
-                Las contraseñas no coinciden
-              </small>
-            </div>
-          </div>
 
-          <!-- Botón -->
-          <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-success"
-              [disabled]="!usuarioForm.valid || f['contraseña'].value !== f['confirmarcontrasena'].value">
-              Crear cuenta
-            </button>
+            <div class="row g-3">
+              <div class="col-md-5">
+                <label for="rol" class="form-label">Rol</label>
+                <select class="form-select" formControlName="idRol">
+                  <option value="" disabled selected>-- Seleccione un rol --</option>
+                  <option *ngFor="let rol of roles" [value]="rol.codigo">
+                    {{ rol.valor }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="contrasena" class="form-label">Contraseña</label>
+                <input id="contrasena" type="password" class="form-control" formControlName="contrasena"
+                  placeholder="********">
+                <small class="text-danger" *ngIf="f['contrasena'].touched && f['contrasena'].errors?.['required']">
+                  Campo requerido
+                </small>
+                <small class="text-danger" *ngIf="f['contrasena'].touched && f['contrasena'].errors?.['minlength']">
+                  Mínimo 6 caracteres
+                </small>
+                <small class="text-danger" *ngIf="f['contrasena'].touched && f['contrasena'].errors?.['maxlength']">
+                  Máximo 15 caracteres
+                </small>
+              </div>
+
+              <div class="col-md-4">
+                <label for="confirmarcontrasena" class="form-label">Confirmar Contraseña</label>
+                <input id="confirmarcontrasena" type="password" class="form-control"
+                  formControlName="confirmarcontrasena" placeholder="********">
+                <small class="text-danger" *ngIf="
+                      f['confirmarcontrasena'].hasError('noIguales') &&
+                      (f['confirmarcontrasena'].dirty || f['confirmarcontrasena'].touched) &&
+                      f['contrasena'].value && f['confirmarcontrasena'].value
+                    ">
+                  Las contraseñas no coinciden.
+                </small>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-4 d-flex align-items-center">
+                <div class="form-check form-switch form-check-lg ms-lg-4">
+                  <input id="idEstado" type="checkbox" class="form-check-input"
+                    [checked]="usuarioForm.value.idEstado === 1" (change)="onEstadoToggle($event)">
+                  <label class="form-check-label fw-bold" for="idEstado">
+                    <i class="fa-solid fa-power-off me-1"></i>Estado Usuario
+                  </label>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row g-3">
+              <div class="col-5 mt-3 mx-auto">
+                <button type="submit" class="btn btn-success w-100"
+                  [disabled]="!usuarioForm.valid || f['contrasena'].value !== f['confirmarcontrasena'].value">
+                  <i class="fas fa-user-plus me-2"></i>
+                  {{ usuarioForm.value.idUsuario ? 'Actualizar Usuario' : 'Crear Usuario' }}
+                </button>
+              </div>
+            </div>
+
           </div>
         </form>
+        <app-tabla-usuarios class="mt-4" [usuarios]="usuarios"
+          (editarUsuario)="llenarCamposFormulario($event.idUsuario!)"
+          (eliminarUsuario)="eliminarUsuario($event.idUsuario!)">
+
+        </app-tabla-usuarios>
       </div>
     </div>
   </div>

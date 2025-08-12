@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Producto } from 'src/app/models/productos/Producto';
-import {ListadoProductosResponse, ProductosResponse} from 'src/app/models/Response/ProductosResponse'
+import {ListadoProductosResponse, ProductosResponse} from 'src/app/models/Response/Productos/ProductosResponse'
 
 
 @Injectable({
@@ -25,22 +25,23 @@ import {ListadoProductosResponse, ProductosResponse} from 'src/app/models/Respon
     // }
 
     registrarProducto(producto: Producto) {
-        return this.http.post<ProductosResponse>(`${this.baseServerUrl + environment.registrarProductos}`, producto)
+      const url = `${this.baseServerUrl + environment.registrarProductos}`
+      console.log('Services Producto')
+        return this.http.post<Producto>(url, producto)
   }
 
   actualizarProducto(producto: Producto) {
-    console.log("Este es mientidad en el service", producto)
-  const url = `${this.baseServerUrl}${environment.actualizarProducto}/${producto.idProducto}`;
-  console.log("URL SERVICES", url)
-  return this.http.put<ProductosResponse>(url, producto);
+    console.log("dta de actualizarProducto",producto)
+  const url = `${this.baseServerUrl}${environment.actualizarProducto}`;
+  return this.http.put<Producto>(url, producto);
 }
 
 
     obtenercomboCategorias(){
     }
 
-   obtenerListadoProductos(): Observable<ListadoProductosResponse> {
-    return this.http.get<ListadoProductosResponse>(
+   obtenerListadoProductos(): Observable<Producto[]> {
+    return this.http.get<Producto[]>(
       `${this.baseServerUrl}${environment.obtenerListadoProductos}`
     );
   }

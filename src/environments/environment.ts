@@ -1,20 +1,31 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
 
   production: false,
 
- //Inicio Conexión Api y Variables 
+ //Inicio Conexión Api y Variables
 
  apiUrl: "https://localhost:44374/api/", // backend pruebas
 
-//Inicio Usuario
 
+//Inicio Seguridad
  loginUsuario: "Seguridad/InicioSesion",
  crearRol: "Seguridad/crearrol",
- crearUsuario: 'User/CrearUsuario'
+ obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
+ crearUsuario: 'User/CrearUsuario',
+ obtenerComboRoles: "Seguridad/combo-roles",
+ consultarpermisosaccionporrol : "Seguridad/consultar-permisos-accion-por-rol",
+ registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol",
+ //Asignación Permisos y Acciones a Rol
+ obtenerMenuPorRol:"Seguridad/consultar-menu-por-rol",
+
+
+//Inicio Usuario
+//  crearUsuario: 'User/crearusuario',
+ obtenerListadoUsuarios: "User/listarusuarios"
+ ,obtenerUsuarioPorId: "User/obtenerusuarioporid"
+ ,actualizarUsuarioPorId: "User/actualizarusuario"
+ ,eliminarUsuarioPorId:"User/eliminarusuarioporid"
+
 
 //Inicio Productos
 
@@ -23,6 +34,21 @@ export const environment = {
 ,registrarProductos: "productos/registrarproducto"
 ,actualizarProducto: "productos/actualizarproducto",
 // ,crearUsuario: 'User/CreateUsers'
+,actualizarProducto: "productos/actualizarproducto"
+
+//Inicio Modulos
+,registrarModulo: "modulos/crearmodulo",
+obtenerModuloPorId: "modulos/obtenermoduloporid",
+obtenerListadoModulos: "modulos/listarmodulos",
+actualizarModulo: "modulos/actualizarmodulo",
+eliminarModulo: "modulos/eliminarmodulo"
+
+//Inicio SubModulos
+,registrarSubModulo: "submodulos/crearsubmodulo",
+obtenerSubModuloPorId: "submodulos/obtenersubmoduloporid",
+obtenerListadoSubModulos: "submodulos/listarsubmodulos",
+actualizarSubModulo: "submodulos/actualizarsubmodulo",
+eliminarSubModulo: "submodulos/eliminarsubmodulo"
 
 // 👇 Endpoints correctos de Categorías
   crearCategorias: "Categorias/registrarcategoria",

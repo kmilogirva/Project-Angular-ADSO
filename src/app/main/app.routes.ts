@@ -48,12 +48,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../component/bodegas/bodegas.component').then((m) => m.BodegasComponent)
 },
-{
-  path: 'categorias',
-   canActivate: [authGuard],
-    loadComponent: () =>
-      import('../component/categorias/categorias.component').then((m) => m.CategoriasComponent)
-},
+// {
+//   path: 'categorias',
+//    canActivate: [authGuard],
+//     loadComponent: () =>
+//       import('../component/categorias/categorias.component').then((m) => m.CategoriasComponent)
+// },
 {
   path: 'configuracion',
    canActivate: [authGuard],
@@ -66,12 +66,7 @@ export const routes: Routes = [
   loadComponent: () =>
       import('../component/permisos/permisos.component').then((m) => m.PermisosComponent)
 },
-{
-  path: 'modulos',
-   canActivate: [authGuard],
-  loadComponent: () =>
-      import('../component/modulos/modulos.component').then((m) => m.ModulosComponent)
-},
+
 {
   path: 'stock',
    canActivate: [authGuard],
@@ -103,6 +98,24 @@ export const routes: Routes = [
    canActivate: [authGuard],
   loadComponent: () =>
       import('../component/notificaciones/notificaciones.component').then((m) => m.NotificacionesComponent)
+},
+{
+  path: 'configurar-submodulos',
+   canActivate: [authGuard],
+  loadComponent: () =>
+      import('../component/seguridad/gestionmodulos/submodulos/submodulos.component').then((m) => m.SubmodulosComponent)
+},
+{
+  path: 'configurar-modulos',
+   canActivate: [authGuard],
+  loadComponent: () =>
+      import('../component/seguridad/gestionmodulos/modulos/modulos.component').then((m) => m.ModulosComponent)
+},
+{
+  path: 'asignacion-permisos-roles',
+   canActivate: [authGuard],
+  loadComponent: () =>
+      import('../component/seguridad/asignacionpermisosroles/asignacionpermisosroles.component').then((m) => m.AsignacionpermisosrolesComponent)
 }
 
 ] as Routes;

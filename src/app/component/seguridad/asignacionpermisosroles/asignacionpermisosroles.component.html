@@ -1,0 +1,99 @@
+<div class="d-flex asignacion-permisos-wrapper">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenido principal -->
+  <div class="container mt-5">
+    <div class="card asignacion-permisos-card shadow animate__animated animate__fadeIn">
+      <div class="card-header bg-dark text-white text-center">
+        <h3 class="mb-0">
+          <i class="fa-solid fa-key me-2"></i> Asignación de Permisos por Rol
+        </h3>
+      </div>
+
+      <div class="card-body px-4 py-4">
+        <form [formGroup]="asignacionPermisosForm" (ngSubmit)="guardarPermisos()" novalidate>
+
+          <div class="row g-4">
+            <!-- Rol -->
+            <div class="col-md-5">
+              <label for="idRol" class="form-label fw-bold">Rol</label>
+              <select class="form-select shadow-sm" id="idRol" formControlName="idRol" required
+                      (change)="onRolChange()">
+                <option value="" disabled selected>-- Seleccione un rol --</option>
+                <option *ngFor="let rol of roles" [value]="rol.codigo">
+                  {{ rol.valor }}
+                </option>
+              </select>
+              <div *ngIf="f['idRol'].touched && f['idRol'].invalid" class="text-danger small mt-1">
+                El rol es obligatorio.
+              </div>
+            </div>
+
+            <!-- Módulo -->
+            <div class="col-md-6">
+              <label for="idModulo" class="form-label fw-bold">Módulo</label>
+              <select id="idModulo" class="form-select shadow-sm" formControlName="idModulo" required
+                      (change)="filtrarSubmodulosPorModulo()">
+                <option value="-999">Todos</option>
+                <option *ngFor="let modulo of modulos" [value]="modulo.id">{{ modulo.nombre }}</option>
+              </select>
+              <div *ngIf="f['idModulo'].touched && f['idModulo'].invalid" class="text-danger small mt-1">
+                El módulo es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla de permisos -->
+          <div class="table-responsive mt-4">
+            <table class="table table-bordered align-middle text-center shadow-sm asignacion-permisos-table">
+              <thead>
+                <tr>
+                  <th>Módulo</th>
+                  <th>Submódulo</th>
+                  <th>Ver</th>
+                  <th>Crear</th>
+                  <th>Editar</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sub of submodulosFiltrados">
+                  <td>{{ sub.nombreModulo }}</td>
+                  <td>{{ sub.nombreSubModulo }}</td>
+                  <td>
+                    <input type="checkbox" [checked]="sub.leer === 1"
+                           (change)="sub.leer = sub.leer === 1 ? 0 : 1" />
+                  </td>
+                  <td>
+                    <input type="checkbox" [checked]="sub.crear === 1"
+                           (change)="sub.crear = sub.crear === 1 ? 0 : 1" />
+                  </td>
+                  <td>
+                    <input type="checkbox" [checked]="sub.editar === 1"
+                           (change)="sub.editar = sub.editar === 1 ? 0 : 1" />
+                  </td>
+                  <td>
+                    <input type="checkbox" [checked]="sub.eliminar === 1"
+                           (change)="sub.eliminar = sub.eliminar === 1 ? 0 : 1" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Botón de guardar -->
+          <div class="row">
+            <div class="col-md-4 mx-auto mt-3">
+              <button type="submit" class="btn btn-success w-100"
+                      [disabled]="asignacionPermisosForm.invalid">
+                <i class="fas fa-save me-2"></i> Guardar Permisos
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
