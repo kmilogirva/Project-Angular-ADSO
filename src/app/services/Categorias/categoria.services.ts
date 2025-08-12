@@ -1,48 +1,49 @@
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-// import { environment } from 'src/environments/environment';
-// import { map } from 'rxjs/operators';
 
-// export interface Categoria {
-//   idCategoria?: number;
-//   nomCategoria: string;
-//   descripcion: string;
-//   estado: boolean;
-//   fechaCreacion?: Date;
-//   fechaModificacion?: Date;
-//   idUsuarioCreacion?: number;
-//   idUsuarioModificacion?: number;
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
-//   // categoria: Categoria[]
-// }
+export interface Categoria {
+  idCategoria?: number;
+  nomCategoria: string;
+  descripcion: string;
+  estado: boolean;
+  fechaCreacion?: Date;
+  fechaModificacion?: Date;
+  idUsuarioCreacion?: number;
+  idUsuarioModificacion?: number;
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class CategoriaService {
-//   private apiUrl = environment.apiUrl;
+  // categoria: Categoria[]
+}
 
-//   constructor(private http: HttpClient) {}
+@Injectable({
+  providedIn: 'root'
+})
+export class CategoriaService {
+  private apiUrl = environment.apiUrl;
 
-//   registrarCategoria(categoria: Categoria): Observable<any> {
-//     return this.http.post(`${this.apiUrl}${environment.crearCategorias}`, categoria);
-//   }
+  constructor(private http: HttpClient) {}
 
-//   listarCategorias(): Observable<Categoria[]> {
-//   return this.http.post<Categoria[]>(`${this.apiUrl}${environment.listarCategorias}`,null)
-//     // .pipe(map(response => response.productos));
-// }
+  registrarCategoria(categoria: Categoria): Observable<any> {
+    return this.http.post(`${this.apiUrl}${environment.crearCategorias}`, categoria);
+  }
 
-//   eliminarCategoriasPorIds(ids: number[]): Observable<any> {
-//     return this.http.post(`${this.apiUrl}${environment.eliminarCategorias}`, ids);
-//   }
+  listarCategorias(): Observable<Categoria[]> {
+  return this.http.post<Categoria[]>(`${this.apiUrl}${environment.listarCategorias}`,null)
+    // .pipe(map(response => response.productos));
+}
 
-//   obtenerCategoriaPorId(id: number): Observable<Categoria> {
-//     return this.http.get<Categoria>(`${this.apiUrl}${environment.obtenerCategoriaPorId}?idCategoria=${id}`);
-//   }
+  eliminarCategoriasPorIds(ids: number[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}${environment.eliminarCategorias}`, ids);
+  }
 
-//   actualizarCategoria(categoria: Categoria): Observable<any> {
-//     return this.http.put(`${this.apiUrl}${environment.actualizarCategorias}`, categoria);
-//   }
-// }
+  obtenerCategoriaPorId(id: number): Observable<Categoria> {
+    return this.http.get<Categoria>(`${this.apiUrl}${environment.obtenerCategoriaPorId}?idCategoria=${id}`);
+  }
+  
+  actualizarCategoria(categoria: Categoria): Observable<any> {
+    return this.http.put(`${this.apiUrl}${environment.actualizarCategorias}`, categoria);
+  }
+}
