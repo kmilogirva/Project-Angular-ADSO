@@ -15,7 +15,7 @@
             <input type="hidden" formControlName="id" />
 
             <!-- Nombre del Módulo -->
-            <div class="col-md-6 mb-3">
+            <div class="col-md-5 mb-3">
               <label for="nombre" class="form-label fw-bold">Nombre del Módulo</label>
               <input type="text" id="nombre" class="form-control" formControlName="nombre"
                 placeholder="Ingrese el nombre del módulo" required />
@@ -25,10 +25,21 @@
             </div>
 
             <!-- Descripción -->
-            <div class="col-md-6 mb-3">
+            <div class="col-md-5 mb-3">
               <label for="descripcion" class="form-label fw-bold">Descripción</label>
               <input type="text" id="descripcion" class="form-control" formControlName="descripcion"
                 placeholder="Ingrese una descripción" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label for="iconModulo" class="form-label fw-bold">Nombre Icon</label>
+              <input type="text" id="iconModulo" class="form-control" formControlName="iconModulo"
+                placeholder="Inventory" required />
+              <div *ngIf="f['iconModulo'].touched && f['iconModulo'].invalid" class="text-danger small">
+                El nombre del icono es obligatorio.
+              </div>
             </div>
           </div>
 
@@ -36,9 +47,9 @@
           <div class="row">
             <div class="col-md-4 mb-3">
               <div class="form-check form-switch mt-4">
-                <input type="checkbox" class="form-check-input" id="IdEstado"
-                  [checked]="f['IdEstado'].value === 1" (change)="onEstadoToggle($event)" />
-                <label class="form-check-label fw-bold" for="IdEstado">
+                <input type="checkbox" class="form-check-input" id="idEstado" [checked]="f['idEstado'].value === 1"
+                  (change)="f['idEstado'].setValue($any($event.target).checked ? 1 : 0)" />
+                <label class="form-check-label fw-bold" for="idEstado">
                   <i class="fa-solid fa-power-off me-1"></i> Estado Activo
                 </label>
               </div>
@@ -50,7 +61,7 @@
             <div class="col-5 mt-3 mx-auto">
               <button type="submit" class="btn btn-success w-100" [disabled]="moduloForm.invalid">
                 <i class="fas fa-save me-2"></i>
-                {{ f['id'].value ? 'Actualizar Módulo' : 'Crear Módulo' }}
+                {{ esEdicion ? 'Actualizar Módulo' : 'Crear Módulo' }}
               </button>
             </div>
           </div>

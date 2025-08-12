@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 // import { Submodulo } from 'src/app/models/submodulos/Submodulo';
 import { Modulo } from 'src/app/models/modulos/Modulo';
 import { Submodulo } from 'src/app/models/modulos/Submodulo';
+import { R3BoundTarget } from '@angular/compiler';
 
 @Component({
   selector: 'app-submodulos',
@@ -32,6 +33,7 @@ export class SubmodulosComponent implements OnInit {
   submoduloForm!: FormGroup;
   submodulos: Submodulo[] = [];
    modulos: Modulo[] = [];
+   esEdicion : Boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -49,13 +51,17 @@ export class SubmodulosComponent implements OnInit {
 
   private instanciarFormulario(): void {
     this.submoduloForm = this.fb.group({
-      id: [''],
-      idModuloPadre: [null, Validators.required],
-      nombreSubModulo: ['', Validators.required],
+      idSubModulo: [null],
+      idModulo: [null, Validators.required],
+      nombre: ['', Validators.required],
       descripcion: [''],
       idEstado: [1, Validators.required],
-      idUsuarioCreacion: [],
-      idUsuarioModificacion: []
+      iconSubModulo: ['',Validators.required],
+      rutaAngular: ['',Validators.required],
+      idUsuarioCreacion: [null],
+      idUsuarioModificacion: [null],
+      fechaCreacion:[null],
+      fechaModificacion:[null]
     });
   }
 
@@ -63,53 +69,48 @@ export class SubmodulosComponent implements OnInit {
     return this.submoduloForm.controls;
   }
 
-  onEstadoToggle(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    const nuevoEstado = isChecked ? 1 : 0;
-    this.submoduloForm.patchValue({ idEstado: nuevoEstado });
-  }
+  // onEstadoToggle(event: Event): void {
+  //   const isChecked = (event.target as HTMLInputElement).checked;
+  //   const nuevoEstado = isChecked ? 1 : 0;
+  //   this.submoduloForm.patchValue({ idEstado: nuevoEstado });
+  // }
 
   onSubmit(): void {
     if (this.submoduloForm.invalid) return;
 
-    const esEdicion = !!this.f['id'].value;
+    this.esEdicion = !!this.f['idSubModulo'].value;
+    // const esEdicion = !!this.f['id'].value;
     const idUsuario = this.authService.obtenerIdUsuario();
 
-    // if (esEdicion) {
-    //   this.submoduloForm.patchValue({ idUsuarioModificacion: Number(idUsuario) });
-    // } else {
-    //   this.submoduloForm.patchValue({ idUsuarioCreacion: Number(idUsuario) });
-    // }
-
-    const raw = this.submoduloForm.getRawValue();
-    console.log("Dta de raw", raw)
-
-    const dto: Submodulo = {
-      idSubModulo: esEdicion ? Number(raw.id) : undefined,
-      nombre: raw.nombreSubModulo,
-      descripcion: raw.descripcion,
-      idModulo: Number(raw.idModuloPadre),
-      idEstado: Number(raw.idEstado),
-      ...(esEdicion
-        ? { idUsuarioModificacion: Number(idUsuario) }
-        : { idUsuarioCreacion: Number(idUsuario) })
+    const dto: any = {
+      ...this.submoduloForm.value,
+        IdUsuarioCreacion:  this.esEdicion ? this.submoduloForm.value.idUsuarioCreacion : idUsuario,
+        IdUsuarioModificacion:  this.esEdicion ? idUsuario : this.submoduloForm.value.idUsuarioModificacion ?? null,
     };
 
-    console.log(dto)
-    if (!esEdicion) {
-      delete dto.idSubModulo;
-      delete dto.idUsuarioModificacion;
-    } else {
-      delete dto.idUsuarioCreacion;
+     for (const key in dto) {
+      const value = dto[key];
+      if (value === null || value === undefined || (typeof value === 'string' && value.trim() === '')) {
+        delete dto[key];
+      }
     }
+     console.log("console OnSubmit",dto)
 
-    const accion$ = esEdicion
+    // console.log(dto)
+    // if (this.esEdicion) {
+    //   delete dto.idSubModulo;
+    //   delete dto.idUsuarioModificacion;
+    // } else {
+    //   delete dto.idUsuarioCreacion;
+    // }
+ 
+    const accion$ = this.esEdicion
       ? this.moduloService.actualizarSubmodulo(dto)
       : this.moduloService.crearSubmodulo(dto);
 
     accion$.subscribe({
       next: () => {
-        this.toastr.success(esEdicion ? 'Submódulo actualizado' : 'Submódulo registrado');
+        this.toastr.success(this.esEdicion ? 'Submódulo actualizado' : 'Submódulo registrado');
         this.cargarDataSubmodulos();
         this.submoduloForm.reset();
       },
@@ -135,15 +136,19 @@ export class SubmodulosComponent implements OnInit {
 
     this.moduloService.obtenerSubModuloPorId(submodulo.idSubModulo!).subscribe({
       next: (submodulo) => {
-        console.log(submodulo)
+        console.log("Data SubModulo",submodulo)
         this.submoduloForm.patchValue({
-          id: submodulo.idSubModulo,
-          idModuloPadre: submodulo.idModulo,
-          nombreSubModulo: submodulo.nombre,
+          idSubModulo: submodulo.idSubModulo,
+          idModulo: submodulo.idModulo,
+          nombre: submodulo.nombre,
+          iconSubModulo : submodulo.iconSubModulo,
+          rutaAngular : submodulo.rutaAngular,
           descripcion : submodulo.descripcion,
           idEstado: submodulo.idEstado,
-          // idUsuarioCreacion: submodulo.idUsuarioCreacion,
-          // idUsuarioModificacion: submodulo.idUsuarioModificacion
+          idUsuarioCreacion: submodulo.idUsuarioCreacion,
+          idUsuarioModificacion: submodulo.idUsuarioModificacion,
+          fechaCreacion : submodulo.fechaCreacion,
+          fechaModificacion : submodulo.fechaModificacion
         });
       },
       error: () => this.toastr.error('Error al cargar submódulo')

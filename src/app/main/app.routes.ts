@@ -66,12 +66,7 @@ export const routes: Routes = [
   loadComponent: () =>
       import('../component/permisos/permisos.component').then((m) => m.PermisosComponent)
 },
-{
-  path: 'modulos',
-   canActivate: [authGuard],
-  loadComponent: () =>
-      import('../component/seguridad/gestionmodulos/modulos/modulos.component').then((m) => m.ModulosComponent)
-},
+
 {
   path: 'stock',
    canActivate: [authGuard],
@@ -109,6 +104,12 @@ export const routes: Routes = [
    canActivate: [authGuard],
   loadComponent: () =>
       import('../component/seguridad/gestionmodulos/submodulos/submodulos.component').then((m) => m.SubmodulosComponent)
+},
+{
+  path: 'configurar-modulos',
+   canActivate: [authGuard],
+  loadComponent: () =>
+      import('../component/seguridad/gestionmodulos/modulos/modulos.component').then((m) => m.ModulosComponent)
 },
 {
   path: 'asignacion-permisos-roles',

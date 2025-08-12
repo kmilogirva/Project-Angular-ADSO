@@ -37,7 +37,7 @@ export class TablaModulosComponent implements AfterViewInit, OnChanges {
   @Output() editarModulo = new EventEmitter<Modulo>();
   @Output() eliminarModulo = new EventEmitter<Modulo>();
 
-  displayedColumns = ['id', 'nombre', 'descripcion', 'idEstado', 'acciones'];
+  displayedColumns = ['id', 'nombre', 'descripcion', 'idEstado','iconModulo', 'acciones'];
   dataSource = new MatTableDataSource<Modulo>();
 
   termino = '';

@@ -13,6 +13,18 @@ interface MyJwtPayload extends JwtPayload {
   IdUsuario?: string;
 }
 
+interface SubModuloDTO {
+  NombreSubModulo: string;
+  IconSubModulo: string;
+  Ruta: string;
+}
+
+interface ModuloDTO {
+  NombreModulo: string;
+  IconModulo: string;
+  items: SubModuloDTO[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,8 +49,8 @@ export class AuthService {
 
   public get usuarioActual(): Usuario | null {
   return this.currentUserSubject.value;
+  console.log(this.usuarioActual)
 }
-  // #region 🔐 Autenticación (Login / Registro)
   
   login(datosLogin: any): Observable<any> {
     return this.http.post(
@@ -46,11 +58,8 @@ export class AuthService {
       datosLogin
     );
   }
-  // #endregion
 
-  // #region 🪪 Token – obtención y decodificación
-=======
-   // #region 🔐 Autenticación (Login / Registro)
+
   crearRol(datosLRol: any): Observable<any> {
     return this.http.post(
       `${this.baseServerUrl}${environment.crearRol}`,
@@ -69,6 +78,11 @@ export class AuthService {
 
   guardarPermisosRolesAcciones(rolesPermisosAcciones :RolesPermisosAccion[]){
     return this.http.post<RolesPermisosAccion[]>(`${this.baseServerUrl}${environment.registrarPermisosRolesAcciones}`,rolesPermisosAcciones);
+  }
+
+  obtenerMenuPorRol(idRol: number): Observable<ModuloDTO[]> {
+    // El endpoint es POST y recibe el idRol como parámetro en la URL
+    return this.http.post<ModuloDTO[]>(`${this.baseServerUrl}${environment.obtenerMenuPorRol}/${idRol}`, null);
   }
 
 
@@ -119,13 +133,13 @@ export class AuthService {
     );
   }
 
-  crearRol(rol: Roles): Observable<any> {
-    // Devuelve exactamente lo que manda el backend: { mensaje, rol }
-    return this.http.post<any>(
-      `${this.baseServerUrl}seguridad/crearrol`,
-      rol
-    );
-  }
+  // crearRol(rol: Roles): Observable<any> {
+  //   // Devuelve exactamente lo que manda el backend: { mensaje, rol }
+  //   return this.http.post<any>(
+  //     `${this.baseServerUrl}seguridad/crearrol`,
+  //     rol
+  //   );
+  // }
 
   // Estos métodos se usarán cuando el backend tenga implementados los endpoints:
   obtenerRolPorId(id: number): Observable<Roles> {
@@ -152,5 +166,7 @@ export class AuthService {
     `${this.baseServerUrl}seguridad/roles/${id}`
   );
 }
-  // #endregion
+
+
+
 }

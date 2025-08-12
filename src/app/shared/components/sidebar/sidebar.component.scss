@@ -1,14 +1,17 @@
+/* ==== Barra superior ==== */
 .full-width-toolbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  height: 60px;
   z-index: 1000;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   background-color: #0A1828 !important;
-  height: 60px;
   padding: 0 15px;
 }
 
@@ -18,12 +21,26 @@
   color: white;
 }
 
+.modulo-titulo {
+  font-weight: bold;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.submodulos a {
+  padding-left: 32px; /* sangría para diferenciar */
+}
+
 /* Logo */
 .logo-container {
   display: flex;
   align-items: center;
   margin-right: 20px;
 }
+
 .logo-jkc {
   width: 32px;
   height: 32px;
@@ -32,21 +49,23 @@
   padding: 3px;
 }
 
-/* Buscador moderno */
+/* ==== Buscador ==== */
 .center-container {
   flex: 1;
   display: flex;
   justify-content: center;
 }
+
 .search-wrapper {
   display: flex;
   align-items: center;
-  background-color: rgba(255,255,255,0.15);
+  background-color: rgba(255, 255, 255, 0.15);
   padding: 4px 10px;
   border-radius: 20px;
   width: 350px;
   max-width: 60%;
 }
+
 .search-wrapper input {
   border: none;
   outline: none;
@@ -55,17 +74,18 @@
   font-size: 14px;
   width: 100%;
 }
+
 .search-icon {
   color: white;
   margin-right: 8px;
 }
 
-/* Botones de navegación */
+/* ==== Botones de navegación ==== */
 .nav-buttons {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
+
 .nav-btn {
   display: flex;
   align-items: center;
@@ -79,8 +99,9 @@
   border-radius: 6px;
   transition: background 0.3s;
 }
+
 .nav-btn:hover {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Icono cuenta */
@@ -88,18 +109,62 @@
   color: white;
 }
 
+/* ==== Sidebar ==== */
 .sidenav-container {
-  margin-top: 60px;
-  height: calc(100vh - 60px);
+  position: fixed;
+  margin-top: 60px; /* para que no tape la toolbar */
+  height: auto; /* que se ajuste al contenido */
+  min-height: calc(100vh - 60px); /* mínimo: altura completa de la pantalla */
 }
-.content {
-  margin-top: 60px;
+
+.sidenav {
+  width: 250px;
+  background-color: #0A1828;
+  color: white;
+  overflow-y: auto; /* si el contenido del menú es largo, el scroll será aquí */
+}
+
+mat-sidenav-content {
   padding: 16px;
 }
 
-/* Responsivo */
+// .sidenav {
+//   width: 250px;
+//   height: 100%;
+//   background-color: #0A1828;
+//   color: white;
+//   overflow-y: auto;
+//   transition: width 0.3s ease;
+// }
+
+.sidenav * {
+  color: white !important;
+}
+
+/* Títulos de módulo */
+.modulo-titulo {
+  font-weight: bold;
+  padding: 8px 16px;
+}
+
+/* Items del menú */
+mat-nav-list a {
+  display: flex;
+  align-items: center;
+}
+
+mat-nav-list a mat-icon {
+  margin-right: 8px;
+}
+
+/* ==== Contenido principal ==== */
+mat-sidenav-content {
+  padding: 16px;
+}
+
+/* ==== Responsivo ==== */
 @media (max-width: 768px) {
   .center-container {
-    display: none; /* se oculta en pantallas pequeñas */
+    display: none; /* Oculta buscador en pantallas pequeñas */
   }
 }

@@ -37,14 +37,16 @@ export const environment = {
  loginUsuario: "Seguridad/InicioSesion",
  crearRol: "Seguridad/crearrol",
  obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
- crearUsuario: 'User/CrearUsuario'
+ crearUsuario: 'User/CrearUsuario',
  obtenerComboRoles: "Seguridad/combo-roles",
  consultarpermisosaccionporrol : "Seguridad/consultar-permisos-accion-por-rol",
- registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol"
+ registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol",
+ //Asignación Permisos y Acciones a Rol
+ obtenerMenuPorRol:"Seguridad/consultar-menu-por-rol",
 
 
 //Inicio Usuario
- ,crearUsuario: 'User/crearusuario',
+//  crearUsuario: 'User/crearusuario',
  obtenerListadoUsuarios: "User/listarusuarios"
  ,obtenerUsuarioPorId: "User/obtenerusuarioporid"
  ,actualizarUsuarioPorId: "User/actualizarusuario"
@@ -72,8 +74,7 @@ obtenerListadoSubModulos: "submodulos/listarsubmodulos",
 actualizarSubModulo: "submodulos/actualizarsubmodulo",
 eliminarSubModulo: "submodulos/eliminarsubmodulo"
 
-//Asignación Permisos y Acciones a Rol
-,obtenerSubModulosPorRol:""
+
 };
 
 
