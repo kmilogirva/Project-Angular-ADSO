@@ -28,7 +28,7 @@ export class CategoriasComponent implements OnInit {
   editando = false;
   categoriaEditandoId: number | null = null;
 
-  dtOptions: any = {};
+  dtOptions: any = {}; 
   dtTrigger: Subject<any> = new Subject<any>();
   // @ViewChild(DataTableDirective, { static: false }) dtElement!: DataTableDirective;
 
