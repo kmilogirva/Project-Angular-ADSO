@@ -41,7 +41,7 @@ export class CategoriaService {
   obtenerCategoriaPorId(id: number): Observable<Categoria> {
     return this.http.get<Categoria>(`${this.apiUrl}${environment.obtenerCategoriaPorId}?idCategoria=${id}`);
   }
-
+  
   actualizarCategoria(categoria: Categoria): Observable<any> {
     return this.http.put(`${this.apiUrl}${environment.actualizarCategorias}`, categoria);
   }
