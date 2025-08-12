@@ -36,7 +36,7 @@ export class TablaSubmodulosComponent implements AfterViewInit, OnChanges {
   @Output() editarSubmodulo = new EventEmitter<Submodulo>();
   @Output() eliminarSubmodulo = new EventEmitter<Submodulo>();
 
-  displayedColumns = ['id', 'nombre', 'descripcion', 'idEstado', 'acciones'];
+  displayedColumns = ['id', 'nombre', 'descripcion', 'idEstado', 'rutaAngular', 'acciones'];
   dataSource = new MatTableDataSource<Submodulo>();
 
   termino = '';

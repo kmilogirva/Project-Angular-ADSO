@@ -28,6 +28,7 @@ export class ModulosComponent implements OnInit {
 
   moduloForm!: FormGroup;
   modulos: Modulo[] = [];
+  esEdicion : boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -47,17 +48,20 @@ export class ModulosComponent implements OnInit {
       id: [''],
       nombre: ['', Validators.required],
       descripcion: [''],
-      IdEstado: [1, Validators.required],
-      IdUsuarioCreacion: [],
-      IdUsuarioModificacion: []
+      idEstado: [1,Validators.required],
+      iconModulo: ['',Validators.required],
+      idUsuarioCreacion: [''],
+      idUsuarioModificacion: [],
+      fechaCreacion:[''],
+      fechaModificacion:['']
     });
   }
 
-  onEstadoToggle(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    const nuevoEstado = isChecked ? 1 : 0;
-    this.moduloForm.patchValue({ IdEstado: nuevoEstado });
-  }
+  // onEstadoToggle(event: Event): void {
+  //   const isChecked = (event.target as HTMLInputElement).checked;
+  //   const nuevoEstado = isChecked ? 1 : 0;
+  //   this.moduloForm.patchValue({ idEstado: nuevoEstado });
+  // }
 
   get f() {
     return this.moduloForm.controls;
@@ -67,32 +71,38 @@ export class ModulosComponent implements OnInit {
   onSubmit(): void {
     if (this.moduloForm.invalid) return;
 
-    const esEdicion = !!this.f['id'].value;
+    this.esEdicion = !!this.f['id'].value;
+    console.log(this.esEdicion)
     const idUsuario = this.authService.obtenerIdUsuario();
 
-    if (esEdicion) {
-      this.moduloForm.patchValue({ IdUsuarioModificacion: idUsuario });
-    } else {
-      this.moduloForm.patchValue({ IdUsuarioCreacion: idUsuario });
-    }
+ 
+    let dto: any = {
+  ...this.moduloForm.value,
+        IdUsuarioCreacion:  this.esEdicion ? this.moduloForm.value.idUsuarioCreacion : idUsuario,
+        IdUsuarioModificacion:  this.esEdicion ? idUsuario : this.moduloForm.value.idUsuarioModificacion,
+      };
 
-    const dto: any = {};
-    for (const key in this.moduloForm.value) {
-      const value = this.moduloForm.value[key];
-      if (value !== null && value !== undefined && (typeof value !== 'string' || value.trim() !== '')) {
-        dto[key] = value;
+    // Filtrar valores nulos, undefined o strings vacíos
+    for (const key in dto) {
+      const value = dto[key];
+      if (value === null || value === undefined || (typeof value === 'string' && value.trim() === '')) {
+        delete dto[key];
       }
     }
 
-    const accion$ = esEdicion
+    
+
+    const accion$ =  this.esEdicion
       ? this.moduloService.actualizarModulo(dto)
       : this.moduloService.registrarModulo(dto);
 
     accion$.subscribe({
       next: () => {
-        this.toastr.success(esEdicion ? 'Módulo actualizado' : 'Módulo registrado');
+        this.toastr.success( this.esEdicion ? 'Módulo actualizado' : 'Módulo registrado');
         this.cargarDataModulos();
+         this.esEdicion = false;
         this.moduloForm.reset();
+        
       },
       error: () => this.toastr.error('Error al procesar la solicitud')
     });
@@ -118,13 +128,18 @@ export class ModulosComponent implements OnInit {
 
     this.moduloService.obtenerModuloPorId(id).subscribe({
       next: (modulo) => {
+        this.esEdicion= true
+        console.log("Esto e slo que recibo en llenarCamposFormulario",modulo)
         this.moduloForm.patchValue({
           id: modulo.id,
           nombre: modulo.nombre,
+          iconModulo: modulo.iconModulo,
           descripcion: modulo.descripcion,
-          IdEstado: modulo.idEstado,
-          IdUsuarioCreacion: modulo.idUsuarioCreacion,
-          IdUsuarioModificacion: modulo.idUsuarioModificacion
+          idEstado: modulo.idEstado ?? 1,
+          fechaCreacion: modulo.fechaCreacion,
+          fechaModificacion: modulo.fechaModificacion,
+          idUsuarioCreacion: modulo.idUsuarioCreacion,
+          idUsuarioModificacion: modulo.idUsuarioModificacion
         });
       },
       error: () => this.toastr.error('Error al cargar módulo')

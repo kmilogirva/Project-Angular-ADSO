@@ -2,6 +2,8 @@ export interface Submodulo {
   idSubModulo?: number;
   nombre: string;
   descripcion: string;
+  iconSubModulo?: string;
+  rutaAngular?: string;
   idModulo: number;
   idEstado: number;
   fechaCreacion?: Date;

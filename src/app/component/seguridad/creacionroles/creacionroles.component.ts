@@ -150,27 +150,27 @@ export class CreacionrolesComponent implements OnInit {
   }
 }
 
-onSubmit() {
-  if (this.rolesForm.invalid) return;
+// onSubmit() {
+//   if (this.rolesForm.invalid) return;
 
-  const idUsuario = this.authService.obtenerIdUsuario();
-  this.rolesForm.patchValue({ IdUsuarioCreacion: idUsuario });
+//   const idUsuario = this.authService.obtenerIdUsuario();
+//   this.rolesForm.patchValue({ IdUsuarioCreacion: idUsuario });
 
-  const nuevoRol = this.rolesForm.value;
+//   const nuevoRol = this.rolesForm.value;
 
-  this.authService.crearRol(nuevoRol).subscribe({
-    next: (response) => {
-      this.toastr.success(response.mensaje);
-      this.rolesForm.reset();
-    },
-    error: (err) => {
-      if (err.status === 409) {
-        this.toastr.warning(err.error.mensaje);
-      } else {
-        this.toastr.error('Error al registrar el rol');
-      }
-    }
-  });
-}
+//   this.authService.crearRol(nuevoRol).subscribe({
+//     next: (response) => {
+//       this.toastr.success(response.mensaje);
+//       this.rolesForm.reset();
+//     },
+//     error: (err) => {
+//       if (err.status === 409) {
+//         this.toastr.warning(err.error.mensaje);
+//       } else {
+//         this.toastr.error('Error al registrar el rol');
+//       }
+//     }
+//   });
+// }
 
 }

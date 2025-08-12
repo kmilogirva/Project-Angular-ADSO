@@ -41,19 +41,66 @@
 
 <!-- Contenedor lateral -->
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
+  <!-- <mat-sidenav
     #sidenav
-    [mode]="isExpanded ? 'side' : 'over'"
+    [mode]="isOverMode ? 'over' : 'side'"
     [(opened)]="isExpanded"
-    [style.width.px]="isExpanded ? 200 : 60"
-    class="sidenav">
+    class="sidenav"
+  >
     <mat-nav-list>
-      <a mat-list-item *ngFor="let item of menuItems" [routerLink]="item.route">
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span *ngIf="isExpanded">{{ item.label }}</span>
-      </a>
+      <ng-container *ngFor="let modulo of menuItems">
+        <h3 class="modulo-titulo" *ngIf="isExpanded">
+          <mat-icon>{{ modulo.IconModulo }}</mat-icon>
+          {{ modulo.NombreModulo }}
+        </h3>
+
+        <a
+          mat-list-item
+          *ngFor="let subModulo of modulo.items"
+          [routerLink]="subModulo.Ruta"
+          (click)="isOverMode ? sidenav.close() : null"
+        >
+          <mat-icon>{{ subModulo.IconSubModulo }}</mat-icon>
+          <span *ngIf="isExpanded">{{ subModulo.NombreSubModulo }}</span>
+        </a>
+      </ng-container>
     </mat-nav-list>
-  </mat-sidenav>
+  </mat-sidenav> -->
+  <mat-sidenav
+  #sidenav
+  [mode]="isOverMode ? 'over' : 'side'"
+  [(opened)]="isExpanded"
+  class="sidenav"
+>
+  <mat-nav-list>
+    <ng-container *ngFor="let modulo of menuItems; let i = index">
+      <!-- Módulo -->
+      <h3 
+        class="modulo-titulo"
+        (click)="toggleModulo(i)"
+      >
+        <mat-icon>{{ modulo.IconModulo }}</mat-icon>
+        {{ modulo.NombreModulo }}
+        <mat-icon style="margin-left:auto">
+          {{ activeModuloIndex === i ? 'expand_less' : 'expand_more' }}
+        </mat-icon>
+      </h3>
+
+      <!-- Submódulos -->
+      <div *ngIf="activeModuloIndex === i" class="submodulos">
+        <a
+          mat-list-item
+          *ngFor="let subModulo of modulo.items"
+          [routerLink]="subModulo.Ruta"
+          (click)="isOverMode ? sidenav.close() : null"
+        >
+          <mat-icon>{{ subModulo.IconSubModulo }}</mat-icon>
+          <span>{{ subModulo.NombreSubModulo }}</span>
+        </a>
+      </div>
+    </ng-container>
+  </mat-nav-list>
+</mat-sidenav>
 
   <mat-sidenav-content>
     <div class="content">
@@ -61,6 +108,3 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<!-- <div class="footer" *ngIf="!isLoginRoute()">
-  <span>© 2023 JKC. Todos los derechos reservados.</span> -->
