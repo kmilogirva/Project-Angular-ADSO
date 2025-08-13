@@ -48,12 +48,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../component/bodegas/bodegas.component').then((m) => m.BodegasComponent)
 },
-// {
-//   path: 'categorias',
-//    canActivate: [authGuard],
-//     loadComponent: () =>
-//       import('../component/categorias/categorias.component').then((m) => m.CategoriasComponent)
-// },
+{
+  path: 'categorias',
+   canActivate: [authGuard],
+    loadComponent: () =>
+      import('../component/categorias/categorias.component').then((m) => m.CategoriasComponent)
+},
 {
   path: 'configuracion',
    canActivate: [authGuard],
