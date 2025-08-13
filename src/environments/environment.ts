@@ -35,7 +35,7 @@ actualizarProducto: "productos/actualizarproducto",
 eliminarProductorPorId:"productos/eliminarproductosporid",
 
 //Inicio Modulos
-,registrarModulo: "modulos/crearmodulo",
+registrarModulo: "modulos/crearmodulo",
 obtenerModuloPorId: "modulos/obtenermoduloporid",
 obtenerListadoModulos: "modulos/listarmodulos",
 actualizarModulo: "modulos/actualizarmodulo",
