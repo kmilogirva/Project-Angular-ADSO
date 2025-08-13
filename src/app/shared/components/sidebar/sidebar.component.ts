@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { NavigationService } from '../../Services/NavigationService';
 // import { Usuario } from 'src/app/shared/models/Usuario';
 
 interface SubModuloDTO {
@@ -44,17 +45,26 @@ interface ModuloDTO {
 export class SidebarComponent implements OnInit{
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isExpanded = window.innerWidth >= 768;
-  isOverMode = window.innerWidth < 768;
+  // isOverMode = window.innerWidth < 768;
   activeModuloIndex: number | null = null;
+  isOverMode = false;
+  modulosAbiertos: boolean[] = [];
 
 
   // usuario: Usuario[] = []
   menuItems: ModuloDTO[] = [];
 
   ngOnInit(): void {
+    // this.checkScreenSize();
+    // window.addEventListener('resize', () => this.checkScreenSize());
+    this.modulosAbiertos = this.menuItems.map(() => true);
     this.obtenerItemsMenu();
   }
-  constructor(public router: Router, private authService: AuthService) {}
+
+  checkScreenSize() {
+  this.isOverMode = window.innerWidth <= 768;
+}
+  constructor(public router: Router, private authService: AuthService, private navigationService :NavigationService) {}
 
   // menuItems = [
   //   { label: 'Inicio', icon: 'home', route: '/asignacion-permisos-roles' },
@@ -89,12 +99,15 @@ export class SidebarComponent implements OnInit{
   }
 }
 
+// toggleModulo(index: number) {
+//   if (this.activeModuloIndex === index) {
+//     this.activeModuloIndex = null; // Cierra si ya estaba abierto
+//   } else {
+//     this.activeModuloIndex = index; // Abre el seleccionado
+//   }
+// }
 toggleModulo(index: number) {
-  if (this.activeModuloIndex === index) {
-    this.activeModuloIndex = null; // Cierra si ya estaba abierto
-  } else {
-    this.activeModuloIndex = index; // Abre el seleccionado
-  }
+  this.modulosAbiertos[index] = !this.modulosAbiertos[index];
 }
 
   toggleSidebar() {
@@ -104,4 +117,24 @@ toggleModulo(index: number) {
   isLoginRoute(): boolean {
     return this.router.url === '/login';
   }
+
+   irASubModulo(ruta: string) {
+    this.navigationService.navegarSubModulo(ruta);
+  }
 }
+
+//   navegarSubModulo(ruta: string) {
+//   // Si no empieza con "/", se lo agregamos para navegación absoluta
+//   if (!ruta.startsWith('/')) {
+//     ruta = '/' + ruta;
+//   }
+
+//   this.router.navigate([ruta], { replaceUrl: true });
+  
+//   // Cierra el sidenav si está en modo "over"
+//   if (this.isOverMode) {
+//     this.sidenav.close();
+//   }
+// }
+
+// }

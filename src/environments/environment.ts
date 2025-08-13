@@ -58,7 +58,8 @@ export const environment = {
 ,obtenerListadoProductos: "productos/listarproductos"
 ,obtenerProductoPorId: "productos/obtenerproductoporid"
 ,registrarProductos: "productos/registrarproducto"
-,actualizarProducto: "productos/actualizarproducto"
+,actualizarProducto: "productos/actualizarproducto",
+eliminarProductorPorId:"productos/eliminarproductosporid"
 
 //Inicio Modulos
 ,registrarModulo: "modulos/crearmodulo",
