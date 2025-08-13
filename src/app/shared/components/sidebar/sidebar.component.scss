@@ -23,17 +23,30 @@
 
 .modulo-titulo {
   font-weight: bold;
+  font-size: 18px;
   padding: 8px 16px;
   display: flex;
   align-items: center;
   cursor: pointer;
   user-select: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.modulo-titulo:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .submodulos a {
-  padding-left: 32px; /* sangría para diferenciar */
+  padding-left: 32px; /* sangría */
+  display: block;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
+.submodulos a:hover {
+  transform: translateX(5px) scale(1.02);
+  background-color: rgba(255, 255, 255, 0.08);
+}
 /* Logo */
 .logo-container {
   display: flex;
@@ -111,21 +124,19 @@
 
 /* ==== Sidebar ==== */
 .sidenav-container {
-  position: fixed;
-  margin-top: 60px; /* para que no tape la toolbar */
-  height: auto; /* que se ajuste al contenido */
-  min-height: calc(100vh - 60px); /* mínimo: altura completa de la pantalla */
+  height: calc(100vh - 60px); /* ocupa todo menos la toolbar */
+  margin-top: 60px;
 }
 
 .sidenav {
-  width: 250px;
+  width: 300px;
   background-color: #0A1828;
   color: white;
-  overflow-y: auto; /* si el contenido del menú es largo, el scroll será aquí */
 }
 
-mat-sidenav-content {
+.mat-sidenav-content {
   padding: 16px;
+  transition: margin-left 0.3s ease;
 }
 
 // .sidenav {
@@ -163,8 +174,15 @@ mat-sidenav-content {
 }
 
 /* ==== Responsivo ==== */
+@media (min-width: 769px) {
+  .mat-sidenav-container.mat-drawer-container {
+    overflow: hidden; /* evita scrolls extraños */
+  }
+}
+
+/* En pantallas pequeñas: menú sobre el contenido */
 @media (max-width: 768px) {
-  .center-container {
-    display: none; /* Oculta buscador en pantallas pequeñas */
+  .mat-sidenav-content {
+    padding: 8px;
   }
 }

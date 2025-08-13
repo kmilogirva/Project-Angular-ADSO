@@ -11,7 +11,6 @@ export const environment = {
  loginUsuario: "Seguridad/InicioSesion",
  crearRol: "Seguridad/crearrol",
  obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
- crearUsuario: 'User/CrearUsuario',
  obtenerComboRoles: "Seguridad/combo-roles",
  consultarpermisosaccionporrol : "Seguridad/consultar-permisos-accion-por-rol",
  registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol",
@@ -21,20 +20,19 @@ export const environment = {
 
 //Inicio Usuario
 //  crearUsuario: 'User/crearusuario',
- obtenerListadoUsuarios: "User/listarusuarios"
- ,obtenerUsuarioPorId: "User/obtenerusuarioporid"
- ,actualizarUsuarioPorId: "User/actualizarusuario"
- ,eliminarUsuarioPorId:"User/eliminarusuarioporid"
+ obtenerListadoUsuarios: "User/listarusuarios",
+ obtenerUsuarioPorId: "User/obtenerusuarioporid",
+ actualizarUsuarioPorId: "User/actualizarusuario",
+ eliminarUsuarioPorId:"User/eliminarusuarioporid",
 
 
 //Inicio Productos
 
-,obtenerListadoProductos: "productos/listarproductos"
-,obtenerProductoPorId: "productos/obtenerproductoporid"
-,registrarProductos: "productos/registrarproducto"
-,actualizarProducto: "productos/actualizarproducto",
-// ,crearUsuario: 'User/CreateUsers'
-,actualizarProducto: "productos/actualizarproducto"
+obtenerListadoProductos: "productos/listarproductos",
+obtenerProductoPorId: "productos/obtenerproductoporid",
+registrarProductos: "productos/registrarproducto",
+actualizarProducto: "productos/actualizarproducto",
+eliminarProductorPorId:"productos/eliminarproductosporid",
 
 //Inicio Modulos
 ,registrarModulo: "modulos/crearmodulo",
@@ -48,7 +46,7 @@ eliminarModulo: "modulos/eliminarmodulo"
 obtenerSubModuloPorId: "submodulos/obtenersubmoduloporid",
 obtenerListadoSubModulos: "submodulos/listarsubmodulos",
 actualizarSubModulo: "submodulos/actualizarsubmodulo",
-eliminarSubModulo: "submodulos/eliminarsubmodulo"
+eliminarSubModulo: "submodulos/eliminarsubmodulo",
 
 // 👇 Endpoints correctos de Categorías
   crearCategorias: "Categorias/registrarcategoria",

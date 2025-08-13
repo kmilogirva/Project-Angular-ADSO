@@ -67,11 +67,11 @@
     </mat-nav-list>
   </mat-sidenav> -->
   <mat-sidenav
-  #sidenav
-  [mode]="isOverMode ? 'over' : 'side'"
-  [(opened)]="isExpanded"
-  class="sidenav"
->
+    #sidenav
+    [mode]="isOverMode ? 'over' : 'side'"
+    [(opened)]="isExpanded"
+    class="sidenav"
+  >
   <mat-nav-list>
     <ng-container *ngFor="let modulo of menuItems; let i = index">
       <!-- Módulo -->
@@ -82,17 +82,17 @@
         <mat-icon>{{ modulo.IconModulo }}</mat-icon>
         {{ modulo.NombreModulo }}
         <mat-icon style="margin-left:auto">
-          {{ activeModuloIndex === i ? 'expand_less' : 'expand_more' }}
+            {{ modulosAbiertos[i] ? 'expand_less' : 'expand_more' }}
         </mat-icon>
       </h3>
 
       <!-- Submódulos -->
-      <div *ngIf="activeModuloIndex === i" class="submodulos">
+      <div *ngIf="modulosAbiertos[i]" class="submodulos">
         <a
           mat-list-item
           *ngFor="let subModulo of modulo.items"
           [routerLink]="subModulo.Ruta"
-          (click)="isOverMode ? sidenav.close() : null"
+          (click)="irASubModulo(subModulo.Ruta)"
         >
           <mat-icon>{{ subModulo.IconSubModulo }}</mat-icon>
           <span>{{ subModulo.NombreSubModulo }}</span>
@@ -103,7 +103,7 @@
 </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="content">
+    <div class="main-content">
       <ng-content></ng-content>
     </div>
   </mat-sidenav-content>

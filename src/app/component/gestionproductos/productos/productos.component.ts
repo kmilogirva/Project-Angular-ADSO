@@ -176,9 +176,23 @@ onSubmit(): void {
   // }
 
   // /** Eliminar de la lista local (tras éxito en backend) */
-  onEliminar(prod: Producto) {
-    /* llamas al servicio y, si todo va bien: */
-    this.productos = this.productos.filter(p => p.idProducto !== prod.idProducto);
+ onEliminar(prod: Producto) {
+  if (prod.idProducto != null) {
+    this.productosService.eliminarProductoPorId(prod.idProducto).subscribe({
+      next: () => {
+        this.toastr.success('Producto eliminado con éxito', 'Éxito');
+        // Si quieres refrescar la lista:
+        this.cargarDataProductos();
+      },
+      error: (err) => {
+        console.error(err);
+        this.toastr.error('Error al eliminar el producto', 'Error');
+      }
+    });
+  }
+
+    
+    // this.productos = this.productos.filter(p => p.idProducto !== prod.idProducto);
   }
 
   /* ────────────── Métodos privados utilitarios ────────────── */
