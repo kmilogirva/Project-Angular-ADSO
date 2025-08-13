@@ -24,6 +24,7 @@ export const environment = {
  obtenerUsuarioPorId: "User/obtenerusuarioporid",
  actualizarUsuarioPorId: "User/actualizarusuario",
  eliminarUsuarioPorId:"User/eliminarusuarioporid",
+ crearUsuario : "crearusuario",
 
 
 //Inicio Productos
