@@ -19,88 +19,81 @@
 
   <!-- Botones -->
   <div class="nav-buttons">
-    <button class="nav-btn" routerLink="/home">
+    <button class="nav-btn" routerLink="/inicio">
       <mat-icon>home</mat-icon>
       <span>Inicio</span>
     </button>
-    <button class="nav-btn" routerLink="/about">
-      <mat-icon>info</mat-icon>
-      <span>Acerca de</span>
+    <button class="nav-btn" routerLink="/notificaciones">
+      <mat-icon>notifications</mat-icon>
+      <span>Notificaciones</span>
     </button>
-    <button class="nav-btn" routerLink="/contact">
-      <mat-icon>mail</mat-icon>
-      <span>Contacto</span>
+    <button class="nav-btn" routerLink="/configuracion">
+      <mat-icon>settings</mat-icon>
+      <span>configuracion</span>
     </button>
   </div>
 
-  <!-- Icono usuario -->
-  <button mat-icon-button aria-label="Cuenta" routerLink="/login" class="account-btn">
+  <!-- Menú usuario -->
+  <button mat-icon-button [matMenuTriggerFor]="userMenu" class="account-btn">
     <mat-icon>account_circle</mat-icon>
   </button>
+
+  <mat-menu #userMenu="matMenu" class="user-menu">
+    <div class="user-card">
+      <div class="user-info">
+        <div class="user-avatar"
+             [style.background-image]="'url(' + (usuario?.fotoUrl || 'assets/images/default-user.png') + ')'">
+        </div>
+        <div class="user-details">
+          <span class="user-name">{{ usuario?.nombre || 'Usuario' }}</span>
+          <span class="user-email">{{ usuario?.email || '' }}</span>
+        </div>
+      </div>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Cerrar sesión
+      </button>
+    </div>
+  </mat-menu>
 </mat-toolbar>
 
 <!-- Contenedor lateral -->
 <mat-sidenav-container class="sidenav-container">
-  <!-- <mat-sidenav
+  <mat-sidenav
     #sidenav
     [mode]="isOverMode ? 'over' : 'side'"
     [(opened)]="isExpanded"
     class="sidenav"
   >
     <mat-nav-list>
-      <ng-container *ngFor="let modulo of menuItems">
-        <h3 class="modulo-titulo" *ngIf="isExpanded">
+      <ng-container *ngFor="let modulo of menuItems; let i = index">
+        <!-- Módulo -->
+        <h3 
+          class="modulo-titulo"
+          (click)="toggleModulo(i)"
+        >
           <mat-icon>{{ modulo.IconModulo }}</mat-icon>
           {{ modulo.NombreModulo }}
+          <mat-icon style="margin-left:auto">
+            {{ activeModuloIndex === i ? 'expand_less' : 'expand_more' }}
+          </mat-icon>
         </h3>
 
-        <a
-          mat-list-item
-          *ngFor="let subModulo of modulo.items"
-          [routerLink]="subModulo.Ruta"
-          (click)="isOverMode ? sidenav.close() : null"
-        >
-          <mat-icon>{{ subModulo.IconSubModulo }}</mat-icon>
-          <span *ngIf="isExpanded">{{ subModulo.NombreSubModulo }}</span>
-        </a>
+        <!-- Submódulos -->
+        <div *ngIf="activeModuloIndex === i" class="submodulos">
+          <a
+            mat-list-item
+            *ngFor="let subModulo of modulo.items"
+            [routerLink]="subModulo.Ruta"
+            (click)="isOverMode ? sidenav.close() : null"
+          >
+            <mat-icon>{{ subModulo.IconSubModulo }}</mat-icon>
+            <span>{{ subModulo.NombreSubModulo }}</span>
+          </a>
+        </div>
       </ng-container>
     </mat-nav-list>
-  </mat-sidenav> -->
-  <mat-sidenav
-  #sidenav
-  [mode]="isOverMode ? 'over' : 'side'"
-  [(opened)]="isExpanded"
-  class="sidenav"
->
-  <mat-nav-list>
-    <ng-container *ngFor="let modulo of menuItems; let i = index">
-      <!-- Módulo -->
-      <h3 
-        class="modulo-titulo"
-        (click)="toggleModulo(i)"
-      >
-        <mat-icon>{{ modulo.IconModulo }}</mat-icon>
-        {{ modulo.NombreModulo }}
-        <mat-icon style="margin-left:auto">
-          {{ activeModuloIndex === i ? 'expand_less' : 'expand_more' }}
-        </mat-icon>
-      </h3>
-
-      <!-- Submódulos -->
-      <div *ngIf="activeModuloIndex === i" class="submodulos">
-        <a
-          mat-list-item
-          *ngFor="let subModulo of modulo.items"
-          [routerLink]="subModulo.Ruta"
-          (click)="isOverMode ? sidenav.close() : null"
-        >
-          <mat-icon>{{ subModulo.IconSubModulo }}</mat-icon>
-          <span>{{ subModulo.NombreSubModulo }}</span>
-        </a>
-      </div>
-    </ng-container>
-  </mat-nav-list>
-</mat-sidenav>
+  </mat-sidenav>
 
   <mat-sidenav-content>
     <div class="content">

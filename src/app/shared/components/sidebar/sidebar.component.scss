@@ -31,7 +31,7 @@
 }
 
 .submodulos a {
-  padding-left: 32px; /* sangría para diferenciar */
+  padding-left: 32px;
 }
 
 /* Logo */
@@ -112,30 +112,21 @@
 /* ==== Sidebar ==== */
 .sidenav-container {
   position: fixed;
-  margin-top: 60px; /* para que no tape la toolbar */
-  height: auto; /* que se ajuste al contenido */
-  min-height: calc(100vh - 60px); /* mínimo: altura completa de la pantalla */
+  margin-top: 60px;
+  height: auto;
+  min-height: calc(100vh - 60px);
 }
 
 .sidenav {
   width: 250px;
   background-color: #0A1828;
   color: white;
-  overflow-y: auto; /* si el contenido del menú es largo, el scroll será aquí */
+  overflow-y: auto;
 }
 
 mat-sidenav-content {
   padding: 16px;
 }
-
-// .sidenav {
-//   width: 250px;
-//   height: 100%;
-//   background-color: #0A1828;
-//   color: white;
-//   overflow-y: auto;
-//   transition: width 0.3s ease;
-// }
 
 .sidenav * {
   color: white !important;
@@ -147,7 +138,6 @@ mat-sidenav-content {
   padding: 8px 16px;
 }
 
-/* Items del menú */
 mat-nav-list a {
   display: flex;
   align-items: center;
@@ -157,14 +147,71 @@ mat-nav-list a mat-icon {
   margin-right: 8px;
 }
 
-/* ==== Contenido principal ==== */
-mat-sidenav-content {
-  padding: 16px;
-}
-
 /* ==== Responsivo ==== */
 @media (max-width: 768px) {
   .center-container {
-    display: none; /* Oculta buscador en pantallas pequeñas */
+    display: none;
   }
+}
+
+/* ==== Estilos para el menú de usuario ==== */
+.user-menu .mat-menu-content {
+  padding: 0 !important;
+  background-color: #0A1828;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.user-card {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background-color: #10263f;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  border: 2px solid #ffffff33;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+}
+
+.user-email {
+  font-size: 13px;
+  color: #cccccc;
+}
+
+/* Botón cerrar sesión */
+.user-card button {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgb(19, 19, 19);
+  background-color: transparent;
+}
+
+.user-card button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
