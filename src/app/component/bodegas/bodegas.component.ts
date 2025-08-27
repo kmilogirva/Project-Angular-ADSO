@@ -3,11 +3,17 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 import { BodegasService, Bodega } from 'src/app/services/Bodegas/bodegas.service';
+import { TablaBodegasComponent } from 'src/app/component/bodegas/tabla-bodegas/tabla-bodegas.component';
 
 @Component({
   selector: 'app-bodegas',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, SidebarComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    SidebarComponent,
+    TablaBodegasComponent  
+  ],
   templateUrl: './bodegas.component.html',
   styleUrls: ['./bodegas.component.scss'],
   providers: [BodegasService]
@@ -27,16 +33,16 @@ export class BodegasComponent implements OnInit {
 
   instanciarFormulario(): void {
     this.BodegasForm = this.fb.group({
-  idBodega: [''],
-  nombreBodega: ['', Validators.required],
-  ubicacion: ['', Validators.required],
-  cantidadMaxima: ['', [Validators.required, Validators.min(1)]],
-  idEstado: [true, Validators.required],
-  fechaCreacion: [null],
-  idUsuarioCreacion: [1],
-  fechaModificacion: [null],
-  idUsuarioModificacion: [null]
-});
+      idBodega: [''],
+      nombreBodega: ['', Validators.required],
+      ubicacion: ['', Validators.required],
+      cantidadMaxima: ['', [Validators.required, Validators.min(1)]],
+      idEstado: [true, Validators.required],
+      fechaCreacion: [null],
+      idUsuarioCreacion: [1],
+      fechaModificacion: [null],
+      idUsuarioModificacion: [null]
+    });
   }
 
   get f() {
@@ -46,13 +52,12 @@ export class BodegasComponent implements OnInit {
   guardarBodega(): void {
     if (this.BodegasForm.valid) {
       const bodega = this.BodegasForm.value;
-          console.log("Esto es lo que envío al backend",bodega)
+      console.log("📤 Enviando al backend:", bodega);
 
-          
-
-             if (bodega.idBodega === '' || bodega.idBodega === null) {
-      delete bodega.idBodega;
-    }
+      // limpiar id si viene vacío
+      if (bodega.idBodega === '' || bodega.idBodega === null) {
+        delete bodega.idBodega;
+      }
 
       if (!bodega.idBodega) {
         this.bodegasService.crearBodega(bodega).subscribe({
@@ -77,16 +82,15 @@ export class BodegasComponent implements OnInit {
     }
   }
 
- 
-cargarBodegas(): void {
-  this.bodegasService.listarBodegas().subscribe({
-    next: (res) => {
-      console.log(res)
-      this.bodegas = res; 
-    },
-    error: (err: any) => console.error('❌ Error al listar:', err)
-  });
-}
+  cargarBodegas(): void {
+    this.bodegasService.listarBodegas().subscribe({
+      next: (res) => {
+        console.log("📥 Listado recibido:", res);
+        this.bodegas = res;
+      },
+      error: (err: any) => console.error('❌ Error al listar:', err)
+    });
+  }
 
   editarBodega(bodega: Bodega): void {
     this.BodegasForm.patchValue(bodega);

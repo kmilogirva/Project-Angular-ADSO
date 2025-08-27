@@ -44,7 +44,7 @@
             </div>
           </div>
 
-          <!-- Campos ocultos o predefinidos -->
+          <!-- Campos ocultos -->
           <input type="hidden" formControlName="idBodega" />
           <input type="hidden" formControlName="fechaCreacion" />
           <input type="hidden" formControlName="idUsuarioCreacion" />
@@ -61,44 +61,17 @@
       </div>
     </div>
 
-    <!-- Listado de bodegas -->
+    <!-- Listado de bodegas con Angular Material -->
     <div class="card mt-4">
       <div class="card-header bg-dark text-white text-center">
         <h4 class="mb-0">Listado de Bodegas</h4>
       </div>
-      <div class="card-body p-0">
-        <table class="table table-striped table-bordered table-hover mb-0">
-          <thead class="table-light">
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Ubicación</th>
-              <th>Capacidad</th>
-              <th>Estado</th>
-              <th class="text-center">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let bodega of bodegas">
-              <td>{{ bodega.idBodega }}</td>
-              <td>{{ bodega.nombreBodega }}</td>
-              <td>{{ bodega.ubicacion }}</td>
-              <td>{{ bodega.cantidadMaxima }}</td>
-              <td>
-                <span class="badge" [ngClass]="bodega.idEstado ? 'bg-success' : 'bg-danger'">
-                  {{ bodega.idEstado ? 'Activa' : 'Inactiva' }}
-                </span>
-              </td>
-              <td class="text-center">
-                <button class="btn btn-sm btn-outline-info me-2" (click)="editarBodega(bodega)">✏️</button>
-                <button class="btn btn-sm btn-outline-danger" (click)="eliminarBodega(bodega.idBodega)">🗑️</button>
-              </td>
-            </tr>
-            <tr *ngIf="bodegas.length === 0">
-              <td colspan="6" class="text-center text-muted">No hay bodegas registradas.</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="card-body">
+        <app-tabla-bodegas
+          [bodegas]="bodegas"
+          (editarBodega)="editarBodega($event)"
+          (eliminarBodega)="eliminarBodega($event)">
+        </app-tabla-bodegas>
       </div>
     </div>
   </div>

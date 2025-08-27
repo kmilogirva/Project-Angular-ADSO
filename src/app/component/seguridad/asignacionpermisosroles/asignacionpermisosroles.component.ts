@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { TagInputModule } from 'ngx-chips';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 import { ComboResponse } from 'src/app/models/Response/Generales/ComboResponse';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -27,7 +26,7 @@ import { Usuario } from 'src/app/shared/models/Usuario';
 @Component({
   selector: 'app-asignacionpermisosroles',
   standalone: true,
-  imports: [TagInputModule, ReactiveFormsModule, SidebarComponent, CommonModule],
+  imports: [ReactiveFormsModule, SidebarComponent, CommonModule],
   templateUrl: './asignacionpermisosroles.component.html',
   styleUrl: './asignacionpermisosroles.component.scss'
 })

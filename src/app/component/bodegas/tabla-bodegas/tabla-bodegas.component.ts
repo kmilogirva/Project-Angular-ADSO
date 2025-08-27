@@ -10,13 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Usuario } from 'src/app/shared/models/Usuario';
+import { Bodega } from 'src/app/services/Bodegas/bodegas.service';
 
 @Component({
-  selector: 'app-tabla-usuarios',
-  templateUrl: './tabla-usuarios.component.html',
-  styleUrls: ['./tabla-usuarios.component.scss'],
+  selector: 'app-tabla-bodegas',
   standalone: true,
+  templateUrl: './tabla-bodegas.component.html',
+  
   imports: [
     CommonModule,
     FormsModule,
@@ -29,29 +29,22 @@ import { Usuario } from 'src/app/shared/models/Usuario';
     MatButtonModule
   ]
 })
-export class TablaUsuariosComponent implements AfterViewInit, OnChanges {
-  @Input() usuarios: Usuario[] = [];
+export class TablaBodegasComponent implements AfterViewInit, OnChanges {
+  @Input() bodegas: Bodega[] = [];
 
-  @Output() editarUsuario   = new EventEmitter<Usuario>();
-  @Output() eliminarUsuario = new EventEmitter<Usuario>();
-
-  editar(u: Usuario) {
-    this.editarUsuario.emit(u);
-    }
-    eliminar(usu: Usuario) { this.eliminarUsuario.emit(usu); }
+  @Output() editarBodega   = new EventEmitter<Bodega>();
+  @Output() eliminarBodega = new EventEmitter<number>();
 
   displayedColumns = [
     'posicion',
-    'nombreCompleto',
-    'correo',
-    'telefono',
-    'idRol',
+    'nombreBodega',
+    'ubicacion',
+    'cantidadMaxima',
     'idEstado',
     'acciones'
   ];
 
-  dataSource = new MatTableDataSource<Usuario>();
-
+  dataSource = new MatTableDataSource<Bodega>();
   termino = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,24 +56,25 @@ export class TablaUsuariosComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['usuarios']) {
-      this.dataSource.data = this.usuarios;
+    if (changes['bodegas']) {
+      this.dataSource.data = this.bodegas;
       this.aplicarFiltro();
     }
   }
 
   aplicarFiltro() {
-    this.dataSource.filterPredicate = (usuario, filtro) => {
-      const nombreCompleto = [usuario.nombre1, usuario.nombre2, usuario.apellido1, usuario.apellido2]
-  .filter(nombre => nombre && nombre.trim() !== '')
-  .join(' ');
-      const correoTelRol = `${usuario.correo} ${usuario.telefono} ${usuario.idRol}`;
-      return (
-        (nombreCompleto + correoTelRol).toLowerCase().includes(filtro)
-      );
+    this.dataSource.filterPredicate = (bodega, filtro) => {
+      const datos = `${bodega.nombreBodega} ${bodega.ubicacion} ${bodega.cantidadMaxima} ${bodega.idEstado ? 'activa' : 'inactiva'}`;
+      return datos.toLowerCase().includes(filtro);
     };
-
     this.dataSource.filter = this.termino.trim().toLowerCase();
   }
 
+  editar(bodega: Bodega) {
+    this.editarBodega.emit(bodega);
+  }
+
+  eliminar(id: number) {
+    this.eliminarBodega.emit(id);
+  }
 }
