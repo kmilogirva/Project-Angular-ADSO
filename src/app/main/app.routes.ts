@@ -116,6 +116,12 @@ export const routes: Routes = [
    canActivate: [authGuard],
   loadComponent: () =>
       import('../component/seguridad/asignacionpermisosroles/asignacionpermisosroles.component').then((m) => m.AsignacionpermisosrolesComponent)
+},
+{
+  path: 'gestion-terceros',
+   canActivate: [authGuard],
+  loadComponent: () =>
+      import('../component/gestionusuarios/registroterceros/registroterceros.component').then((m) => m.RegistrotercerosComponent)
 }
 
 ] as Routes;

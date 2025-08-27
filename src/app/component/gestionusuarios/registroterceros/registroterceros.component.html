@@ -1,0 +1,236 @@
+<div class="d-flex registro-wrapper">
+    <app-sidebar></app-sidebar>
+
+    <div class="container mt-5">
+        <div class="card registro-card shadow animate__animated animate__fadeIn">
+            <div class="card-header text-white text-center">
+                <h3 class="mb-0">
+                    <i class="fa-solid fa-user-plus me-2"></i> Registro de Terceros
+                </h3>
+            </div>
+
+            <div class="card-body px-4 py-4">
+                <form [formGroup]="terceroForm" (ngSubmit)="registrarTercero()" novalidate>
+
+                    <!-- ID oculto -->
+                    <input type="hidden" formControlName="idTercero">
+
+                    <!-- Documento -->
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="codDocumento" class="form-label fw-semibold">Identificación</label>
+                            <input id="codDocumento" type="text" class="form-control shadow-sm"
+                                formControlName="codDocumento">
+                            <small class="text-danger"
+                                *ngIf="f['codDocumento'].touched && f['codDocumento'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="idTipoIdentificacion" class="form-label fw-semibold">Tipo Identificación</label>
+                            <select id="idTipoIdentificacion" class="form-select shadow-sm"
+                                formControlName="idTipoIdentificacion">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let tipo of tiposIdentificacion" [value]="tipo.codigo">
+                                    {{ tipo.valor }} 
+                                </option>
+                            </select>
+                            <small class="text-danger"
+                                *ngIf="f['idTipoIdentificacion'].touched && f['idTipoIdentificacion'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="idTipoTercero" class="form-label fw-semibold">Tipo de Tercero</label>
+                            <select id="idTipoTercero" class="form-select shadow-sm" formControlName="idTipoTercero">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let tipo of tiposTercero" [value]="tipo.codigo">
+                                    {{ tipo.valor }}
+                                </option>
+                            </select>
+                            <small class="text-danger"
+                                *ngIf="f['idTipoTercero'].touched && f['idTipoTercero'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+                    </div>
+
+
+                    <div class="row g-3">
+
+
+
+                        <div class="col-md-4">
+                            <label for="idTipoPersona" class="form-label fw-semibold">Tipo Persona</label>
+                            <select id="idTipoPersona" class="form-select shadow-sm" formControlName="idTipoPersona">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let tipo of tiposPersona" [value]="tipo.codigo">
+                                    {{ tipo.valor }}
+                                </option>
+                            </select>
+                            <small class="text-danger"
+                                *ngIf="f['idTipoPersona'].touched && f['idTipoPersona'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+
+
+                    </div>
+                    <!-- Nombres y Apellidos -->
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-3">
+                            <label for="nombre1" class="form-label fw-semibold">Primer Nombre</label>
+                            <input id="nombre1" type="text" class="form-control shadow-sm" formControlName="nombre1">
+                            <small class="text-danger"
+                                *ngIf="f['nombre1'].touched && f['nombre1'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="nombre2" class="form-label fw-semibold">Segundo Nombre</label>
+                            <input id="nombre2" type="text" class="form-control shadow-sm" formControlName="nombre2">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="apellido1" class="form-label fw-semibold">Primer Apellido</label>
+                            <input id="apellido1" type="text" class="form-control shadow-sm"
+                                formControlName="apellido1">
+                            <small class="text-danger"
+                                *ngIf="f['apellido1'].touched && f['apellido1'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="apellido2" class="form-label fw-semibold">Segundo Apellido</label>
+                            <input id="apellido2" type="text" class="form-control shadow-sm"
+                                formControlName="apellido2">
+                        </div>
+                    </div>
+
+                    <!-- Contacto -->
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-5">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input id="email" type="email" class="form-control" formControlName="email">
+                            <small class="text-danger" *ngIf="f['email'].touched && f['email'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                            <small class="text-danger" *ngIf="f['email'].touched && f['email'].errors?.['email']">
+                                Correo inválido
+                            </small>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input id="telefono" type="text" class="form-control" formControlName="telefono">
+                            <small class="text-danger"
+                                *ngIf="f['telefono'].touched && f['telefono'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="f['telefono'].touched && f['telefono'].errors?.['pattern']">
+                                Debe tener 10 dígitos
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Dirección -->
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-8">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input id="direccion" type="text" class="form-control" formControlName="direccion">
+                            <small class="text-danger"
+                                *ngIf="f['direccion'].touched && f['direccion'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Ubicación -->
+                    <div class="row g-3 mt-1">
+
+
+                        <div class="col-md-4">
+                            <label for="idPais" class="form-label">País</label>
+                            <select id="idPais" class="form-select shadow-sm" formControlName="idPais"
+                                (change)="obtenerComboDepartamentos($any($event.target).value)">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let pais of paises" [value]="pais.codigo">
+                                    {{ pais.valor }}
+                                </option>
+                            </select>
+                            <small class="text-danger" *ngIf="f['idPais'].touched && f['idPais'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="idDepartamento" class="form-label">Departamento</label>
+                            <select id="idDepartamento" class="form-select shadow-sm" formControlName="idDepartamento"
+                                (change)="obtenerComboCiudades($any($event.target).value)">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let depto of departamentos" [value]="depto.codigo">
+                                    {{ depto.valor }}
+                                </option>
+                            </select>
+                            <small class="text-danger"
+                                *ngIf="f['idDepartamento'].touched && f['idDepartamento'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+
+                        <!-- Municipio -->
+                        <div class="col-md-4">
+                            <label for="idCiudad" class="form-label">Municipio</label>
+                            <select id="idCiudad" class="form-select shadow-sm" formControlName="idCiudad">
+                                <option value="">Seleccione</option>
+                                <option *ngFor="let ciudad of ciudades" [value]="ciudad.codigo">
+                                    {{ ciudad.valor }}
+                                </option>
+                            </select>
+                            <small class="text-danger"
+                                *ngIf="f['idCiudad'].touched && f['idCiudad'].errors?.['required']">
+                                Campo requerido
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Estado -->
+                    <div class="row g-3 mt-1">
+                        <div class="col-lg-4 d-flex align-items-center">
+                            <div class="form-check form-switch form-check-lg ms-lg-4">
+                                <input id="idEstado" type="checkbox" class="form-check-input"
+                                    [checked]="terceroForm.value.idEstado === 1" (change)="onEstadoToggle($event)">
+                                <label class="form-check-label fw-bold" for="idEstado">
+                                    <i class="fa-solid fa-power-off me-1"></i>Estado Cliente
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón -->
+                    <div class="row g-3 mt-3">
+                        <div class="col-5 mt-3 mx-auto">
+                            <button type="submit" class="btn btn-success w-100" [disabled]="!terceroForm.valid">
+                                <i class="fas fa-user-plus me-2"></i>
+                                {{ terceroForm.value.idTercero ? 'Actualizar Tercero' : 'Crear Tercero' }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <app-tabla-terceros class="mt-4" [terceros]="terceros"
+                    (editarTercero)="llenarCamposFormulario($event.idTercero!)"
+                    (eliminarTercero)="eliminarTercero($event.idTercero!)">
+                </app-tabla-terceros>
+
+            </div>
+        </div>
+    </div>
+</div>
