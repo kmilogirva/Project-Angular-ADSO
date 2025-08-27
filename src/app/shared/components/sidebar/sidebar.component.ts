@@ -96,9 +96,9 @@ export class SidebarComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
-  isLoginRoute(): boolean {
-    return this.router.url === '/login';
-  }
+  // isLoginRoute(): boolean {
+  //   return this.router.url === '/acceso';
+  // }
 
   irASubModulo(ruta: string) {
     this.navigationService.navegarSubModulo(ruta);
@@ -109,6 +109,6 @@ export class SidebarComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/acceso']);
   }
 }

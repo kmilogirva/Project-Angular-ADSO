@@ -113,9 +113,20 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken() && !!this.currentUserValue;
+ isLoggedIn(): boolean {
+  const token = this.getToken();
+
+  if (!token) return false;
+
+  if (!this.currentUserValue) {
+    const savedUser = localStorage.getItem('usuario');
+    if (savedUser) {
+      this.currentUserSubject.next(JSON.parse(savedUser));
+    }
   }
+
+  return true;
+}
   // #endregion
 
   // #region 🔓 Cierre de sesión

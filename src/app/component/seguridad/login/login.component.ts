@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,26 +15,32 @@ import { RouterModule, Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   userAutentication: boolean = false;
   loginForm!: FormGroup;
+  private returnUrl: string = '/inicio';  // 👈 por defecto inicio
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
-    private toastr: ToastrService, private router: Router) { }
+    private toastr: ToastrService,
+    private router: Router,
+    private route: ActivatedRoute  // 👈 para leer query params
+  ) {}
 
   ngOnInit(): void {
     this.instanciarFormulario();
+    // Si existe ?returnUrl=xxx en la URL lo tomamos
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';
   }
 
   instanciarFormulario(): void {
     this.loginForm = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
-      contrasena: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15),]]
+      contrasena: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]]
     });
   }
 
   get f() {
     return this.loginForm.controls;
   }
-
 
   loginSubmited() {
     if (this.loginForm.valid) {
@@ -51,9 +57,11 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
             this.userAutentication = true;
             this.loginForm.reset();
-            this.router.navigate(['/inicio']);
+
+            // 👇 Aquí respetamos el returnUrl, si no hay usamos '/inicio'
+            this.router.navigateByUrl(this.returnUrl);
+
           } else {
-            // Si no hay token pero no es un error HTTP
             this.toastr.error('Error inesperado, comuníquese con el Administrador');
             this.userAutentication = false;
           }
@@ -72,6 +80,4 @@ export class LoginComponent implements OnInit {
       alert('Formulario inválido');
     }
   }
-
-
 }
