@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { NavigationService } from '../../Services/NavigationService';
 
 interface SubModuloDTO {
   NombreSubModulo: string;
@@ -45,17 +46,28 @@ interface ModuloDTO {
 export class SidebarComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isExpanded = window.innerWidth >= 768;
-  isOverMode = window.innerWidth < 768;
-  activeModuloIndex: number | null = null;
+  isOverMode = window.innerWidth <= 768;
+  modulosAbiertos: boolean[] = [];
 
   menuItems: ModuloDTO[] = [];
   usuario: any;
 
-  constructor(public router: Router, private authService: AuthService) {}
+  constructor(
+    public router: Router,
+    private authService: AuthService,
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit(): void {
+    this.checkScreenSize();
     this.obtenerItemsMenu();
     this.usuario = this.authService.usuarioActual;
+  }
+
+  @HostListener('window:resize', [])
+  checkScreenSize() {
+    this.isOverMode = window.innerWidth <= 768;
+    this.isExpanded = !this.isOverMode;
   }
 
   obtenerItemsMenu() {
@@ -65,6 +77,7 @@ export class SidebarComponent implements OnInit {
       this.authService.obtenerMenuPorRol(idRol).subscribe({
         next: (data: ModuloDTO[]) => {
           this.menuItems = data;
+          this.modulosAbiertos = this.menuItems.map(() => true); // abrir todos por defecto
         },
         error: (err) => {
           console.error('Error al obtener el menú:', err);
@@ -76,7 +89,7 @@ export class SidebarComponent implements OnInit {
   }
 
   toggleModulo(index: number) {
-    this.activeModuloIndex = this.activeModuloIndex === index ? null : index;
+    this.modulosAbiertos[index] = !this.modulosAbiertos[index];
   }
 
   toggleSidebar() {
@@ -85,6 +98,13 @@ export class SidebarComponent implements OnInit {
 
   isLoginRoute(): boolean {
     return this.router.url === '/login';
+  }
+
+  irASubModulo(ruta: string) {
+    this.navigationService.navegarSubModulo(ruta);
+    if (this.isOverMode && this.sidenav) {
+      this.sidenav.close();
+    }
   }
 
   logout() {

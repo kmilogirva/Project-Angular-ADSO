@@ -29,7 +29,7 @@
     </button>
     <button class="nav-btn" routerLink="/configuracion">
       <mat-icon>settings</mat-icon>
-      <span>configuracion</span>
+      <span>Configuración</span>
     </button>
   </div>
 
@@ -75,17 +75,17 @@
           <mat-icon>{{ modulo.IconModulo }}</mat-icon>
           {{ modulo.NombreModulo }}
           <mat-icon style="margin-left:auto">
-            {{ activeModuloIndex === i ? 'expand_less' : 'expand_more' }}
+            {{ modulosAbiertos[i] ? 'expand_less' : 'expand_more' }}
           </mat-icon>
         </h3>
 
         <!-- Submódulos -->
-        <div *ngIf="activeModuloIndex === i" class="submodulos">
+        <div *ngIf="modulosAbiertos[i]" class="submodulos">
           <a
             mat-list-item
             *ngFor="let subModulo of modulo.items"
             [routerLink]="subModulo.Ruta"
-            (click)="isOverMode ? sidenav.close() : null"
+            (click)="irASubModulo(subModulo.Ruta)"
           >
             <mat-icon>{{ subModulo.IconSubModulo }}</mat-icon>
             <span>{{ subModulo.NombreSubModulo }}</span>
@@ -96,7 +96,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="content">
+    <div class="main-content">
       <ng-content></ng-content>
     </div>
   </mat-sidenav-content>

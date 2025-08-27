@@ -23,15 +23,29 @@
 
 .modulo-titulo {
   font-weight: bold;
+  font-size: 18px;
   padding: 8px 16px;
   display: flex;
   align-items: center;
   cursor: pointer;
   user-select: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.modulo-titulo:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .submodulos a {
-  padding-left: 32px;
+  padding-left: 32px; /* sangría */
+  display: block;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.submodulos a:hover {
+  transform: translateX(5px) scale(1.02);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 /* Logo */
@@ -111,21 +125,20 @@
 
 /* ==== Sidebar ==== */
 .sidenav-container {
-  position: fixed;
+  height: calc(100vh - 60px); /* ocupa todo menos la toolbar */
   margin-top: 60px;
-  height: auto;
-  min-height: calc(100vh - 60px);
 }
 
 .sidenav {
-  width: 250px;
+  width: 310px;
   background-color: #0A1828;
   color: white;
-  overflow-y: auto;
+  overflow-y: auto; /* permite scroll si hay mucho contenido */
 }
 
-mat-sidenav-content {
+.mat-sidenav-content {
   padding: 16px;
+  transition: margin-left 0.3s ease;
 }
 
 .sidenav * {
@@ -150,7 +163,17 @@ mat-nav-list a mat-icon {
 /* ==== Responsivo ==== */
 @media (max-width: 768px) {
   .center-container {
-    display: none;
+    display: none; /* oculta buscador en pantallas pequeñas */
+  }
+
+  .mat-sidenav-content {
+    padding: 8px;
+  }
+}
+
+@media (min-width: 769px) {
+  .mat-sidenav-container.mat-drawer-container {
+    overflow: hidden; /* evita scrolls extraños */
   }
 }
 
