@@ -26,7 +26,21 @@ export const environment = {
  eliminarUsuarioPorId:"User/eliminarusuarioporid",
  crearUsuario : "crearusuario",
 
+//Inicio Tercero
+ obtenerListadoTerceros: "Terceros/listarterceros",
+ obtenerTerceroPorId: "Terceros/obtenerterceroporid",
+ actualizarTerceroPorId: "Terceros/actualizartercero",
+ eliminarTerceroPorId:"Terceros/eliminarterceroporid",
+ crearTercero : "Terceros/creartercero",
 
+ //Registro Terceros
+ obtenerComboTiposDocumento: "generales/combo-tipos-documento",
+ obtenerComboTiposTercero: "generales/combo-tipos-terceros",
+ obtenerComboTiposPersona: "generales/combo-tipos-persona",
+ obtenerComboPaises: "generales/combo-paises",
+ obtenerComboDepartamentos: "generales/combo-departamentos",
+ obtenerComboCiudades: "generales/combo-ciudades",
+//Generales
 //Inicio Productos
 
 obtenerListadoProductos: "productos/listarproductos",
