@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 import { ComboResponse } from 'src/app/models/Response/Generales/ComboResponse'
 import { TablaUsuariosComponent } from '../tabla-usuarios/tabla-usuarios.component';
+import { UsuarioResponse } from 'src/app/models/Response/Seguridad/UsuarioResponse';
 @Component({
   selector: 'app-registrousuario',
   templateUrl: './registrousuario.component.html',
@@ -21,7 +22,8 @@ export class RegistroUsuariosComponent implements OnInit {
   cuentaCreada = false;
   repetircontrasena = 'none';
   roles: ComboResponse[] = [];
-  usuarios: Usuario[] = []
+  usuarios: UsuarioResponse[] = []
+  esEdicion: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -38,15 +40,14 @@ export class RegistroUsuariosComponent implements OnInit {
 
   InstanciarFormulario(): void {
     this.usuarioForm = this.fb.group({
+      idTercero: [],
       idUsuario: [],
-      nombre1: ['', Validators.required],
-      nombre2: [''],
-      apellido1: ['', Validators.required],
-      apellido2: [''],
-      correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      contrasena: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
-      confirmarcontrasena: ['', Validators.required],
+      codUsuario: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
+      nombrecompleto: [''],
+      correo: [''],
+      telefono: [''],
+      contrasena: [''],
+      confirmarcontrasena: [''],
       idRol: ['', Validators.required],
       idEstado: [1, Validators.required],
       idUsuarioCreacion: [null],
@@ -57,7 +58,6 @@ export class RegistroUsuariosComponent implements OnInit {
         validators: this.validacionContrasena('contrasena', 'confirmarcontrasena')
       }
     );
-
   }
 
   onEstadoToggle(event: Event): void {
@@ -93,55 +93,77 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   registerSubmited(): void {
-    if (this.usuarioForm.invalid) return;
+  if (this.usuarioForm.invalid) return;
 
-    const esEdicion = this.usuarioForm.value.idUsuario != null;
-    console.log(esEdicion)
-    const contrasena = this.f['contrasena'].value;
-    const confirmar = this.f['confirmarcontrasena'].value;
+  // 👇 definimos el estado de edición según idUsuario
+  this.esEdicion = !!this.usuarioForm.value.idUsuario;
 
-    if (contrasena !== confirmar) {
-      this.repetircontrasena = 'inline';
-      return;
-    }
+  const contrasena = this.f['contrasena'].value;
+  const confirmar = this.f['confirmarcontrasena'].value;
 
-    const idUsuario = this.authService.obtenerIdUsuario();
-
-    if (!esEdicion) {
-      this.usuarioForm.patchValue({ idUsuarioCreacion: Number(idUsuario) });
-    } else {
-      this.usuarioForm.patchValue({ idUsuarioModificacion: Number(idUsuario) });
-    }
-
-    const dto = { ...this.usuarioForm.value };
-    //Elimina campos vacios o nulos
-    for (const key in dto) {
-      if (typeof dto[key] === 'string' && dto[key].trim() === '') {
-        delete dto[key];
-      }
-    }
-
-    const accion = esEdicion
-      ? this.usuarioService.actualizarUsuario(dto)
-      : this.usuarioService.crearUsuario(dto);
-
-    accion.subscribe({
-      next: (res) => {
-        console.log("Respuesta:", res);
-        this.toastr.success(
-          esEdicion ? 'Usuario actualizado correctamente' : 'Usuario registrado correctamente'
-        );
-        this.cargarDataUsuarios();
-        this.usuarioForm.reset();
-        this.repetircontrasena = 'none';
-      },
-      error: (err) => {
-        console.error("Error en la petición", err);
-        this.toastr.error('Error al procesar la solicitud');
-      }
-    });
+  // 🔒 Validación de contraseñas
+  if (contrasena !== confirmar) {
+    this.repetircontrasena = 'inline';
+    return;
   }
 
+  const idUsuario = this.authService.obtenerIdUsuario();
+
+  // 👉 Actualizamos el campo correcto según sea edición o creación
+  if (this.esEdicion) {
+    this.usuarioForm.patchValue({ idUsuarioModificacion: Number(idUsuario) });
+  } else {
+    this.usuarioForm.patchValue({ idUsuarioCreacion: Number(idUsuario) });
+  }
+
+  // Construcción del DTO
+  const dto = { ...this.usuarioForm.value };
+
+  // Elimina campos vacíos o nulos
+  for (const key in dto) {
+    if (typeof dto[key] === 'string' && dto[key].trim() === '') {
+      delete dto[key];
+    }
+  }
+
+  const usuario: Usuario = {
+  idTercero: dto.idTercero,
+  idUsuario: dto.idUsuario,
+  codUsuario: dto.codUsuario,
+  idRol: Number(dto.idRol),
+  idEstado: dto.idEstado,
+  ...(dto.contrasena ? { contrasena: dto.contrasena } : {}),
+  ...(this.esEdicion
+    ? { idUsuarioModificacion: dto.idUsuarioModificacion }
+    : { idUsuarioCreacion: dto.idUsuarioCreacion })
+};
+
+  console.log("DTO a enviar:", usuario);
+
+  // Acción según estado
+  const accion = this.esEdicion
+    ? this.usuarioService.actualizarUsuario(usuario)
+    : this.usuarioService.crearUsuario(usuario);
+
+  accion.subscribe({
+    next: (res) => {
+      console.log("Respuesta:", res);
+      this.toastr.success(
+        this.esEdicion
+          ? 'Usuario actualizado correctamente'
+          : 'Usuario registrado correctamente'
+      );
+      this.cargarDataUsuarios();
+      this.usuarioForm.reset();
+      this.repetircontrasena = 'none';
+      this.esEdicion = false; // reset al terminar
+    },
+    error: (err) => {
+      console.error("Error en la petición", err);
+      this.toastr.error('Error al procesar la solicitud');
+    }
+  });
+}
 
 
   cargarComboRoles(): void {
@@ -156,45 +178,56 @@ export class RegistroUsuariosComponent implements OnInit {
   }
 
   cargarDataUsuarios() {
-    this.usuarioService.obtenerListadoUsuarios().subscribe({
+    this.usuarioService.obtenerDataUsuarios().subscribe({
       next: (usuarios) => {
+        console.log(usuarios)
         this.usuarios = usuarios
       },
       error: () => this.toastr.error('No se pudo cargar la datos de la tabla Usuarios')
     })
   }
 
-  llenarCamposFormulario(id: number): void {
-    console.log("Entre al metodo llenarCamposFormulario()", id)
-    if (!id) {
-      this.toastr.warning('ID no válido');
-      return;
-    }
-
-    this.usuarioService.obtenerUsuarioPorId(id).subscribe({
-      next: (usuario) => {
-        console.log(usuario)
-        this.usuarioForm.patchValue({
-          idUsuario: usuario.idUsuario,
-          nombre1: usuario.nombre1,
-          nombre2: usuario.nombre2,
-          apellido1: usuario.apellido1,
-          apellido2: usuario.apellido2,
-          correo: usuario.correo,
-          telefono: usuario.telefono,
-          contrasena: usuario.contrasena,
-          confirmarcontrasena: usuario.contrasena,
-          idRol: usuario.idRol,
-          idEstado: usuario.idEstado,
-          idUsuarioCreacion: usuario.idUsuarioCreacion,
-          idUsuarioModificacion: usuario.idUsuarioModificacion,
-        });
-
-        // this.idUsuarioEnEdicion = id; // Puedes usarlo si necesitas saber si estás editando
-      },
-      error: () => this.toastr.error('No se pudo obtener el usuario')
-    });
+llenarCamposFormulario(id: number): void {
+  console.log("Entre al metodo llenarCamposFormulario()", id);
+  if (!id) {
+    this.toastr.warning('ID no válido');
+    return;
   }
+
+  this.usuarioService.obtenerUsuarioPorIdTercero(id).subscribe({
+    next: (usuario) => {
+      console.log(usuario);
+
+      this.usuarioForm.patchValue({
+        idTercero: usuario.idTercero,
+        idUsuario: usuario.idUsuario,
+        nombrecompleto: usuario.nombreCompleto,
+        correo: usuario.email,
+        telefono: usuario.telefono,
+        codUsuario: usuario.codUsuario,
+        idRol: usuario.idRol,
+        idEstado: usuario.idEstado,
+        idUsuarioCreacion: usuario.idUsuarioCreacion,
+        idUsuarioModificacion: usuario.idUsuarioModificacion,
+
+        contrasena: '',               // 👈 dejamos vacío
+        confirmarcontrasena: ''  
+      });
+
+      // 👉 Quitar validación requerida en edición
+      this.usuarioForm.get('contrasena')?.setValidators([Validators.minLength(6), Validators.maxLength(15)]);
+      this.usuarioForm.get('confirmarcontrasena')?.clearValidators();
+
+      this.usuarioForm.get('contrasena')?.updateValueAndValidity();
+      this.usuarioForm.get('confirmarcontrasena')?.updateValueAndValidity();
+
+      this.esEdicion = true;
+    },
+    error: () => this.toastr.error('No se pudo obtener el usuario')
+  });
+}
+
+
 
   eliminarUsuario(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {

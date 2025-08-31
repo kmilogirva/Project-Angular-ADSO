@@ -21,10 +21,12 @@ export const environment = {
 //Inicio Usuario
 //  crearUsuario: 'User/crearusuario',
  obtenerListadoUsuarios: "User/listarusuarios",
- obtenerUsuarioPorId: "User/obtenerusuarioporid",
+ obtenerUsuariosResponse: "User/consultarusuarios",
+obtenerUsuarioPorIdTercero: "User/consultarusuariosporidtercero",
+//  obtenerUsuarioPorId: "User/obtenerusuarioporid",
  actualizarUsuarioPorId: "User/actualizarusuario",
  eliminarUsuarioPorId:"User/eliminarusuarioporid",
- crearUsuario : "crearusuario",
+ crearUsuario : "User/crearusuario",
 
 //Inicio Tercero
  obtenerListadoTerceros: "Terceros/listarterceros",
