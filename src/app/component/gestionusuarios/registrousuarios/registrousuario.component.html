@@ -12,68 +12,32 @@
       <div class="card-body px-4 py-4">
         <form [formGroup]="usuarioForm" (ngSubmit)="registerSubmited()" novalidate>
 
+          <input type="hidden" id="idTercero" formControlName="idTercero" />
           <input type="hidden" id="idUsuario" formControlName="idUsuario" />
+
           <div class="row g-4">
+            <!-- Información del Usuario (Solo Lectura) -->
             <div class="row g-3">
-              <div class="col-md-4">
-                <label for="nombre1" class="form-label fw-semibold">Primer Nombre</label>
-                <input id="nombre1" type="text" class="form-control shadow-sm" formControlName="nombre1"
-                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Juan' : ''">
-                <div *ngIf="f['nombre1'].touched && f['nombre1'].errors?.['required']" class="text-danger small mt-1">
-                  Campo requerido
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <label for="nombre2" class="form-label fw-semibold">Segundo Nombre</label>
-                <input id="nombre2" type="text" class="form-control shadow-sm" formControlName="nombre2"
-                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Esteban' : ''">
-              </div>
-            </div>
-
-            <div class="row g-3">
-              <div class="col-md-4">
-                <label for="apellido1" class="form-label">Primer Apellido</label>
-                <input id="apellido1" type="text" class="form-control" formControlName="apellido1"
-                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Pérez' : ''">
-                <small class="text-danger" *ngIf="f['apellido1'].touched && f['apellido1'].errors?.['required']">
-                  Campo requerido
-                </small>
-              </div>
-
-              <div class="col-md-4">
-                <label for="apellido2" class="form-label">Segundo Apellido</label>
-                <input id="apellido2" type="text" class="form-control" formControlName="apellido2"
-                  [placeholder]="!usuarioForm.value.idUsuario ? 'Ej. Gómez' : ''">
+              <div class="col-md-6">
+                <label for="nombrecompleto" class="form-label fw-semibold">Nombre Completo</label>
+                <input id="nombrecompleto" type="text" class="form-control" formControlName="nombrecompleto" readonly>
               </div>
             </div>
 
             <div class="row g-3">
               <div class="col-md-5">
                 <label for="correo" class="form-label">Correo Electrónico</label>
-                <input id="correo" type="email" class="form-control" formControlName="correo"
-                  placeholder="correo@ejemplo.com">
-                <small class="text-danger" *ngIf="f['correo'].touched && f['correo'].errors?.['required']">
-                  Campo requerido
-                </small>
-                <small class="text-danger" *ngIf="f['correo'].touched && f['correo'].errors?.['email']">
-                  Correo inválido
-                </small>
+                <input id="correo" type="email" class="form-control" formControlName="correo" readonly>
               </div>
+
               <div class="col-md-3">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input id="telefono" type="text" class="form-control" formControlName="telefono"
-                  placeholder="Ej. 3012345678">
-                <small class="text-danger" *ngIf="f['telefono'].touched && f['telefono'].errors?.['required']">
-                  Campo requerido
-                </small>
-                <small class="text-danger" *ngIf="f['telefono'].touched && f['telefono'].errors?.['pattern']">
-                  Debe tener 10 dígitos
-                </small>
+                <input id="telefono" type="text" class="form-control" formControlName="telefono" readonly>
               </div>
             </div>
 
 
+            <!-- Rol -->
             <div class="row g-3">
               <div class="col-md-5">
                 <label for="rol" class="form-label">Rol</label>
@@ -83,9 +47,18 @@
                     {{ rol.valor }}
                   </option>
                 </select>
+                <small class="text-danger" *ngIf="f['idRol'].touched && f['idRol'].errors?.['required']">
+                  Campo requerido
+                </small>
+              </div>
+
+              <div class="col-md-3">
+                <label for="codUsuario" class="form-label">Código Usuario</label>
+                <input id="codUsuario" type="text" class="form-control" formControlName="codUsuario">
               </div>
             </div>
 
+            <!-- Contraseña -->
             <div class="row g-3">
               <div class="col-md-4">
                 <label for="contrasena" class="form-label">Contraseña</label>
@@ -107,15 +80,15 @@
                 <input id="confirmarcontrasena" type="password" class="form-control"
                   formControlName="confirmarcontrasena" placeholder="********">
                 <small class="text-danger" *ngIf="
-                      f['confirmarcontrasena'].hasError('noIguales') &&
-                      (f['confirmarcontrasena'].dirty || f['confirmarcontrasena'].touched) &&
-                      f['contrasena'].value && f['confirmarcontrasena'].value
-                    ">
+                  f['confirmarcontrasena'].hasError('noIguales') &&
+                  (f['confirmarcontrasena'].dirty || f['confirmarcontrasena'].touched) &&
+                  f['contrasena'].value && f['confirmarcontrasena'].value">
                   Las contraseñas no coinciden.
                 </small>
               </div>
             </div>
 
+            <!-- Estado -->
             <div class="row g-3">
               <div class="col-lg-4 d-flex align-items-center">
                 <div class="form-check form-switch form-check-lg ms-lg-4">
@@ -128,7 +101,7 @@
               </div>
             </div>
 
-
+            <!-- Botón -->
             <div class="row g-3">
               <div class="col-5 mt-3 mx-auto">
                 <button type="submit" class="btn btn-success w-100"
@@ -138,13 +111,13 @@
                 </button>
               </div>
             </div>
-
           </div>
         </form>
-        <app-tabla-usuarios class="mt-4" [usuarios]="usuarios"
-          (editarUsuario)="llenarCamposFormulario($event.idUsuario!)"
-          (eliminarUsuario)="eliminarUsuario($event.idUsuario!)">
 
+        <!-- Tabla de usuarios -->
+        <app-tabla-usuarios class="mt-4" [usuarios]="usuarios"
+          (editarUsuario)="llenarCamposFormulario($event.idTercero!)"
+          (eliminarUsuario)="eliminarUsuario($event.idTercero!)">
         </app-tabla-usuarios>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ComboResponse } from 'src/app/models/Response/Generales/ComboResponse';
+import { UsuarioResponse } from 'src/app/models/Response/Seguridad/UsuarioResponse';
 import { Tercero } from 'src/app/models/terceros/Tercero';
 import { Usuario } from 'src/app/shared/models/Usuario';
 import { environment } from 'src/environments/environment';
@@ -29,17 +30,28 @@ actualizarUsuario(usuario: Usuario) {
   return this.http.put<Usuario>(url, usuario); // también devuelve Usuario
 }
 
-  obtenerListadoUsuarios(): Observable<Usuario[]>{
-    return this.http.get<Usuario[]>(
-      `${this.baseServerUrl}${environment.obtenerListadoUsuarios}`
+  // obtenerListadoUsuarios(): Observable<Usuario[]>{
+  //   return this.http.get<Usuario[]>(
+  //     `${this.baseServerUrl}${environment.obtenerListadoUsuarios}`
+  //   );
+  // }
+
+    obtenerDataUsuarios(): Observable<UsuarioResponse[]>{
+    return this.http.get<UsuarioResponse[]>(
+      `${this.baseServerUrl}${environment.obtenerUsuariosResponse}`
     );
   }
+  
+  obtenerUsuarioPorIdTercero(idTercero: number): Observable<any> {
+    const url = `${this.baseServerUrl}${environment.obtenerUsuarioPorIdTercero}/${idTercero}`;
+    return this.http.get<any>(url);
+  }
 
-  obtenerUsuarioPorId(id: number) {
-    console.log("Este es el id", id)
-     const url = `${this.baseServerUrl + environment.obtenerUsuarioPorId}`
-  return this.http.get<any>(url, { params: { idUsuario: id }});
-}
+//   obtenerUsuarioPorId(id: number) {
+//     console.log("Este es el id", id)
+//      const url = `${this.baseServerUrl + environment.obtenerUsuarioPorId}`
+//   return this.http.get<any>(url, { params: { idUsuario: id }});
+// }
 
 eliminarUsuarioPorId(idUsuario: number): Observable<any> {
   const url = `${this.baseServerUrl + environment.eliminarUsuarioPorId}`;
