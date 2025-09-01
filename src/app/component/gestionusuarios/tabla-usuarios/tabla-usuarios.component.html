@@ -19,14 +19,14 @@
     <ng-container matColumnDef="nombreCompleto">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
       <td mat-cell *matCellDef="let u">
-        {{ u.nombre1 }} {{ u.nombre2 }} {{ u.apellido1 }} {{ u.apellido2 }}
+        {{ u.nombreCompleto}}
       </td>
     </ng-container>
 
     <!-- Correo -->
     <ng-container matColumnDef="correo">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo</th>
-      <td mat-cell *matCellDef="let u">{{ u.correo }}</td>
+      <td mat-cell *matCellDef="let u">{{ u.email }}</td>
     </ng-container>
 
     <!-- Teléfono -->
@@ -38,7 +38,7 @@
     <!-- Rol -->
     <ng-container matColumnDef="idRol">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Rol</th>
-      <td mat-cell *matCellDef="let u">{{ u.idRol }}</td>
+      <td mat-cell *matCellDef="let u">{{ u.nombreRol }}</td>
     </ng-container>
 
     <!-- Estado -->
