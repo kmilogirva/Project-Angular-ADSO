@@ -1,75 +1,79 @@
 export const environment = {
+  production: false,
 
-  production: false,
+  // 🔗 Conexión API
+  apiUrl: "https://localhost:44374/api/", // backend pruebas
 
- //Inicio Conexión Api y Variables
+  // ==========================
+  // 🔐 Seguridad
+  // ==========================
+  loginUsuario: "Seguridad/InicioSesion",
+  crearRol: "Seguridad/crearrol",
+  obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
+  obtenerComboRoles: "Seguridad/combo-roles",
+  consultarpermisosaccionporrol: "Seguridad/consultar-permisos-accion-por-rol",
+  registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol",
+  obtenerMenuPorRol: "Seguridad/consultar-menu-por-rol",
 
- apiUrl: "https://localhost:44374/api/", // backend pruebas
+  // ==========================
+  // 👤 Usuarios
+  // ==========================
+  obtenerListadoUsuarios: "User/listarusuarios",
+  obtenerUsuarioPorId: "User/obtenerusuarioporid",
+  actualizarUsuarioPorId: "User/actualizarusuario",
+  eliminarUsuarioPorId: "User/eliminarusuarioporid",
+  crearUsuario: "crearusuario",
 
+  // ==========================
+  // 🧾 Terceros
+  // ==========================
+  obtenerListadoTerceros: "Terceros/listarterceros",
+  obtenerTerceroPorId: "Terceros/obtenerterceroPorid",
+  actualizarTerceroPorId: "Terceros/actualizartercero",
+  eliminarTerceroPorId: "Terceros/eliminarterceroporid",
+  crearTercero: "Terceros/creartercero",
 
-//Inicio Seguridad
- loginUsuario: "Seguridad/InicioSesion",
- crearRol: "Seguridad/crearrol",
- obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
- obtenerComboRoles: "Seguridad/combo-roles",
- consultarpermisosaccionporrol : "Seguridad/consultar-permisos-accion-por-rol",
- registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol",
- //Asignación Permisos y Acciones a Rol
- obtenerMenuPorRol:"Seguridad/consultar-menu-por-rol",
+  // 📋 Generales - Combos
+  obtenerComboTiposDocumento: "generales/combo-tipos-documento",
+  obtenerComboTiposTercero: "generales/combo-tipos-terceros",
+  obtenerComboTiposPersona: "generales/combo-tipos-persona",
+  obtenerComboPaises: "generales/combo-paises",
+  obtenerComboDepartamentos: "generales/combo-departamentos",
+  obtenerComboCiudades: "generales/combo-ciudades",
 
+  // ==========================
+  // 📦 Productos
+  // ==========================
+  obtenerListadoProductos: "Productos/listarproductos",
+  obtenerProductoPorId: "Productos/obtenerproductoporid",
+  registrarProductos: "Productos/registrarproducto",
+  actualizarProducto: "Productos/actualizarproducto",
+  eliminarProductorPorId: "Productos/eliminarproductosporid",
 
-//Inicio Usuario
-//  crearUsuario: 'User/crearusuario',
- obtenerListadoUsuarios: "User/listarusuarios",
- obtenerUsuarioPorId: "User/obtenerusuarioporid",
- actualizarUsuarioPorId: "User/actualizarusuario",
- eliminarUsuarioPorId:"User/eliminarusuarioporid",
- crearUsuario : "crearusuario",
+  // ==========================
+  // 📂 Módulos
+  // ==========================
+  registrarModulo: "Modulos/crearmodulo",
+  obtenerModuloPorId: "Modulos/obtenermoduloporid",
+  obtenerListadoModulos: "Modulos/listarmodulos",
+  actualizarModulo: "Modulos/actualizarmodulo",
+  eliminarModulo: "Modulos/eliminarmodulo",
 
-//Inicio Tercero
- obtenerListadoTerceros: "Terceros/listarterceros",
- obtenerTerceroPorId: "Terceros/obtenerterceroporid",
- actualizarTerceroPorId: "Terceros/actualizartercero",
- eliminarTerceroPorId:"Terceros/eliminarterceroporid",
- crearTercero : "Terceros/creartercero",
+  // ==========================
+  // 📂 SubMódulos
+  // ==========================
+  registrarSubModulo: "Submodulos/crearsubmodulo",
+  obtenerSubModuloPorId: "Submodulos/obtenersubmoduloporid",
+  obtenerListadoSubModulos: "Submodulos/listarsubmodulos",
+  actualizarSubModulo: "Submodulos/actualizarsubmodulo",
+  eliminarSubModulo: "Submodulos/eliminarsubmodulo",
 
- //Registro Terceros
- obtenerComboTiposDocumento: "generales/combo-tipos-documento",
- obtenerComboTiposTercero: "generales/combo-tipos-terceros",
- obtenerComboTiposPersona: "generales/combo-tipos-persona",
- obtenerComboPaises: "generales/combo-paises",
- obtenerComboDepartamentos: "generales/combo-departamentos",
- obtenerComboCiudades: "generales/combo-ciudades",
-//Generales
-//Inicio Productos
-
-obtenerListadoProductos: "productos/listarproductos",
-obtenerProductoPorId: "productos/obtenerproductoporid",
-registrarProductos: "productos/registrarproducto",
-actualizarProducto: "productos/actualizarproducto",
-eliminarProductorPorId:"productos/eliminarproductosporid",
-
-//Inicio Modulos
-registrarModulo: "modulos/crearmodulo",
-obtenerModuloPorId: "modulos/obtenermoduloporid",
-obtenerListadoModulos: "modulos/listarmodulos",
-actualizarModulo: "modulos/actualizarmodulo",
-eliminarModulo: "modulos/eliminarmodulo"
-
-//Inicio SubModulos
-,registrarSubModulo: "submodulos/crearsubmodulo",
-obtenerSubModuloPorId: "submodulos/obtenersubmoduloporid",
-obtenerListadoSubModulos: "submodulos/listarsubmodulos",
-actualizarSubModulo: "submodulos/actualizarsubmodulo",
-eliminarSubModulo: "submodulos/eliminarsubmodulo",
-
-// 👇 Endpoints correctos de Categorías
-  crearCategorias: "Categorias/registrarcategoria",
-  actualizarCategorias: "Categorias/actualizarcategoria",
-  listarCategorias: "categorias/listarcategorias",
-  eliminarCategorias: "Categorias/eliminarcategoriasporids",
-  obtenerCategoriaPorId: "Categorias/obtenercategoriaporid"
-
+  // ==========================
+  // 🗂 Categorías
+  // ==========================
+  crearCategorias: "Categorias",
+  actualizarCategorias: "Categorias",
+  listarCategorias: "Categorias",
+  eliminarCategorias: "Categorias",
+  obtenerCategoriaPorId: "Categorias",
 };
-
-

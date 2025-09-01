@@ -1,49 +1,49 @@
-
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
-
-export interface Categoria {
-  idCategoria?: number;
-  nomCategoria: string;
-  descripcion: string;
-  estado: boolean;
-  fechaCreacion?: Date;
-  fechaModificacion?: Date;
-  idUsuarioCreacion?: number;
-  idUsuarioModificacion?: number;
-
-  // categoria: Categoria[]
-}
+import { Categoria } from 'src/app/models/categorias/Categoria';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root'
 })
 export class CategoriaService {
-  private apiUrl = environment.apiUrl;
+  private baseServerUrl = environment.apiUrl;
+  private categoriasApiUrl = `${this.baseServerUrl}Categorias`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  registrarCategoria(categoria: Categoria): Observable<any> {
-    return this.http.post(`${this.apiUrl}${environment.crearCategorias}`, categoria);
-  }
+  // Listar todas las categorías
+  // GET: /api/Categorias
+  listarCategorias(): Observable<Categoria[]> {
+    return this.http.get<Categoria[]>(this.categoriasApiUrl);
+  }
 
-  listarCategorias(): Observable<Categoria[]> {
-  return this.http.post<Categoria[]>(`${this.apiUrl}${environment.listarCategorias}`,null)
-    // .pipe(map(response => response.productos));
-}
+  // Crear una nueva categoría
+  // POST: /api/Categorias
+  registrarCategoria(categoria: Categoria): Observable<Categoria> {
+    return this.http.post<Categoria>(this.categoriasApiUrl, categoria);
+  }
 
-  eliminarCategoriasPorIds(ids: number[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}${environment.eliminarCategorias}`, ids);
-  }
+  // Actualizar categoría existente
+  // PUT: /api/Categorias/{id}
+  actualizarCategoria(idCategoria: number, categoria: Categoria): Observable<any> {
+    const url = `${this.categoriasApiUrl}/${idCategoria}`;
+    return this.http.put(url, categoria);
+  }
 
-  obtenerCategoriaPorId(id: number): Observable<Categoria> {
-    return this.http.get<Categoria>(`${this.apiUrl}${environment.obtenerCategoriaPorId}?idCategoria=${id}`);
-  }
-  
-  actualizarCategoria(categoria: Categoria): Observable<any> {
-    return this.http.put(`${this.apiUrl}${environment.actualizarCategorias}`, categoria);
-  }
+  // Obtener categoría por ID
+  // GET: /api/Categorias/{id}
+  obtenerCategoriaPorId(idCategoria: number): Observable<Categoria> {
+    const url = `${this.categoriasApiUrl}/${idCategoria}`;
+    return this.http.get<Categoria>(url);
+  }
+
+  // Eliminar una categoría por ID
+  // DELETE: /api/Categorias/{id}
+  eliminarCategoriasPorIds(ids: number[]): Observable<any> {
+    const id = ids[0];
+    const url = `${this.categoriasApiUrl}/${id}`;
+    return this.http.delete(url);
+  }
 }

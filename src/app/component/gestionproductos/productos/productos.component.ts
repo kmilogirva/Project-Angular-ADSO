@@ -1,6 +1,3 @@
-/* =========================================================
-   IMPORTS
-   ========================================================= */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +11,8 @@ import { ProductoService } from 'src/app/services/Productos/productos.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 import { TablaProductosComponent } from '../tabla-productos/tabla-productos.component';
+import { CategoriaService } from 'src/app/services/Categorias/categoria.services';
+import { Categoria } from 'src/app/models/categorias/Categoria';
 
 @Component({
   selector: 'app-productos',
@@ -31,104 +30,99 @@ import { TablaProductosComponent } from '../tabla-productos/tabla-productos.comp
 export class ProductosComponent implements OnInit {
   /* ────────────── Propiedades públicas (para la vista) ────────────── */
   productoForm!: FormGroup;
-  IdCategoria: number[] = [1, 2, 3, 4];
+  categorias: Categoria[] = []; // Asegúrate de que esta línea esté aquí
   CodEanVisible: boolean = false;
-
   productos: Producto[] = [];
 
-  //  productos: Producto[] = Array.from({ length: 100 }, (_, i) => ({
-  //     idProducto: i + 1,
-  //     nombreProducto: `Producto ${i + 1}`,
-  //     idCategoria: (i % 4) + 1,
-  //     ubicacion: `Estante ${(i % 10) + 1}`,
-  //     cantidad: Math.floor(Math.random() * 100) + 1,
-  //     observacion: ''
-  //   }));
-
-  /* ────────────── Constructor (inyección de dependencias) ─────────── */
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private productosService: ProductoService,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private categoriaService: CategoriaService // Y este servicio esté inyectado
   ) { }
 
-  /* ────────────── Ciclo de vida ────────────── */
   ngOnInit(): void {
     this.instanciarFormulario();
     this.cargarDataProductos();
+    this.cargarCategorias(); // Llamada al método para cargar las categorías
   }
 
-  /* ────────────── Métodos que usa la plantilla ────────────── */
+  onSubmit(): void {
+    if (this.productoForm.invalid) return;
 
-  /** Alta / edición de producto */
-  /** Alta o edición según exista IdProducto */
-onSubmit(): void {
-  if (this.productoForm.invalid) return;
+    const esEdicion = !!this.productoForm.value.IdProducto;
+    const idUsuario = this.authService.obtenerIdUsuario();
 
-  const esEdicion = !!this.productoForm.value.IdProducto;
-  const idUsuario = this.authService.obtenerIdUsuario();
+    if (!esEdicion) {
+      const ean = this.generateEAN13().trim();
+      this.productoForm.patchValue({
+        CodEan: ean,
+        IdUsuarioCreacion: Number(idUsuario)
+      });
 
-  if (!esEdicion) {
-    const ean = this.generateEAN13().trim();
-    this.productoForm.patchValue({
-      CodEan: ean,
-      IdUsuarioCreacion: Number(idUsuario)
-    });
-
-    JsBarcode('#barcode', ean, {
-      format: 'ean13',
-      lineColor: '#000',
-      width: 2,
-      height: 100,
-      displayValue: true
-    });
-  } else {
-    this.productoForm.patchValue({
-      IdUsuarioModificacion: Number(idUsuario)
-    });
-  }
-
-  // Crear DTO sin campos vacíos
-  const dto: any = {};
-  for (const key in this.productoForm.value) {
-    const value = this.productoForm.value[key];
-    if (value !== null && value !== undefined && (typeof value !== 'string' || value.trim() !== '')) {
-      dto[key] = value;
+      JsBarcode('#barcode', ean, {
+        format: 'ean13',
+        lineColor: '#000',
+        width: 2,
+        height: 100,
+        displayValue: true
+      });
+    } else {
+      this.productoForm.patchValue({
+        IdUsuarioModificacion: Number(idUsuario)
+      });
     }
-  }
 
-  console.log("Esto es lo que voy a enviar al backend", dto);
-
-  const accion$ = esEdicion
-    ? this.productosService.actualizarProducto(dto)
-    : this.productosService.registrarProducto(dto);
-
-  accion$.subscribe({
-    next: (res) => {
-      console.log("Respuesta del backend:", res);
-      this.toastr.success(esEdicion ? 'Producto actualizado correctamente' : 'Producto registrado correctamente');
-      this.cargarDataProductos();
-      this.productoForm.reset();
-    },
-    error: (err) => {
-      console.error("Error en la petición:", err);
-      this.toastr.error('Error al procesar la solicitud');
+    const dto: any = {};
+    for (const key in this.productoForm.value) {
+      const value = this.productoForm.value[key];
+      if (value !== null && value !== undefined && (typeof value !== 'string' || value.trim() !== '')) {
+        dto[key] = value;
+      }
     }
-  });
-}
 
+    console.log("Esto es lo que voy a enviar al backend", dto);
 
+    const accion$ = esEdicion
+      ? this.productosService.actualizarProducto(dto)
+      : this.productosService.registrarProducto(dto);
 
+    accion$.subscribe({
+      next: (res) => {
+        console.log("Respuesta del backend:", res);
+        this.toastr.success(esEdicion ? 'Producto actualizado correctamente' : 'Producto registrado correctamente');
+        this.cargarDataProductos();
+        this.productoForm.reset();
+      },
+      error: (err) => {
+        console.error("Error en la petición:", err);
+        this.toastr.error('Error al procesar la solicitud');
+      }
+    });
+  }
 
   private cargarDataProductos(): void {
     this.productosService.obtenerListadoProductos().subscribe({
       next: (producto) => {
         this.productos = producto;
         console.log(producto)
-
       },
       error: () => this.toastr.error('No se pudo cargar la data de la tabla')
     })
+  }
+  
+  // Este método es crucial para solucionar tu error
+  private cargarCategorias(): void {
+    this.categoriaService.listarCategorias().subscribe({
+      next: (categorias) => {
+        this.categorias = categorias;
+      },
+      error: (err) => {
+        console.error('Error al cargar las categorías:', err);
+        this.toastr.error('No se pudo cargar la lista de categorías.');
+      }
+    });
   }
 
   llenarCamposFormulario(id: number): void {
@@ -138,7 +132,6 @@ onSubmit(): void {
     }
 
     this.productosService.obtenerProductoPorId(id).subscribe({
-
       next: (producto) => {
         const ean = (producto.codEan ?? '').trim();
         console.log(ean)
@@ -150,13 +143,12 @@ onSubmit(): void {
           UbicacionProducto: producto.ubicacionProducto,
           Observacion: producto.observacion,
           IdCategoria: producto.idCategoria,
-          IdUsuarioCreacion : producto.idUsuarioCreacion,
-           IdUsuarioModificacion : producto.idUsuarioModificacion
+          IdUsuarioCreacion: producto.idUsuarioCreacion,
+          IdUsuarioModificacion: producto.idUsuarioModificacion
         });
 
         this.CodEanVisible = true;
 
-        // (opcional) redibujar el código de barras
         JsBarcode('#barcode', ean, {
           format: 'ean13', lineColor: '#000', width: 2, height: 100, displayValue: true
         });
@@ -165,37 +157,21 @@ onSubmit(): void {
     });
   }
 
-
-
-
-  /** Cargar datos en el formulario para editar */
-
-  //   onEditar(prod: Producto) {
-  //   /* precargas el formulario para edición */
-  //   this.productoForm.patchValue(prod);
-  // }
-
-  // /** Eliminar de la lista local (tras éxito en backend) */
- onEliminar(prod: Producto) {
-  if (prod.idProducto != null) {
-    this.productosService.eliminarProductoPorId(prod.idProducto).subscribe({
-      next: () => {
-        this.toastr.success('Producto eliminado con éxito', 'Éxito');
-        // Si quieres refrescar la lista:
-        this.cargarDataProductos();
-      },
-      error: (err) => {
-        console.error(err);
-        this.toastr.error('Error al eliminar el producto', 'Error');
-      }
-    });
+  onEliminar(prod: Producto) {
+    if (prod.idProducto != null) {
+      this.productosService.eliminarProductoPorId(prod.idProducto).subscribe({
+        next: () => {
+          this.toastr.success('Producto eliminado con éxito', 'Éxito');
+          this.cargarDataProductos();
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastr.error('Error al eliminar el producto', 'Error');
+        }
+      });
+    }
   }
 
-    
-    // this.productos = this.productos.filter(p => p.idProducto !== prod.idProducto);
-  }
-
-  /* ────────────── Métodos privados utilitarios ────────────── */
   private instanciarFormulario(): void {
     this.productoForm = this.fb.group({
       IdProducto: [''],
@@ -215,7 +191,7 @@ onSubmit(): void {
   }
 
   private generateEAN13(): string {
-    const base = Math.floor(100000000000 + Math.random() * 900000000000).toString().substring(0, 12); // 12 dígitos aleatorios
+    const base = Math.floor(100000000000 + Math.random() * 900000000000).toString().substring(0, 12);
     let sum = 0;
     for (let i = 0; i < base.length; i++) {
       const digit = parseInt(base[i], 10);
@@ -224,6 +200,4 @@ onSubmit(): void {
     const checkDigit = (10 - (sum % 10)) % 10;
     return base + checkDigit;
   }
-
-
 }

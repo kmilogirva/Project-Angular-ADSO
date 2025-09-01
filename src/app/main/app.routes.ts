@@ -52,7 +52,7 @@ export const routes: Routes = [
   path: 'categorias',
    canActivate: [authGuard],
     loadComponent: () =>
-      import('../component/categorias/categorias.component').then((m) => m.CategoriasComponent)
+      import('../component/gestioncategorias/categorias/categorias.component').then((m) => m.CategoriasComponent)
 },
 {
   path: 'configuracion',

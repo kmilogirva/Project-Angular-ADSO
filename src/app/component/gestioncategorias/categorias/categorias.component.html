@@ -1,18 +1,14 @@
 <div class="d-flex">
-  <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
-  <!-- Contenido principal -->
   <div class="container mt-5">
-    <!-- Encabezado visual como en "Registro de Productos" -->
     <div class="card shadow-lg">
       <div class="card-header bg-dark text-white text-center">
         <h2 class="mb-0">Registro de Categorías</h2>
       </div>
 
       <div class="card-body">
-        <!-- Formulario -->
-        <form [formGroup]="categoriaForm" (ngSubmit)="registrarCategoria()">
+        <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()">
           <div class="row mb-3">
             <div class="col">
               <label class="form-label">Nombre Categoría</label>
@@ -30,6 +26,7 @@
               </select>
             </div>
           </div>
+
           <div class="text-end">
             <button class="btn btn-primary me-2" type="submit">
               {{ editando ? 'Actualizar' : 'Registrar' }}
@@ -42,39 +39,10 @@
 
     <hr>
 
-    <!-- Tabla de Categorías -->
-  <!-- Tabla de Categorías (sin DataTables) -->
-<div class="card shadow-sm mt-3">
-  <div class="card-body">
-    <table class="table table-bordered table-hover table-striped">
-      <thead class="table-dark text-center">
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let cat of categorias">
-          <td>{{ cat.idCategoria }}</td>
-          <td>{{ cat.nomCategoria }}</td>
-          <td>{{ cat.descripcion }}</td>
-          <td>{{ cat.estado ? 'ACTIVO' : 'INACTIVO' }}</td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-warning me-2" (click)="editarCategoria(cat)">✏️ Editar</button>
-            <button class="btn btn-sm btn-danger" (click)="cat.idCategoria && eliminarCategoria(cat.idCategoria)">🗑️ Eliminar </button>
-          </td>
-        </tr>
-        <tr *ngIf="categorias && categorias.length === 0">
-          <td colspan="5" class="text-center">No hay categorías registradas.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-
+    <app-tabla-categorias
+      [categorias]="categorias"
+      (editarCategoria)="editarCategoria($event)"
+      (eliminarCategoria)="eliminarCategoria($event)">
+    </app-tabla-categorias>
   </div>
 </div>
