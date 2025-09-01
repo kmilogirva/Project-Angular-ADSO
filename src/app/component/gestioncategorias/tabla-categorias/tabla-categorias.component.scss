@@ -1,0 +1,87 @@
+/* ================================================
+   Estilos para tabla-categorias (paralelo a productos)
+   ================================================ */
+
+.tabla-wrapper {
+  border: 1px solid #cfd4da;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .06);
+  overflow: hidden;
+  max-width: 95%;
+  margin: 0 auto;
+}
+
+/* Asegura que la tabla llene el wrapper y no genere doble borde */
+.tabla-wrapper > table {
+  width: 100%;
+  border: none;
+}
+
+/* Barra de filtros: similar comportamiento que en productos */
+.barra-filtros {
+  justify-content: flex-start;
+  margin: 0 auto;
+  max-width: 95%;
+}
+
+/* Campo de búsqueda / inputs numéricos (ajustables) */
+.campo-buscar {
+  width: 250px; /* ajusta al gusto */
+}
+
+.campo-num {
+  width: 120px;
+}
+
+/* Alineación vertical por si hay iconos/inputs */
+table th.mat-header-cell,
+table td.mat-cell {
+  vertical-align: middle;
+}
+
+/* Badge visual para el estado (opcional: usar en template si quieres) */
+.estado-badge {
+  display: inline-block;
+  padding: .25rem .5rem;
+  border-radius: .5rem;
+  font-size: .775rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.estado-badge.activo {
+  background: #e6f7ec;
+  color: #2b7a3a;
+  border: 1px solid #c3e6ce;
+}
+
+.estado-badge.inactivo {
+  background: #fff2f2;
+  color: #a12a2a;
+  border: 1px solid #f0c2c2;
+}
+
+/* Truncado para descripciones largas */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive: ordena filtros en móvil */
+@media (max-width: 768px) {
+  .campo-buscar {
+    width: 100%;
+  }
+
+  .barra-filtros {
+    flex-direction: column;
+    gap: .5rem;
+    align-items: stretch;
+  }
+
+  .tabla-wrapper {
+    max-width: 100%;
+    padding: 0 8px;
+  }
+}
