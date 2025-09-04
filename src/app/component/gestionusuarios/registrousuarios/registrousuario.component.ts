@@ -120,11 +120,17 @@ export class RegistroUsuariosComponent implements OnInit {
   const dto = { ...this.usuarioForm.value };
 
   // Elimina campos vacíos o nulos
-  for (const key in dto) {
-    if (typeof dto[key] === 'string' && dto[key].trim() === '') {
-      delete dto[key];
-    }
+for (const key in dto) {
+  const value = dto[key];
+  if (
+    value === null ||
+    value === undefined ||
+    value === '' || // string vacío
+    (typeof value === 'string' && value.trim() === '')
+  ) {
+    delete dto[key];
   }
+}
 
   const usuario: Usuario = {
   idTercero: dto.idTercero,
