@@ -71,6 +71,9 @@ export class CategoriasComponent implements OnInit {
     }
 
     const dto: Categoria = this.categoriaForm.value;
+    if (!esEdicion) {
+  delete dto.idCategoria; // elimina el campo
+} 
 
     const accion$ = esEdicion
       ? this.categoriaService.actualizarCategoria(dto.idCategoria!, dto)
