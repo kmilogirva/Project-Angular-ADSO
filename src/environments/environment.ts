@@ -68,7 +68,15 @@ eliminarSubModulo: "submodulos/eliminarsubmodulo",
   actualizarCategorias: "Categorias/actualizarcategoria",
   listarCategorias: "categorias/listarcategorias",
   eliminarCategorias: "Categorias/eliminarcategoriasporids",
-  obtenerCategoriaPorId: "Categorias/obtenercategoriaporid"
+  obtenerCategoriaPorId: "Categorias/obtenercategoriaporid",
+
+  //  NUEVOS ENDPOINTS DE MOVIMIENTOS (Entradas y Salidas)
+
+  obtenerListadoMovimientos: "movimientos/listarmovimientos",
+  obtenerMovimientoPorId: "movimientos/obtenermovimientoporid",
+  registrarMovimiento: "movimientos/crearmovimiento",
+  actualizarMovimiento: "movimientos/actualizarmovimiento",
+  eliminarMovimiento: "movimientos/eliminarmovimientoporid"
 
 };
 

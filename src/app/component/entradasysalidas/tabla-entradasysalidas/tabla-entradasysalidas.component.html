@@ -1,0 +1,85 @@
+<section class="barra-filtros d-flex flex-wrap align-items-center gap-2 mb-3">
+  <!-- Búsqueda -->
+  <mat-form-field appearance="outline" class="campo-buscar">
+    <mat-label>Buscar…</mat-label>
+    <input
+      matInput
+      [(ngModel)]="termino"
+      (keyup)="aplicarFiltro()"
+      placeholder="Producto, tipo, observación…"
+    />
+  </mat-form-field>
+
+  <!-- Cantidad mínima -->
+  <mat-form-field appearance="outline" style="width: 140px">
+    <mat-label>Min</mat-label>
+    <input matInput type="number" [(ngModel)]="minCant" (input)="aplicarFiltro()" />
+  </mat-form-field>
+
+  <!-- Cantidad máxima -->
+  <mat-form-field appearance="outline" style="width: 140px">
+    <mat-label>Max</mat-label>
+    <input matInput type="number" [(ngModel)]="maxCant" (input)="aplicarFiltro()" />
+  </mat-form-field>
+</section>
+
+<div class="tabla-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 w-100">
+    
+    <!-- ID -->
+    <ng-container matColumnDef="idMovimiento">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let m">{{ m.idMovimiento }}</td>
+    </ng-container>
+
+    <!-- Tipo -->
+    <ng-container matColumnDef="tipoMovimiento">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+      <td mat-cell *matCellDef="let m">{{ m.tipoMovimiento }}</td>
+    </ng-container>
+
+    <!-- Producto -->
+    <ng-container matColumnDef="producto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
+      <td mat-cell *matCellDef="let m">{{ m.producto }}</td>
+    </ng-container>
+
+    <!-- Cantidad -->
+    <ng-container matColumnDef="cantidad">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
+      <td mat-cell *matCellDef="let m">{{ m.cantidad }}</td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="fechaMovimiento">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+      <td mat-cell *matCellDef="let m">{{ m.fechaMovimiento | date:'short' }}</td>
+    </ng-container>
+
+    <!-- Observación -->
+    <ng-container matColumnDef="observacion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Obs.</th>
+      <td mat-cell *matCellDef="let m" class="text-truncate" style="max-width: 160px">
+        {{ m.observacion }}
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let m" class="text-end">
+        <button mat-icon-button color="primary" (click)="editar(m)" matTooltip="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="eliminar(m)" matTooltip="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
