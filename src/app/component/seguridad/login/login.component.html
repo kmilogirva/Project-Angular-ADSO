@@ -1,9 +1,9 @@
 <div class="login-container">
   <div class="card p-4 shadow-lg login-card">
-    
+
     <!-- Logo del sistema -->
     <div class="text-center mb-4">
-     <img src="/assets/images/inve.png" alt="Logo JKC Inventory" class="login-logo">
+      <img src="/assets/images/inve.png" alt="Logo JKC Inventory" class="login-logo">
     </div>
 
     <h3 class="text-center mb-3 text-white">Iniciar sesión</h3>
@@ -12,18 +12,22 @@
       <div class="form-group text-white">
         <label for="correo">Correo Electrónico</label>
         <input type="email" class="form-control" id="correo" placeholder="Ingresa tu correo" formControlName="correo">
-        <div class="form-text text-danger" *ngIf="f['correo']?.errors?.['required'] && (f['correo']?.touched || f['correo']?.dirty)">
+        <div class="form-text text-danger"
+          *ngIf="f['correo']?.errors?.['required'] && (f['correo']?.touched || f['correo']?.dirty)">
           Correo Electrónico es requerido
         </div>
-        <div class="form-text text-danger" *ngIf="f['correo']?.errors?.['email'] && (f['correo']?.touched || f['correo']?.dirty)">
+        <div class="form-text text-danger"
+          *ngIf="f['correo']?.errors?.['email'] && (f['correo']?.touched || f['correo']?.dirty)">
           El formato del correo no es válido
         </div>
       </div>
 
       <div class="form-group mt-3 text-white">
         <label for="contrasena">Contraseña</label>
-        <input type="password" class="form-control" id="contrasena" placeholder="Ingresa tu contraseña" formControlName="contrasena">
-        <div class="form-text text-danger" *ngIf="f['contrasena']?.errors?.['required'] && (f['contrasena']?.touched || f['contrasena']?.dirty)">
+        <input type="password" class="form-control" id="contrasena" placeholder="Ingresa tu contraseña"
+          formControlName="contrasena">
+        <div class="form-text text-danger"
+          *ngIf="f['contrasena']?.errors?.['required'] && (f['contrasena']?.touched || f['contrasena']?.dirty)">
           La contraseña es requerida
         </div>
       </div>
@@ -32,10 +36,8 @@
     </form>
 
     <div class="text-center mt-3">
-      <a href="#" class="text-white">¿Olvidaste tu contraseña?</a>
+      <a [routerLink]="['/recuperacion-clave']" class="text-white">¿Olvidaste tu contraseña?</a>
     </div>
-    <div class="text-center mt-2">
-      <a [routerLink]="['/register']" class="text-white">¿No tienes una cuenta? Regístrate</a>
-    </div>
+
   </div>
 </div>
