@@ -165,7 +165,7 @@ export const routes: Routes = [
   },
   {
     path: 'recuperacion-clave',
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     loadComponent: () =>
       import(
         '../component/seguridad/forgot-password/forgot-password.component'
@@ -173,7 +173,7 @@ export const routes: Routes = [
   },
   {
     path: 'resetear-contrasena/:token',
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     loadComponent: () =>
       import(
         '../component/seguridad/reset-password/reset-password.component'

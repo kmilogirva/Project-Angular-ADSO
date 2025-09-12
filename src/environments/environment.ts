@@ -83,5 +83,6 @@ export const environment = {
 
   // 🔑 Rutas de recuperación de contraseña
   solicitarRecuperacion: 'Recuperacion/solicitar-recuperacion',
+  validarToken: 'Recuperacion/validar-token',
   restablecerContrasena: 'Recuperacion/restablecer-contrasena',
 };

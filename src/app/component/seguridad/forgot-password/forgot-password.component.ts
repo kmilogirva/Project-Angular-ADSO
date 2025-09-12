@@ -34,26 +34,25 @@ export class ForgotPasswordComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
     });
   }
+  
+onSubmit(): void {
+  if (this.forgotPasswordForm.valid) {
+    const email = this.forgotPasswordForm.value.email;
 
-  onSubmit(): void {
-    if (this.forgotPasswordForm.valid) {
-      const email = this.forgotPasswordForm.value.email;
-      // const solicitud: SolicitudRecuperacion = { email: email };
-      this.recuperarService.solicitarRecuperacion(email).subscribe({
-        next: (response) => {
-          if (response.exitoso) {
-            this.toastr.success('Se ha enviado un correo de recuperación.');
-            //Redirigir a la vista de RestablecerContraseña
-            // this.router.navigate(['/acceso']);
-          } else {
-            this.toastr.error(response.mensaje);
-          }
-        },
-        error: (err) => {
-          this.toastr.error('Ocurrió un error al procesar la solicitud.');
-          console.error('Error en la solicitud de recuperación:', err);
-        },
-      });
-    }
+    this.recuperarService.solicitarRecuperacion(email).subscribe({
+      next: (response) => {
+        if (response) {
+          this.toastr.success(response.mensaje);
+          // this.router.navigate(['/acceso']);
+        } else {
+          this.toastr.error(response);
+        }
+      },
+      error: (err) => {
+        this.toastr.error('Ocurrió un error al procesar la solicitud.');
+        console.error('Error en la solicitud de recuperación:', err);
+      },
+    });
   }
+}
 }

@@ -28,6 +28,11 @@ export class RecuperacionService {
     return this.http.post<ResponseMessages>(`${url}/${correo}`, {});
   }
 
+validarToken(token: string): Observable<{ valido: boolean }> {
+    return this.http.get<{ valido: boolean }>(`${this.baseUrl}${environment.validarToken}/${token}`);
+  }
+
+
   /**
    * Envía el token y la nueva contraseña para restablecer.
    * @param token Token recibido en el link por correo

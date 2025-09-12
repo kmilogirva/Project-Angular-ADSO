@@ -34,15 +34,16 @@
             <button *ngIf="editando" class="btn btn-secondary" type="button" (click)="cancelarEdicion()">Cancelar</button>
           </div>
         </form>
+        <app-tabla-categorias
+      [categorias]="categorias"
+      (editarCategoria)="editarCategoria($event)"
+      (eliminarCategoria)="eliminarCategoria($event)">
+    </app-tabla-categorias>
       </div>
     </div>
 
     <hr>
 
-    <app-tabla-categorias
-      [categorias]="categorias"
-      (editarCategoria)="editarCategoria($event)"
-      (eliminarCategoria)="eliminarCategoria($event)">
-    </app-tabla-categorias>
+    
   </div>
 </div>
