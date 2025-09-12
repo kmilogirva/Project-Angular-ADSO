@@ -1,25 +1,36 @@
 <div class="d-flex">
+  <!-- Sidebar -->
   <app-sidebar></app-sidebar>
 
+  <!-- Contenido principal -->
   <div class="container mt-5">
     <div class="card shadow-lg">
-      <div class="card-header bg-primary text-white text-center">
-        <h2 class="mb-0">{{ editando ? 'Editar Bodega' : 'Crear Nueva Bodega' }}</h2>
+      <!-- Header -->
+      <div class="card-header bg-dark text-white text-center">
+        <h2 class="mb-0">
+          {{ editando ? 'Editar Bodega' : 'Registro de Bodegas' }}
+        </h2>
       </div>
+
+      <!-- Formulario -->
       <div class="card-body">
         <form [formGroup]="BodegasForm" (ngSubmit)="guardarBodega()" novalidate>
           <div class="row">
+            <!-- Nombre -->
             <div class="col-md-6 mb-3">
-              <label class="form-label fw-bold">Nombre de la Bodega</label>
-              <input type="text" class="form-control" formControlName="nombreBodega" placeholder="Ej. Bodega Norte" />
+              <label for="nombreBodega" class="form-label fw-bold">Nombre de la Bodega</label>
+              <input type="text" id="nombreBodega" class="form-control" formControlName="nombreBodega"
+                placeholder="Ej. Bodega Norte" required />
               <div *ngIf="f['nombreBodega'].touched && f['nombreBodega'].invalid" class="text-danger small">
                 Campo obligatorio.
               </div>
             </div>
 
+            <!-- Ubicación -->
             <div class="col-md-6 mb-3">
-              <label class="form-label fw-bold">Ubicación</label>
-              <input type="text" class="form-control" formControlName="ubicacion" placeholder="Ej. Medellín" />
+              <label for="ubicacion" class="form-label fw-bold">Ubicación</label>
+              <input type="text" id="ubicacion" class="form-control" formControlName="ubicacion"
+                placeholder="Ej. Medellín" required />
               <div *ngIf="f['ubicacion'].touched && f['ubicacion'].invalid" class="text-danger small">
                 Campo obligatorio.
               </div>
@@ -27,52 +38,55 @@
           </div>
 
           <div class="row">
+            <!-- Cantidad Máxima -->
             <div class="col-md-6 mb-3">
-              <label class="form-label fw-bold">Cantidad Máxima</label>
-              <input type="number" class="form-control" formControlName="cantidadMaxima" placeholder="Ej. 5000" />
+              <label for="cantidadMaxima" class="form-label fw-bold">Cantidad Máxima</label>
+              <input type="number" id="cantidadMaxima" class="form-control" formControlName="cantidadMaxima"
+                placeholder="Ej. 5000" required />
               <div *ngIf="f['cantidadMaxima'].touched && f['cantidadMaxima'].invalid" class="text-danger small">
                 Debe ser mayor que 0.
               </div>
             </div>
 
+            <!-- Estado -->
             <div class="col-md-6 mb-3">
-              <label class="form-label fw-bold">Estado</label>
-              <select class="form-select" formControlName="idEstado">
+              <label for="idEstado" class="form-label fw-bold">Estado</label>
+              <select id="idEstado" class="form-select" formControlName="idEstado" required>
                 <option [value]="true">Activa</option>
                 <option [value]="false">Inactiva</option>
               </select>
             </div>
           </div>
 
-          <!-- Campos ocultos -->
+          <!-- Hidden fields -->
           <input type="hidden" formControlName="idBodega" />
           <input type="hidden" formControlName="fechaCreacion" />
           <input type="hidden" formControlName="idUsuarioCreacion" />
           <input type="hidden" formControlName="fechaModificacion" />
           <input type="hidden" formControlName="idUsuarioModificacion" />
 
-          <div class="text-center mt-4">
-            <button type="submit" class="btn btn-success me-2" [disabled]="BodegasForm.invalid">
-              {{ editando ? 'Actualizar Bodega' : 'Registrar Bodega' }}
-            </button>
-            <button *ngIf="editando" type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+          <!-- Botones -->
+          <div class="row">
+            <div class="col-6 mt-3 mx-auto d-flex justify-content-center gap-2">
+              <button type="submit" class="btn btn-success w-100" [disabled]="BodegasForm.invalid">
+                <i class="fas fa-warehouse me-2"></i>
+                {{ editando ? 'Actualizar Bodega' : 'Registrar Bodega' }}
+              </button>
+              <button *ngIf="editando" type="button" class="btn btn-secondary w-100" (click)="cancelarEdicion()">
+                Cancelar
+              </button>
+            </div>
           </div>
         </form>
-      </div>
-    </div>
 
-    <!-- Listado de bodegas con Angular Material -->
-    <div class="card mt-4">
-      <div class="card-header bg-dark text-white text-center">
-        <h4 class="mb-0">Listado de Bodegas</h4>
-      </div>
-      <div class="card-body">
-        <app-tabla-bodegas
-          [bodegas]="bodegas"
-          (editarBodega)="editarBodega($event)"
-          (eliminarBodega)="eliminarBodega($event)">
-        </app-tabla-bodegas>
+        <div class="row">
+          <app-tabla-bodegas [bodegas]="bodegas" (editarBodega)="editarBodega($event)"
+            (eliminarBodega)="eliminarBodega($event)">
+          </app-tabla-bodegas>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
+
