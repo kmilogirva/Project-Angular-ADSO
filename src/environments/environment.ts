@@ -2,7 +2,9 @@ export const environment = {
   production: false,
 
   // 🔗 Conexión API
-  apiUrl: "https://localhost:44374/api/", // backend pruebas
+  apiUrl: "https://localhost:44372/api/", // backend pruebas
+  //apiUrl: "https://jkccanada.azurewebsites.net/", // backend producción
+  
 
   // ==========================
   // 🔐 Seguridad
@@ -80,4 +82,15 @@ export const environment = {
   listarCategorias: "categorias/listarcategorias",
   eliminarCategorias: "Categorias/eliminarcategoriasporids",
   obtenerCategoriaPorId: "Categorias/obtenercategoriaporid",
+
+  // ==========================
+  // (Entradas y Salidas)
+  // ==========================
+
+  obtenerListadoMovimientos: "movimientos/listarmovimientos",
+  obtenerMovimientoPorId: "movimientos/obtenermovimientoporid",
+  registrarMovimiento: "movimientos/crearmovimiento",
+  actualizarMovimiento: "movimientos/actualizarmovimiento",
+  eliminarMovimiento: "movimientos/eliminarmovimientoporid"
+
 };

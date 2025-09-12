@@ -122,6 +122,13 @@ export const routes: Routes = [
    canActivate: [authGuard],
   loadComponent: () =>
       import('../component/gestionusuarios/registroterceros/registroterceros.component').then((m) => m.RegistrotercerosComponent)
-}
+},
+{
+  path: 'entradas-salidas',
+  canActivate: [authGuard],
+  loadComponent: () =>
+    import('../component/entradasysalidas/entradasysalidas')
+      .then((m) => m.EntradasSalidasComponent)
+},
 
 ] as Routes;
