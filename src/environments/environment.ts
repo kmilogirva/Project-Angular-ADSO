@@ -5,6 +5,7 @@ export const environment = {
 
   // apiUrl: "https://localhost:44372/api/", // backend pruebas
   apiUrl: "https://jkccanada.azurewebsites.net/api/",  // backend producción
+
   
 
   // ==========================
