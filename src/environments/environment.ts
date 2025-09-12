@@ -2,7 +2,10 @@ export const environment = {
   production: false,
 
   // 🔗 Conexión API
-  apiUrl: 'https://localhost:44322/api/', // backend pruebas
+
+  apiUrl: "https://localhost:44372/api/", // backend pruebas
+  //apiUrl: "https://jkccanada.azurewebsites.net/", // backend producción
+  
 
   // ==========================
   // 🔐 Seguridad
@@ -85,4 +88,15 @@ export const environment = {
   solicitarRecuperacion: 'Recuperacion/solicitar-recuperacion',
   validarToken: 'Recuperacion/validar-token',
   restablecerContrasena: 'Recuperacion/restablecer-contrasena',
+  
+  // ==========================
+  // (Entradas y Salidas)
+  // ==========================
+
+  obtenerListadoMovimientos: "movimientos/listarmovimientos",
+  obtenerMovimientoPorId: "movimientos/obtenermovimientoporid",
+  registrarMovimiento: "movimientos/crearmovimiento",
+  actualizarMovimiento: "movimientos/actualizarmovimiento",
+  eliminarMovimiento: "movimientos/eliminarmovimientoporid"
+
 };

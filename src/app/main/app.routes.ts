@@ -42,6 +42,7 @@ export const routes: Routes = [
       ).then((m) => m.CreacionrolesComponent),
   },
 
+
   {
     path: 'crear-productos',
     canActivate: [authGuard],
@@ -82,6 +83,7 @@ export const routes: Routes = [
         (m) => m.PermisosComponent
       ),
   },
+
 
   {
     path: 'stock',
@@ -179,4 +181,11 @@ export const routes: Routes = [
         '../component/seguridad/reset-password/reset-password.component'
       ).then((m) => m.ResetPasswordComponent),
   },
+    {
+  path: 'entradas-salidas',
+  canActivate: [authGuard],
+  loadComponent: () =>
+    import('../component/entradasysalidas/entradasysalidas')
+      .then((m) => m.EntradasSalidasComponent)
+},
 ] as Routes;
