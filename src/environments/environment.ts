@@ -1,76 +1,91 @@
 export const environment = {
-
   production: false,
 
- //Inicio Conexión Api y Variables
+  // 🔗 Conexión API
+  apiUrl: "https://localhost:44372/api/", // backend pruebas
+  //apiUrl: "https://jkccanada.azurewebsites.net/", // backend producción
+  
 
- apiUrl: "https://localhost:44374/api/", // backend pruebas
+  // ==========================
+  // 🔐 Seguridad
+  // ==========================
+  loginUsuario: "Seguridad/InicioSesion",
+  crearRol: "Seguridad/crearrol",
+  obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
+  obtenerComboRoles: "Seguridad/combo-roles",
+  consultarpermisosaccionporrol: "Seguridad/consultar-permisos-accion-por-rol",
+  registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol",
+  obtenerMenuPorRol: "Seguridad/consultar-menu-por-rol",
 
+  // ==========================
+  // 👤 Usuarios
+  // ==========================
+  obtenerListadoUsuarios: "User/listarusuarios",
+  obtenerUsuariosResponse: "User/consultarusuarios",
+  obtenerUsuarioPorId: "User/obtenerusuarioporid",
+  obtenerUsuarioPorIdTercero: "User/consultarusuariosporidtercero",
+  actualizarUsuarioPorId: "User/actualizarusuario",
+  eliminarUsuarioPorId: "User/eliminarusuarioporid",
+  crearUsuario: "User/crearusuario",
 
-//Inicio Seguridad
- loginUsuario: "Seguridad/InicioSesion",
- crearRol: "Seguridad/crearrol",
- obtenerlistadoRoles: "Seguridad/obtenerlistadoroles",
- obtenerComboRoles: "Seguridad/combo-roles",
- consultarpermisosaccionporrol : "Seguridad/consultar-permisos-accion-por-rol",
- registrarPermisosRolesAcciones: "Seguridad/asignar-permisos-a-rol",
- //Asignación Permisos y Acciones a Rol
- obtenerMenuPorRol:"Seguridad/consultar-menu-por-rol",
+  // ==========================
+  // 🧾 Terceros
+  // ==========================
+  obtenerListadoTerceros: "Terceros/listarterceros",
+  obtenerTerceroPorId: "Terceros/obtenerterceroporid",
+  actualizarTerceroPorId: "Terceros/actualizartercero",
+  eliminarTerceroPorId: "Terceros/eliminarterceroporid",
+  crearTercero: "Terceros/creartercero",
 
+  // ==========================
+  // 📋 Generales - Combos
+  // ==========================
+  obtenerComboTiposDocumento: "generales/combo-tipos-documento",
+  obtenerComboTiposTercero: "generales/combo-tipos-terceros",
+  obtenerComboTiposPersona: "generales/combo-tipos-persona",
+  obtenerComboPaises: "generales/combo-paises",
+  obtenerComboDepartamentos: "generales/combo-departamentos",
+  obtenerComboCiudades: "generales/combo-ciudades",
 
-//Inicio Usuario
-//  crearUsuario: 'User/crearusuario',
- obtenerListadoUsuarios: "User/listarusuarios",
- obtenerUsuarioPorId: "User/obtenerusuarioporid",
- actualizarUsuarioPorId: "User/actualizarusuario",
- eliminarUsuarioPorId:"User/eliminarusuarioporid",
- crearUsuario : "crearusuario",
+  // ==========================
+  // 📦 Productos
+  // ==========================
+  obtenerListadoProductos: "productos/listarproductos",
+  obtenerProductoPorId: "productos/obtenerproductoporid",
+  registrarProductos: "productos/registrarproducto",
+  actualizarProducto: "productos/actualizarproducto",
+  eliminarProductorPorId: "productos/eliminarproductosporid",
 
-//Inicio Tercero
- obtenerListadoTerceros: "Terceros/listarterceros",
- obtenerTerceroPorId: "Terceros/obtenerterceroporid",
- actualizarTerceroPorId: "Terceros/actualizartercero",
- eliminarTerceroPorId:"Terceros/eliminarterceroporid",
- crearTercero : "Terceros/creartercero",
+  // ==========================
+  // 📂 Módulos
+  // ==========================
+  registrarModulo: "modulos/crearmodulo",
+  obtenerModuloPorId: "modulos/obtenermoduloporid",
+  obtenerListadoModulos: "modulos/listarmodulos",
+  actualizarModulo: "modulos/actualizarmodulo",
+  eliminarModulo: "modulos/eliminarmodulo",
 
- //Registro Terceros
- obtenerComboTiposDocumento: "generales/combo-tipos-documento",
- obtenerComboTiposTercero: "generales/combo-tipos-terceros",
- obtenerComboTiposPersona: "generales/combo-tipos-persona",
- obtenerComboPaises: "generales/combo-paises",
- obtenerComboDepartamentos: "generales/combo-departamentos",
- obtenerComboCiudades: "generales/combo-ciudades",
-//Generales
-//Inicio Productos
+  // ==========================
+  // 📂 SubMódulos
+  // ==========================
+  registrarSubModulo: "submodulos/crearsubmodulo",
+  obtenerSubModuloPorId: "submodulos/obtenersubmoduloporid",
+  obtenerListadoSubModulos: "submodulos/listarsubmodulos",
+  actualizarSubModulo: "submodulos/actualizarsubmodulo",
+  eliminarSubModulo: "submodulos/eliminarsubmodulo",
 
-obtenerListadoProductos: "productos/listarproductos",
-obtenerProductoPorId: "productos/obtenerproductoporid",
-registrarProductos: "productos/registrarproducto",
-actualizarProducto: "productos/actualizarproducto",
-eliminarProductorPorId:"productos/eliminarproductosporid",
-
-//Inicio Modulos
-registrarModulo: "modulos/crearmodulo",
-obtenerModuloPorId: "modulos/obtenermoduloporid",
-obtenerListadoModulos: "modulos/listarmodulos",
-actualizarModulo: "modulos/actualizarmodulo",
-eliminarModulo: "modulos/eliminarmodulo"
-
-//Inicio SubModulos
-,registrarSubModulo: "submodulos/crearsubmodulo",
-obtenerSubModuloPorId: "submodulos/obtenersubmoduloporid",
-obtenerListadoSubModulos: "submodulos/listarsubmodulos",
-actualizarSubModulo: "submodulos/actualizarsubmodulo",
-eliminarSubModulo: "submodulos/eliminarsubmodulo",
-
-// 👇 Endpoints correctos de Categorías
+  // ==========================
+  // 🗂 Categorías
+  // ==========================
   crearCategorias: "Categorias/registrarcategoria",
   actualizarCategorias: "Categorias/actualizarcategoria",
   listarCategorias: "categorias/listarcategorias",
   eliminarCategorias: "Categorias/eliminarcategoriasporids",
   obtenerCategoriaPorId: "Categorias/obtenercategoriaporid",
 
-  //  NUEVOS ENDPOINTS DE MOVIMIENTOS (Entradas y Salidas)
+  // ==========================
+  // (Entradas y Salidas)
+  // ==========================
 
   obtenerListadoMovimientos: "movimientos/listarmovimientos",
   obtenerMovimientoPorId: "movimientos/obtenermovimientoporid",
@@ -79,5 +94,3 @@ eliminarSubModulo: "submodulos/eliminarsubmodulo",
   eliminarMovimiento: "movimientos/eliminarmovimientoporid"
 
 };
-
-

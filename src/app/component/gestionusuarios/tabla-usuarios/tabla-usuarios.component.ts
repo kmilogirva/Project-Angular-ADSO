@@ -10,7 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Usuario } from 'src/app/shared/models/Usuario';
+// import { Usuario } from 'src/app/shared/models/Usuario';
+import { UsuarioResponse } from 'src/app/models/Response/Seguridad/UsuarioResponse';
 
 @Component({
   selector: 'app-tabla-usuarios',
@@ -30,15 +31,15 @@ import { Usuario } from 'src/app/shared/models/Usuario';
   ]
 })
 export class TablaUsuariosComponent implements AfterViewInit, OnChanges {
-  @Input() usuarios: Usuario[] = [];
+  @Input() usuarios: UsuarioResponse[] = [];
 
-  @Output() editarUsuario   = new EventEmitter<Usuario>();
-  @Output() eliminarUsuario = new EventEmitter<Usuario>();
+  @Output() editarUsuario   = new EventEmitter<UsuarioResponse>();
+  @Output() eliminarUsuario = new EventEmitter<UsuarioResponse>();
 
-  editar(u: Usuario) {
+  editar(u: UsuarioResponse) {
     this.editarUsuario.emit(u);
     }
-    eliminar(usu: Usuario) { this.eliminarUsuario.emit(usu); }
+    eliminar(usu: UsuarioResponse) { this.eliminarUsuario.emit(usu); }
 
   displayedColumns = [
     'posicion',
@@ -50,7 +51,7 @@ export class TablaUsuariosComponent implements AfterViewInit, OnChanges {
     'acciones'
   ];
 
-  dataSource = new MatTableDataSource<Usuario>();
+  dataSource = new MatTableDataSource<UsuarioResponse>();
 
   termino = '';
 
@@ -69,18 +70,14 @@ export class TablaUsuariosComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  aplicarFiltro() {
-    this.dataSource.filterPredicate = (usuario, filtro) => {
-      const nombreCompleto = [usuario.nombre1, usuario.nombre2, usuario.apellido1, usuario.apellido2]
-  .filter(nombre => nombre && nombre.trim() !== '')
-  .join(' ');
-      const correoTelRol = `${usuario.correo} ${usuario.telefono} ${usuario.idRol}`;
-      return (
-        (nombreCompleto + correoTelRol).toLowerCase().includes(filtro)
-      );
-    };
 
-    this.dataSource.filter = this.termino.trim().toLowerCase();
-  }
+aplicarFiltro() {
+  this.dataSource.filterPredicate = (usuario, filtro) => {
+    const textoBusqueda = `${usuario.nombreCompleto} ${usuario.email ?? ''} ${usuario.telefono ?? ''} ${usuario.nombreRol || 'Sin Rol'}`;
+    return textoBusqueda.toLowerCase().includes(filtro);
+  };
+
+  this.dataSource.filter = this.termino.trim().toLowerCase();
+}
 
 }

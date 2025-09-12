@@ -41,14 +41,13 @@
 
           <div class="row">
             <!-- Categoría -->
-
-
-
             <div class="col-md-3 mb-3">
               <label for="IdCategoria" class="form-label fw-bold">Categoría</label>
               <select id="IdCategoria" class="form-select" formControlName="IdCategoria" required>
                 <option value="" disabled selected>Seleccione una categoría</option>
-                <option *ngFor="let cat of IdCategoria" [ngValue]="cat">{{ cat }}</option>
+                <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">
+                  {{ categoria.nomCategoria }}
+                </option>
               </select>
               <div *ngIf="f['IdCategoria'].touched && f['IdCategoria'].invalid" class="text-danger small">
                 La categoría es obligatoria.
@@ -78,8 +77,8 @@
             </div>
 
           </div>
-   
-          
+
+
           <div class="row">
             <div class="col-md-12">
               <label for="Observacion" class="form-label fw-bold">Observación</label>
@@ -102,10 +101,15 @@
           </div>
         </form>
 
-      <div class="row"> 
-        <app-tabla-productos class="mt-4" [productos]="productos"
-          (editarProducto)="llenarCamposFormulario($event.idProducto!)"
-          (eliminarProducto)="onEliminar($event)"></app-tabla-productos>
+        <div class="row">
+          <app-tabla-productos class="mt-4"
+            [productos]="productos"
+            [categorias]="categorias"
+            (editarProducto)="llenarCamposFormulario($event.idProducto!)"
+            (eliminarProducto)="onEliminar($event)">
+          </app-tabla-productos>
+        </div>
+
       </div>
 
     </div>
