@@ -3,8 +3,8 @@ export const environment = {
 
   // 🔗 Conexión API
 
-  apiUrl: "https://localhost:44372/api/", // backend pruebas
-  //apiUrl: "https://jkccanada.azurewebsites.net/", // backend producción
+  // apiUrl: "https://localhost:44372/api/", // backend pruebas
+  apiUrl: "https://jkccanada.azurewebsites.net/", // backend producción
   
 
   // ==========================
