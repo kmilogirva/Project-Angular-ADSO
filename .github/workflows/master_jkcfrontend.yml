@@ -62,4 +62,5 @@ jobs:
           app-name: 'jkcFrontend'
           slot-name: 'Production'
           package: .
+
           
