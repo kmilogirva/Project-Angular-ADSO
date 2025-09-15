@@ -1,13 +1,14 @@
 {
   "name": "proyecto1",
   "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
+ "scripts": {
+  "ng": "ng",
+  "start": "node server.js", 
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "serve:dev": "ng serve"
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.1.4",
