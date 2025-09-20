@@ -1,17 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Roles } from 'src/app/shared/models/roles.model';
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
+import { TablaRolesComponent } from './tabla-roles/tabla-roles.component';
 
 @Component({
   selector: 'app-creacionroles',
   templateUrl: './creacionroles.component.html',
   styleUrls: ['./creacionroles.component.scss'],
   standalone: true,
-  imports: [SidebarComponent, ReactiveFormsModule, CommonModule]
+  imports: [
+    SidebarComponent,
+    ReactiveFormsModule,
+    CommonModule,
+    TablaRolesComponent,
+  ],
 })
 export class CreacionrolesComponent implements OnInit {
   rolesForm!: FormGroup;
@@ -34,12 +45,11 @@ export class CreacionrolesComponent implements OnInit {
   // 1. Definir formulario con los nombres EXACTOS como están en backend y HTML
   instanciarFormulario(): void {
     this.rolesForm = this.fb.group({
-
       IdRol: [''],
       NombreRol: ['', Validators.required],
       IdEstado: [true, Validators.required],
 
-      IdUsuarioCreacion: ['']
+      IdUsuarioCreacion: [''],
     });
   }
 
@@ -59,10 +69,9 @@ export class CreacionrolesComponent implements OnInit {
       error: () => {
         this.toastr.error('Error al cargar roles');
         this.cargando = false;
-      }
+      },
     });
   }
-
 
   // 3. Editar: llena el formulario con el rol seleccionado
   editarRol(rol: Roles): void {
@@ -73,7 +82,7 @@ export class CreacionrolesComponent implements OnInit {
       IdRol: rol.id,
       NombreRol: rol.nombreRol,
       IdEstado: rol.idEstado,
-      IdUsuarioCreacion: '' // se llenará al guardar
+      IdUsuarioCreacion: '', // se llenará al guardar
     });
   }
 
@@ -103,14 +112,14 @@ export class CreacionrolesComponent implements OnInit {
         },
         error: () => {
           this.toastr.error('Error al actualizar el rol');
-        }
+        },
       });
     }
     // Crear (POST)
     else {
       this.authService.crearRol(rolData).subscribe({
         next: (response: any) => {
-          console.log("Esto recibo", response);
+          console.log('Esto recibo', response);
           if (response && response.mensaje) {
             this.toastr.success(response.mensaje || 'Rol creado correctamente');
             this.resetForm();
@@ -121,7 +130,7 @@ export class CreacionrolesComponent implements OnInit {
         },
         error: () => {
           this.toastr.error('Error al registrar el rol');
-        }
+        },
       });
     }
   }
@@ -134,43 +143,40 @@ export class CreacionrolesComponent implements OnInit {
   }
 
   eliminarRol(id: number) {
-  if (confirm('¿Estás seguro de eliminar este rol?')) {
-    this.authService.eliminarRol(id).subscribe({
-      next: (response) => {
-        this.toastr.success(response.mensaje || 'Rol eliminado exitosamente');
-        this.cargarRoles(); // Recarga la lista
-      },
-      error: (err) => {
-        console.error(err);
-        this.toastr.error(
-          err.error?.mensaje || 'Error al eliminar el rol'
-        );
-      }
-    });
+    if (confirm('¿Estás seguro de eliminar este rol?')) {
+      this.authService.eliminarRol(id).subscribe({
+        next: (response) => {
+          this.toastr.success(response.mensaje || 'Rol eliminado exitosamente');
+          this.cargarRoles(); // Recarga la lista
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastr.error(err.error?.mensaje || 'Error al eliminar el rol');
+        },
+      });
+    }
   }
-}
 
-// onSubmit() {
-//   if (this.rolesForm.invalid) return;
+  // onSubmit() {
+  //   if (this.rolesForm.invalid) return;
 
-//   const idUsuario = this.authService.obtenerIdUsuario();
-//   this.rolesForm.patchValue({ IdUsuarioCreacion: idUsuario });
+  //   const idUsuario = this.authService.obtenerIdUsuario();
+  //   this.rolesForm.patchValue({ IdUsuarioCreacion: idUsuario });
 
-//   const nuevoRol = this.rolesForm.value;
+  //   const nuevoRol = this.rolesForm.value;
 
-//   this.authService.crearRol(nuevoRol).subscribe({
-//     next: (response) => {
-//       this.toastr.success(response.mensaje);
-//       this.rolesForm.reset();
-//     },
-//     error: (err) => {
-//       if (err.status === 409) {
-//         this.toastr.warning(err.error.mensaje);
-//       } else {
-//         this.toastr.error('Error al registrar el rol');
-//       }
-//     }
-//   });
-// }
-
+  //   this.authService.crearRol(nuevoRol).subscribe({
+  //     next: (response) => {
+  //       this.toastr.success(response.mensaje);
+  //       this.rolesForm.reset();
+  //     },
+  //     error: (err) => {
+  //       if (err.status === 409) {
+  //         this.toastr.warning(err.error.mensaje);
+  //       } else {
+  //         this.toastr.error('Error al registrar el rol');
+  //       }
+  //     }
+  //   });
+  // }
 }

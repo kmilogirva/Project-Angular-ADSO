@@ -1,0 +1,56 @@
+<div class="tabla-container">
+  <!-- Buscador -->
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Buscar rol</mat-label>
+    <input matInput [(ngModel)]="termino" (keyup)="aplicarFiltro()" placeholder="Escribe nombre, ID o estado" />
+    <button *ngIf="termino" matSuffix mat-icon-button aria-label="Limpiar" (click)="termino=''; aplicarFiltro()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <!-- Tabla de roles -->
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 w-100">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let rol">{{ rol.id }}</td>
+    </ng-container>
+
+    <!-- Nombre -->
+    <ng-container matColumnDef="nombreRol">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let rol">{{ rol.nombreRol }}</td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let rol">
+        <span class="badge" [ngClass]="rol.idEstado ? 'bg-success' : 'bg-secondary'">
+          {{ rol.idEstado ? 'Activo' : 'Inactivo' }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef class="text-center">Acciones</th>
+      <td mat-cell *matCellDef="let rol" class="text-center">
+        <button mat-icon-button color="primary" (click)="onEditar(rol)" title="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onEliminar(rol.id)" title="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Header y filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- Paginador -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+</div>
