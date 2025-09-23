@@ -2,7 +2,8 @@
   <app-sidebar></app-sidebar>
 
   <div class="container mt-5">
-    <div class="card shadow-lg">
+
+    <div *ngIf="authService.hasPermission('Gestión Categorías', 'crear') || authService.hasPermission('Gestión Categorías', 'editar')" class="card shadow-lg">
       <div class="card-header bg-dark text-white text-center">
         <h2 class="mb-0">Registro de Categorías</h2>
       </div>
@@ -28,22 +29,27 @@
           </div>
 
           <div class="text-end">
-            <button class="btn btn-primary me-2" type="submit">
+            <button *ngIf="editando ? authService.hasPermission('Gestión Categorías', 'editar') : authService.hasPermission('Gestión Categorías', 'crear')" class="btn btn-primary me-2" type="submit">
               {{ editando ? 'Actualizar' : 'Registrar' }}
             </button>
             <button *ngIf="editando" class="btn btn-secondary" type="button" (click)="cancelarEdicion()">Cancelar</button>
           </div>
         </form>
-        <app-tabla-categorias
-      [categorias]="categorias"
-      (editarCategoria)="editarCategoria($event)"
-      (eliminarCategoria)="eliminarCategoria($event)">
-    </app-tabla-categorias>
       </div>
     </div>
 
     <hr>
 
-    
+    <app-tabla-categorias
+      *ngIf="authService.hasPermission('Gestión Categorías', 'leer')"
+      [categorias]="categorias"
+      (editarCategoria)="editarCategoria($event)"
+      (eliminarCategoria)="eliminarCategoria($event)">
+    </app-tabla-categorias>
+
+    <div *ngIf="!authService.hasPermission('Gestión Categorías', 'leer')">
+      <p class="text-center text-muted">🚫 No tienes permisos para ver las categorías.</p>
+    </div>
+
   </div>
-</div>
+</div>  
