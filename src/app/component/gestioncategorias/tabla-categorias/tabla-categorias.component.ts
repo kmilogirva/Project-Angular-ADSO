@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { AuthService } from 'src/app/core/services/auth.service'; // <-- PASO 1: Importar AuthService
 
 interface CategoriaNormalized {
   id: number;
@@ -51,6 +52,14 @@ export class TablaCategoriasComponent implements AfterViewInit, OnChanges {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  
+  // ==========================================================
+  // AQUÍ ESTÁ EL CAMBIO
+  // ==========================================================
+  constructor(public authService: AuthService) {} // <-- PASO 2: Inyectar AuthService como público
+  // ==========================================================
+  // FIN DEL CAMBIO
+  // ==========================================================
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;

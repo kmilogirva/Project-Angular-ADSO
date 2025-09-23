@@ -31,7 +31,7 @@ export class CategoriasComponent implements OnInit {
     private fb: FormBuilder,
     private categoriaService: CategoriaService,
     private toastr: ToastrService,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
