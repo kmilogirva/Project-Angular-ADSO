@@ -1,65 +1,68 @@
-/* Margen adicional para separar del sidebar */
-.contenedor-roles {
-  margin-left: 30px; /* Ajusta según el ancho de tu sidebar */
+/* Estilo general del layout con sidebar */
+.d-flex {
+  display: flex;
 }
 
-/* Título */
+/* Ajuste del contenedor principal */
+.container {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+/* Encabezado */
 .titulo-gestion {
   font-size: 1.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-/* Tarjetas */
-.card {
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* Tabla */
-.table thead th {
-  text-align: center;
   font-weight: 600;
-}
-.table tbody td {
-  vertical-align: middle;
-  text-align: center;
+  color: #343a40;
 }
 
-/* Botón guardar */
-.btn-success {
-  background-color: #28a745;
-  border: none;
+/* Tarjeta del formulario */
+.card {
+  border-radius: 0.75rem;
+  border: 1px solid #dee2e6;
 }
 
-/* Switch: más separación */
-.switch-estado {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.card-body {
+  padding: 1.5rem;
 }
 
-/* Tamaño del switch */
-.form-check-input {
-  width: 2.5em;
-  height: 1.3em;
+/* Labels */
+.form-label {
+  font-weight: 500;
+  color: #495057;
 }
 
-/* Botones de acciones */
-.btn-outline-primary {
-  border-color: #007bff;
-  color: #007bff;
+/* Inputs */
+.form-control {
+  border-radius: 0.5rem;
 }
-.btn-outline-primary:hover {
-  background-color: #007bff;
-  color: #fff;
-}
-.btn-outline-danger {
+
+.form-control.is-invalid {
   border-color: #dc3545;
-  color: #dc3545;
 }
-.btn-outline-danger:hover {
-  background-color: #dc3545;
+
+/* Switch */
+.form-check-input {
+  cursor: pointer;
+}
+
+/* Botones */
+.btn {
+  border-radius: 0.5rem;
+}
+
+.btn-success {
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
   color: #fff;
 }
