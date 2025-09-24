@@ -8,7 +8,6 @@ import { Roles } from 'src/app/shared/models/roles.model';
 import { ComboResponse } from 'src/app/models/Response/Generales/ComboResponse';
 import { RolesPermisosAccion } from 'src/app/models/modulos/RolesPermisosAccion';
 
-
 interface MyJwtPayload extends JwtPayload {
   IdUsuario?: string;
 }
@@ -26,10 +25,9 @@ interface ModuloDTO {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   // #region 🔧 Propiedades – estado y configuración
   private readonly baseServerUrl = environment.apiUrl;
   private currentUserSubject: BehaviorSubject<Usuario | null>;
@@ -46,12 +44,11 @@ export class AuthService {
   }
   // #endregion
 
-
   public get usuarioActual(): Usuario | null {
-  return this.currentUserSubject.value;
-  console.log(this.usuarioActual)
-}
-  
+    return this.currentUserSubject.value;
+    console.log(this.usuarioActual);
+  }
+
   login(datosLogin: any): Observable<any> {
     return this.http.post(
       `${this.baseServerUrl}${environment.loginUsuario}`,
@@ -59,35 +56,38 @@ export class AuthService {
     );
   }
 
-
-  crearRol(datosLRol: any): Observable<any> {
-    return this.http.post(
-      `${this.baseServerUrl}${environment.crearRol}`,
-      datosLRol
+  obtenerComboRoles(): Observable<ComboResponse[]> {
+    return this.http.get<ComboResponse[]>(
+      `${this.baseServerUrl}${environment.obtenerComboRoles}`
     );
-  }
-
-    obtenerComboRoles(): Observable<ComboResponse[]> {
-    return this.http.get<ComboResponse[]>( `${this.baseServerUrl}${environment.obtenerComboRoles}`,);
   }
   // #endregion
 
-  obtenerPermisosRolesAcciones(idRol: number): Observable<RolesPermisosAccion[]> {
-    return this.http.get<RolesPermisosAccion[]>(`${this.baseServerUrl}${environment.consultarpermisosaccionporrol}/${idRol}`,);
+  obtenerPermisosRolesAcciones(
+    idRol: number
+  ): Observable<RolesPermisosAccion[]> {
+    return this.http.get<RolesPermisosAccion[]>(
+      `${this.baseServerUrl}${environment.consultarpermisosaccionporrol}/${idRol}`
+    );
   }
 
-  guardarPermisosRolesAcciones(rolesPermisosAcciones :RolesPermisosAccion[]){
-    return this.http.post<RolesPermisosAccion[]>(`${this.baseServerUrl}${environment.registrarPermisosRolesAcciones}`,rolesPermisosAcciones);
+  guardarPermisosRolesAcciones(rolesPermisosAcciones: RolesPermisosAccion[]) {
+    return this.http.post<RolesPermisosAccion[]>(
+      `${this.baseServerUrl}${environment.registrarPermisosRolesAcciones}`,
+      rolesPermisosAcciones
+    );
   }
 
   obtenerMenuPorRol(idRol: number): Observable<ModuloDTO[]> {
     // El endpoint es POST y recibe el idRol como parámetro en la URL
-    return this.http.post<ModuloDTO[]>(`${this.baseServerUrl}${environment.obtenerMenuPorRol}/${idRol}`, null);
+    return this.http.post<ModuloDTO[]>(
+      `${this.baseServerUrl}${environment.obtenerMenuPorRol}/${idRol}`,
+      null
+    );
   }
 
-
   // #region 🪪 Token – obtención y decodificación
-  
+
   getToken(): string | null {
     return localStorage.getItem('jwtToken');
   }
@@ -113,20 +113,20 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
- isLoggedIn(): boolean {
-  const token = this.getToken();
+  isLoggedIn(): boolean {
+    const token = this.getToken();
 
-  if (!token) return false;
+    if (!token) return false;
 
-  if (!this.currentUserValue) {
-    const savedUser = localStorage.getItem('usuario');
-    if (savedUser) {
-      this.currentUserSubject.next(JSON.parse(savedUser));
+    if (!this.currentUserValue) {
+      const savedUser = localStorage.getItem('usuario');
+      if (savedUser) {
+        this.currentUserSubject.next(JSON.parse(savedUser));
+      }
     }
-  }
 
-  return true;
-}
+    return true;
+  }
   // #endregion
 
   // #region 🔓 Cierre de sesión
@@ -138,9 +138,17 @@ export class AuthService {
   // #endregion
 
   // #region 🛠️ Métodos para Roles
+
+  crearRol(datosLRol: any): Observable<any> {
+    return this.http.post(
+      `${this.baseServerUrl}${environment.crearRol}`,
+      datosLRol
+    );
+  }
+
   obtenerRoles(): Observable<Roles[]> {
     return this.http.get<Roles[]>(
-      `${this.baseServerUrl}seguridad/listaroles`
+      `${this.baseServerUrl}${environment.obtenerlistadoRoles}`
     );
   }
 
@@ -154,9 +162,7 @@ export class AuthService {
 
   // Estos métodos se usarán cuando el backend tenga implementados los endpoints:
   obtenerRolPorId(id: number): Observable<Roles> {
-    return this.http.get<Roles>(
-      `${this.baseServerUrl}seguridad/roles/${id}`
-    );
+    return this.http.get<Roles>(`${this.baseServerUrl}seguridad/roles/${id}`);
   }
 
   // actualizarRol(id: number, rol: Roles): Observable<any> {
@@ -166,18 +172,15 @@ export class AuthService {
   //   );
   // }
   actualizarRol(id: number, rol: Roles): Observable<any> {
-  return this.http.put<any>(
-    `${this.baseServerUrl}seguridad/roles/${id}`,
-    rol
-  );
-}
+    return this.http.put<any>(
+      `${this.baseServerUrl}${environment.actualizarRol}/${id}`,
+      rol
+    );
+  }
 
   eliminarRol(id: number): Observable<any> {
-  return this.http.delete<any>(
-    `${this.baseServerUrl}seguridad/roles/${id}`
-  );
-}
-
-
-
+    return this.http.delete<any>(
+      `${this.baseServerUrl}${environment.eliminarRol}/${id}`
+    );
+  }
 }

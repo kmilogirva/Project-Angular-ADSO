@@ -4,20 +4,20 @@ export const environment = {
   // 🔗 Conexión API
 
   // apiUrl: "https://localhost:44372/api/", // backend pruebas
-  apiUrl: "https://jkccanada.azurewebsites.net/api/",  // backend producción
+  apiUrl: 'https://jkccanada.azurewebsites.net/api/', // backend producción
 
-  
-
-  // ==========================
+  // ========================== poncho pilatos ==========================
   // 🔐 Seguridad
   // ==========================
   loginUsuario: 'Seguridad/InicioSesion',
   crearRol: 'Seguridad/crearrol',
-  obtenerlistadoRoles: 'Seguridad/obtenerlistadoroles',
+  obtenerlistadoRoles: 'Seguridad/listaroles',
   obtenerComboRoles: 'Seguridad/combo-roles',
   consultarpermisosaccionporrol: 'Seguridad/consultar-permisos-accion-por-rol',
   registrarPermisosRolesAcciones: 'Seguridad/asignar-permisos-a-rol',
   obtenerMenuPorRol: 'Seguridad/consultar-menu-por-rol',
+  actualizarRol: 'Seguridad/actualizarrolesporid',
+  eliminarRol: 'Seguridad/eliminarrolesporid',
 
   // ==========================
   // 👤 Usuarios
@@ -89,15 +89,14 @@ export const environment = {
   solicitarRecuperacion: 'Recuperacion/solicitar-recuperacion',
   validarToken: 'Recuperacion/validar-token',
   restablecerContrasena: 'Recuperacion/restablecer-contrasena',
-  
+
   // ==========================
   // (Entradas y Salidas)
   // ==========================
 
-  obtenerListadoMovimientos: "movimientos/listarmovimientos",
-  obtenerMovimientoPorId: "movimientos/obtenermovimientoporid",
-  registrarMovimiento: "movimientos/crearmovimiento",
-  actualizarMovimiento: "movimientos/actualizarmovimiento",
-  eliminarMovimiento: "movimientos/eliminarmovimientoporid"
-
+  obtenerListadoMovimientos: 'movimientos/listarmovimientos',
+  obtenerMovimientoPorId: 'movimientos/obtenermovimientoporid',
+  registrarMovimiento: 'movimientos/crearmovimiento',
+  actualizarMovimiento: 'movimientos/actualizarmovimiento',
+  eliminarMovimiento: 'movimientos/eliminarmovimientoporid',
 };
