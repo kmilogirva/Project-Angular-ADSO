@@ -136,7 +136,7 @@ obtenerComboCiudades(idDepartamento: number) {
         console.log(terceros)
         this.terceros = terceros
       },
-      error: () => this.toastr.error('No se pudo cargar la datos de la tabla Usuarios')
+      error: () => this.toastr.error('No se pudo cargar la datos de la tabla Terceros')
     })
   }
 
@@ -208,7 +208,7 @@ obtenerComboCiudades(idDepartamento: number) {
       next: (res) => {
         console.log("Respuesta:", res);
         this.toastr.success(
-          esEdicion ? 'Usuario actualizado correctamente' : 'Usuario registrado correctamente'
+          esEdicion ? 'Tercero actualizado correctamente' : 'Tercero registrado correctamente'
         );
         this.cargarDataTerceros();
         this.terceroForm.reset();
@@ -220,25 +220,7 @@ obtenerComboCiudades(idDepartamento: number) {
       }
     });
   }
-
-  // registrarTercero(): void {
-  //   if (this.terceroForm.invalid) {
-  //     this.terceroForm.markAllAsTouched();
-  //     return;
-  //   }
-
-  //   if (this.terceroForm.value.idTercero) {
-  //     // Actualizar cliente
-  //     console.log('Cliente actualizado:', this.terceroForm.value);
-  //   } else {
-  //     // Crear nuevo cliente
-  //     console.log('Cliente creado:', this.terceroForm.value);
-  //     this.terceros.push(this.terceroForm.value);
-  //   }
-
-  //   this.terceroForm.reset({ idEstado: 1 });
-  // }
-
+  
    llenarCamposFormulario(id: number): void {
     console.log("Entre al metodo llenarCamposFormulario()", id)
     if (!id) {
@@ -272,8 +254,6 @@ obtenerComboCiudades(idDepartamento: number) {
         console.log(tercero.idPais, tercero.idDepartamento)
         this.obtenerComboDepartamentos(tercero.idPais);
         this.obtenerComboCiudades(tercero.idDepartamento);
-       
-        // this.idUsuarioEnEdicion = id; // Puedes usarlo si necesitas saber si estás editando
       },
       error: () => this.toastr.error('No se pudo obtener el usuario')
     });
@@ -281,14 +261,14 @@ obtenerComboCiudades(idDepartamento: number) {
 
 
    eliminarTercero(idTercero: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+    if (confirm('¿Estás seguro de que deseas eliminar este tercero?')) {
       this.usuarioService.eliminarTerceroPorId(idTercero).subscribe({
         next: (response) => {
           this.toastr.success(response.mensaje);
           this.cargarDataTerceros(); // Refrescar lista
         },
         error: (err) => {
-          this.toastr.error(err.error.mensaje || 'Error al eliminar el usuario');
+          this.toastr.error(err.error.mensaje || 'Error al eliminar el tercero');
         }
       });
     }
