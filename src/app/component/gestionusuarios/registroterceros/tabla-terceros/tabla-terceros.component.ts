@@ -43,6 +43,7 @@ export class TablaTercerosComponent implements AfterViewInit, OnChanges {
     'codTercero',
     'nombreCompleto',
     'correo',
+    'idEstado',
     'telefono',
     'acciones'
   ];
